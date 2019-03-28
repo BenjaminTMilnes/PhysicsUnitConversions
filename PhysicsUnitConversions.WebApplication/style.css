@@ -1,0 +1,53 @@
+﻿body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0px;
+    font-weight: lighter;
+    color: #202020;
+}
+
+h1, h2, h3, h4, h5, h6, p, ul, ol, table, div, input {
+    font-family: inherit;
+    font-weight: inherit;
+}
+
+h1 {
+    font-size: 17px;
+    text-transform: uppercase;
+     margin:0px;
+       text-align:center;
+}
+
+@media (min-width:400px) {
+    h1 {
+        font-size: 22px;
+    }
+}
+
+.mainpage {
+    padding: 20px;
+}
+
+@media (min-width:400px) {
+    .mainpage {
+        padding: 40px;
+    }
+}
+
+@media (min-width:700px) {
+    .mainpage {
+        padding: 70px;
+    }
+}
+
+.maininput {
+      font-size:70px;
+        padding:20px;
+          text-align:center;
+             outline:none;
+                border:1px solid #D0D0D0;
+                 border-radius:2px;
+                   width:70%;
+                    box-sizing: border-box;
+                      margin: 20px auto;
+                        display:block;
+}
