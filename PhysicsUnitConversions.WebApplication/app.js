@@ -108,7 +108,7 @@ class InputParser {
     }
 }
 
-class Unit {
+class BaseUnit {
     constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix) {
         this.singularName = singularName;
         this.pluralName = pluralName;
@@ -119,67 +119,67 @@ class Unit {
     }
 }
 
-class Metre extends Unit {
+class Metre extends BaseUnit {
     constructor() {
         super("Metre", "Metres", "m", [], "L", true);
     }
 }
 
-class Inch extends Unit {
+class Inch extends BaseUnit {
     constructor() {
         super("Inch", "Inches", "in", [], "L", false);
     }
 }
 
-class Foot extends Unit {
+class Foot extends BaseUnit {
     constructor() {
         super("Foot", "Feet", "ft", [], "L", false);
     }
 }
 
-class Yard extends Unit {
+class Yard extends BaseUnit {
     constructor() {
         super("Yard", "Yards", "yd", [], "L", false);
     }
 }
 
-class Mile extends Unit {
+class Mile extends BaseUnit {
     constructor() {
         super("Mile", "Miles", "m", ["mi"], "L", false);
     }
 }
 
-class Second extends Unit {
+class Second extends BaseUnit {
     constructor() {
         super("Second", "Seconds", "s", [], "T", true);
     }
 }
 
-class Minute extends Unit {
+class Minute extends BaseUnit {
     constructor() {
         super("Minute", "Minutes", "min", ["m", "minute"], "T", false);
     }
 }
 
-class Hour extends Unit {
+class Hour extends BaseUnit {
     constructor() {
         super("Hour", "Hours", "h", ["hr", "hrs"], "T", false);
     }
 }
 
-class Day extends Unit {
+class Day extends BaseUnit {
     constructor() {
         super("Day", "Days", "d", ["dy", "dys"], "T", false);
     }
 }
 
-class Year extends Unit {
+class Year extends BaseUnit {
     constructor() {
         super("Year", "Years", "y", ["yr", "yrs"], "T", true);
     }
 }
 
-class    ElectronVolt extends Unit {
+class ElectronVolt extends BaseUnit {
     constructor() {
         super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true);
     }
@@ -189,7 +189,7 @@ class UnitPrefix {
     constructor(name, symbol, multiplierExponent) {
         this.name = name;
         this.symbol = symbol;
-        this.multiplierExponent;
+        this.multiplierExponent = multiplierExponent;
     }
 }
 
@@ -313,6 +313,43 @@ class Yocto extends UnitPrefix {
     }
 }
 
+class NonePrefix extends UnitPrefix {
+    constructor() {
+        super("", "", 0);
+    }
+}
+
+class Unit {
+    constructor(unitPrefix, baseUnit) {
+        this.unitPrefix = unitPrefix;
+        this.baseUnit = baseUnit;
+    }
+
+    get singularName() {
+        return  capitaliseFirstLetter( this.unitPrefix.name.toLowerCase() + this.baseUnit.singularName.toLowerCase());
+    }
+
+    get pluralName(){
+        return  capitaliseFirstLetter(   this.unitPrefix.name.toLowerCase() +  this.baseUnit.pluralName.toLowerCase());
+    }
+
+    get symbol() {
+        return this.unitPrefix.symbol + this.baseUnit.symbol;
+    }
+
+    get alternateSymbols() {
+        return this.baseUnit.alternateSymbols.map(s =>  this.unitPrefix.symbol + s);
+    }
+
+    get dimensions() {
+        return this.baseUnit.dimensions;
+    }
+
+    get hasPrefix() {
+        return (this.unitPrefix != null && this.unitPrefix != undefined   && this.unitPrefix.symbol != "");
+    }
+    }
+
 class Number {
     constructor(significand, exponent) {
         this.significand = significand;
@@ -327,7 +364,12 @@ class OutputValue {
     }
 
     toString() {
-        return this.number.significand.toString() + " × 10<sup>" + this.number.exponent.toString() + "</sup> " + this.unit.symbol;
+        if (this.number.exponent == 0) {
+            return this.number.significand.toString() + " " + this.unit.symbol;
+        }
+        else {
+            return this.number.significand.toString() + " × 10<sup>" + this.number.exponent.toString() + "</sup> " + this.unit.symbol;
+        }
     }
 }
 
@@ -338,20 +380,13 @@ function capitaliseFirstLetter(text) {
 class UnitIdentifier {
     constructor() {
 
-        this.units = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt()];
+        this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt()];
 
         this.unitPrefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(),  new Pico(), new Femto(),  new Atto(), new Zepto(), new Yocto()];
     }
     
     applyPrefixToUnit(prefix, unit) {
-        var newSingularName =  capitaliseFirstLetter( prefix.name.toLowerCase() + unit.singularName.toLowerCase());
-        var newPluralName =  capitaliseFirstLetter( prefix.name.toLowerCase() + unit.pluralName.toLowerCase());
-        var newSymbol = prefix.symbol + unit.symbol;
-        var newAlternateSymbols = unit.alternateSymbols.map(s => prefix.symbol + s);
-          
-        var u = new Unit(newSingularName, newPluralName, newSymbol, newAlternateSymbols, unit.dimensions, false);
-
-        return u;  
+        return new Unit(prefix, unit);
     }
 
     getMatchingUnitPrefixes(symbol) {
@@ -368,7 +403,7 @@ class UnitIdentifier {
             symbol = symbol.substr(unitPrefixMatches[0].symbol.length);
         }
 
-        var unitMatches = this.units.filter(u => u.symbol == symbol);
+        var unitMatches = this.baseUnits.filter(u => u.symbol == symbol);
 
         if (unitMatches.length > 0) {
 
@@ -376,10 +411,35 @@ class UnitIdentifier {
                 return this.applyPrefixToUnit(unitPrefixMatches[0], unitMatches[0]);
             }
 
-            return unitMatches[0];
+            return  this.applyPrefixToUnit( new NonePrefix(), unitMatches[0]);
         }
 
         return null;
+    }
+
+    convertValue(value, fromUnit, toUnit) {
+
+        if (fromUnit.hasPrefix) {
+            value = value * Math.pow(10, fromUnit.unitPrefix.multiplierExponent);
+           fromUnit.unitPrefix = new NonePrefix();
+        }
+
+        if (toUnit.hasPrefix) {
+            value = value * Math.pow(10, - toUnit.unitPrefix.multiplierExponent);
+        toUnit.unitPrefix = new NonePrefix();
+        }
+
+        if (fromUnit.symbol == "m" && toUnit.symbol == "in") {
+            value = value / 0.0254;
+        }
+        
+        var outputValue = new OutputValue();
+
+        outputValue.number.significand = value;
+        outputValue.unit = toUnit;
+
+        return outputValue;
+
     }
 }
 
@@ -416,13 +476,16 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
                 $scope.identifiedUnits.push(unit);
 
-                var outputValue = new OutputValue();
+                if (unit.baseUnit.symbol == "m") {
 
-                outputValue.number.significand = parseFloat(inputValue.coefficient);
-                outputValue.unit = unit;
+                    console.log(inputValue.coefficient);
 
+                    var outputValue = unitIdentifier.convertValue(parseFloat(inputValue.coefficient.text), unit, new Inch());
 
-                $scope.commonResultsLeftColumn.push(outputValue);
+                    $scope.commonResultsLeftColumn.push(outputValue);
+
+                }
+
             }
         }
     });
