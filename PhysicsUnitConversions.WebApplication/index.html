@@ -24,7 +24,7 @@
 
         <input type="text" class="maininput" ng-model="mainInput" />
                 <div>
-          <span ng-repeat="unit in identifiedUnits">{{unit.pluralName}} ({{unit.symbol}})</span>
+          <span ng-repeat="unit in identifiedUnits">{{unit.pluralName}} ({{unit.symbol}}) {{unit.measure}}</span>
                 </div>
         <h2>Common Conversions</h2>
         <div class="results">

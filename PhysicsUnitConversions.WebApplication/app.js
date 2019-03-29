@@ -108,6 +108,23 @@ class InputParser {
     }
 }
 
+var measures = [{ "dimensions": "L", "name": "Length" },
+    { "dimensions": "L^{2}", "name": "Area" },
+    { "dimensions": "L^{3}", "name": "Volume" },
+    { "dimensions": "T", "name": "Time" },
+    { "dimensions": "L T^{-1}", "name": "Speed" },
+    { "dimensions": "L T^{-2}", "name": "Acceleration" },
+    { "dimensions": "M", "name": "Mass" },
+    { "dimensions": "M L^{-3}", "name": "Density" },
+    { "dimensions": "M L T^{-1}", "name": "Momentum" },
+    { "dimensions": "M L T^{-2}", "name": "Force" },
+    { "dimensions": "M L^{2} T^{-2}", "name": "Energy" },
+    { "dimensions": "", "name": "" },
+    { "dimensions": "", "name": "" },
+    { "dimensions": "", "name": "" },
+    { "dimensions": "", "name": "" },
+];
+
 class BaseUnit {
     constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, commonness) {
         this.singularName = singularName;
@@ -345,6 +362,16 @@ class Unit {
 
     get dimensions() {
         return this.baseUnit.dimensions;
+    }
+
+    get measure() {
+        var a = measures.filter(m => m.dimensions == this.dimensions);
+
+        if (a.length > 0) {
+            return a[0].name;
+        }
+
+        return "";
     }
 
     get hasPrefix() {
