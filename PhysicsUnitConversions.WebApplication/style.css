@@ -13,13 +13,33 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, table, div, input {
 h1 {
     font-size: 17px;
     text-transform: uppercase;
-     margin:0px;
-       text-align:center;
+    margin: 0px 0px 10px 0px;
+    text-align: center;
+    color: #105ecc;
+}
+
+h2 {
+    font-size: 14px;
+    margin: 20px 0px;
+}
+
+p{
+    font-size: 14px;
+    width: 60%;
+      text-align:center;
+        margin: 0px auto;
+
 }
 
 @media (min-width:400px) {
     h1 {
         font-size: 22px;
+        margin: 0px 0px 20px 0px;
+    }
+
+    h2 {
+        font-size: 20px;
+        margin: 20px 0px;
     }
 }
 
@@ -40,14 +60,36 @@ h1 {
 }
 
 .maininput {
-      font-size:70px;
-        padding:20px;
-          text-align:center;
-             outline:none;
-                border:1px solid #D0D0D0;
-                 border-radius:2px;
-                   width:70%;
-                    box-sizing: border-box;
-                      margin: 20px auto;
-                        display:block;
+    font-size: 70px;
+    padding: 20px;
+    text-align: center;
+    outline: none;
+    border: 1px solid #D0D0D0;
+    border-radius: 2px;
+    width: 70%;
+    box-sizing: border-box;
+    margin: 20px auto 20px auto;
+    display: block;
+    outline: none;
+}
+
+    .maininput:focus {
+        border: 1px solid #105ecc;
+    }
+
+.inputinformation {
+    font-size: 14px;
+    text-align: center;
+    margin: 20px 0px 20px 0px;
+      min-height:27px;
+}
+
+.tag {
+    display: inline-block;
+    padding: 2px 7px;
+    margin: 0px 4px;
+    background-color: #105ecc;
+    font-weight: normal;
+    color: #ffffff;
+    border-radius: 2px;
 }

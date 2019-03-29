@@ -21,17 +21,19 @@
 <body>
     <div class="mainpage" ng-controller="UnitConversionController">
         <h1>Physics Unit Conversions</h1>
-
-        <input type="text" class="maininput" ng-model="mainInput" />
-                <div>
-          <span ng-repeat="unit in identifiedUnits">{{unit.pluralName}} ({{unit.symbol}}) {{unit.measure}}</span>
-                </div>
+        <p>Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
+         <input type="text" class="maininput" ng-model="mainInput" />
+        <div class="inputinformation">
+            <span ng-show="mostLikelyUnit != null">
+                Recognised unit: {{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}}) <span class="tag" title="This unit is a measure of {{mostLikelyUnit.measure.toLowerCase()}}.">{{mostLikelyUnit.measure}}</span><span ng-show="otherUnits != []"><span style="display:inline-block; width: 40px;"></span> other possible units: <span ng-repeat="unit in otherUnits"> {{unit.pluralName}} ({{unit.symbol}})</span></span>
+            </span>
+        </div>
         <h2>Common Conversions</h2>
         <div class="results">
             <div class="results-leftcolumn">
                 <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
                     {{outputValue.toString()}}
-             </div>
+                </div>
             </div>
             <div class="results-rightcolumn">
                 <div class="result"></div>

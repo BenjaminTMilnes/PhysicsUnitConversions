@@ -26,9 +26,7 @@ class Marker {
 }
 
 class InputParser {
-    constructor() {
-
-    }
+    constructor() {    }
 
     parseInput(inputText) {
 
@@ -119,9 +117,9 @@ var measures = [{ "dimensions": "L", "name": "Length" },
     { "dimensions": "M L T^{-1}", "name": "Momentum" },
     { "dimensions": "M L T^{-2}", "name": "Force" },
     { "dimensions": "M L^{2} T^{-2}", "name": "Energy" },
-    { "dimensions": "", "name": "" },
-    { "dimensions": "", "name": "" },
-    { "dimensions": "", "name": "" },
+    { "dimensions": "M L^{2} T^{-3}", "name": "Power" },
+    { "dimensions": "M L^{2} T^{-2} Q^{-1}", "name": "Electric Potential Difference" },
+    { "dimensions": "Q T^{-1}", "name": "Electric Current" },
     { "dimensions": "", "name": "" },
 ];
 
@@ -200,6 +198,36 @@ class Year extends BaseUnit {
 class ElectronVolt extends BaseUnit {
     constructor() {
         super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0);
+    }
+}
+
+class Gram extends BaseUnit {
+    constructor() {
+        super("Gram", "Grams", "g", [], "M", true, 1.0);
+    }
+}
+
+class Joule extends BaseUnit {
+    constructor() {
+        super("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0);
+    }
+}
+
+class Watt extends BaseUnit {
+    constructor() {
+        super("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, 1.0);
+    }
+}
+
+class Volt extends BaseUnit {
+    constructor() {
+        super("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, 1.0);
+    }
+}
+
+class Amp extends BaseUnit {
+    constructor() {
+        super("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0);
     }
 }
 
@@ -413,7 +441,7 @@ function capitaliseFirstLetter(text) {
 class UnitIdentifier {
     constructor() {
 
-        this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt()];
+        this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt(), new Gram(), new Joule(), new Watt(), new Volt(), new Amp()];
 
         this.unitPrefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(), new Pico(), new Femto(), new Atto(), new Zepto(), new Yocto()];
     }
@@ -454,7 +482,6 @@ class UnitIdentifier {
         console.log(unitMatches);
 
         return unitMatches;
-
     }
 
     convertValue(value, fromUnit, toUnit) {
@@ -488,6 +515,8 @@ var application = angular.module("PhysicsUnitConversions", []);
 application.controller("UnitConversionController", ["$scope", function UnitConversionController($scope) {
 
     $scope.identifiedUnits = [];
+    $scope.mostLikelyUnit = null;
+    $scope.otherUnits = [];
 
     $scope.commonResultsLeftColumn = [];
     $scope.commonResultsRightColumn = [];
@@ -495,6 +524,8 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
     $scope.$watch("mainInput", function (newValue, oldValue) {
 
         $scope.identifiedUnits = [];
+        $scope.mostLikelyUnit = null;
+        $scope.otherUnits = [];
 
         $scope.commonResultsLeftColumn = [];
         $scope.commonResultsRightColumn = [];
@@ -513,6 +544,9 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
             $scope.identifiedUnits = unitMatches;
 
             if (unitMatches.length > 0) {
+
+                $scope.mostLikelyUnit = unitMatches[0];
+                $scope.otherUnits = unitMatches.slice(1);
 
                 var mostLikelyMatch = unitMatches[0];
 
