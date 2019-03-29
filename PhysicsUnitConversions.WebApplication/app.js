@@ -328,11 +328,11 @@ class Unit {
     }
 
     get singularName() {
-        return  capitaliseFirstLetter( this.unitPrefix.name.toLowerCase() + this.baseUnit.singularName.toLowerCase());
+        return capitaliseFirstLetter(this.unitPrefix.name.toLowerCase() + this.baseUnit.singularName.toLowerCase());
     }
 
-    get pluralName(){
-        return  capitaliseFirstLetter(   this.unitPrefix.name.toLowerCase() +  this.baseUnit.pluralName.toLowerCase());
+    get pluralName() {
+        return capitaliseFirstLetter(this.unitPrefix.name.toLowerCase() + this.baseUnit.pluralName.toLowerCase());
     }
 
     get symbol() {
@@ -348,13 +348,13 @@ class Unit {
     }
 
     get hasPrefix() {
-        return (this.unitPrefix != null && this.unitPrefix != undefined   && this.unitPrefix.symbol != "");
+        return (this.unitPrefix != null && this.unitPrefix != undefined && this.unitPrefix.symbol != "");
     }
 
     get commonness() {
         return this.unitPrefix.commonness * this.baseUnit.commonness;
     }
-      }
+}
 
 class Number {
     constructor(significand, exponent) {
@@ -388,7 +388,7 @@ class UnitIdentifier {
 
         this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt()];
 
-        this.unitPrefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(),  new Pico(), new Femto(),  new Atto(), new Zepto(), new Yocto()];
+        this.unitPrefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(), new Pico(), new Femto(), new Atto(), new Zepto(), new Yocto()];
     }
 
     getMatchingUnitPrefixes(symbol) {
@@ -404,21 +404,29 @@ class UnitIdentifier {
         var baseUnitMatches = this.baseUnits.filter(u => u.symbol == symbol || u.singularName.toLowerCase() == symbol.toLowerCase() || u.pluralName.toLowerCase() == symbol.toLowerCase() || u.alternateSymbols.filter(as => as == symbol).length > 0);
 
         baseUnitMatches.forEach(u => {
-            unitMatches.push(new Unit( new NonePrefix(), u));
+            unitMatches.push(new Unit(new NonePrefix(), u));
         });
 
         var unitPrefixMatches = this.getMatchingUnitPrefixes(symbol);
 
+        console.log(unitPrefixMatches);
+
         unitPrefixMatches.forEach(p => {
 
             var s = symbol.substr(p.symbol.length);
-            var baseUnitMatches = this.baseUnits.filter(u => u.symbol == s || u.alternateSymbols.filter(as => as == symbol).length > 0);
+            baseUnitMatches = this.baseUnits.filter(u => u.canHaveSIPrefix && (u.symbol == s || u.alternateSymbols.filter(as => as == s).length > 0));
 
             baseUnitMatches.forEach(u => {
-                unitMatches.push(new Unit(p, u));
+                unitMatches.push(  new Unit(p, u));
             });
 
         });
+
+        unitMatches.sort(function (a, b) { return b.commonness - a.commonness });
+
+        console.log(unitMatches);
+
+        return unitMatches;
 
     }
 
@@ -426,18 +434,16 @@ class UnitIdentifier {
 
         if (fromUnit.hasPrefix) {
             value = value * Math.pow(10, fromUnit.unitPrefix.multiplierExponent);
-           fromUnit.unitPrefix = new NonePrefix();
         }
 
         if (toUnit.hasPrefix) {
-            value = value * Math.pow(10, - toUnit.unitPrefix.multiplierExponent);
-        toUnit.unitPrefix = new NonePrefix();
+            value = value * Math.pow(10, -toUnit.unitPrefix.multiplierExponent);
         }
 
-        if (fromUnit.symbol == "m" && toUnit.symbol == "in") {
+        if (fromUnit.baseUnit.symbol == "m" && toUnit.symbol == "in") {
             value = value / 0.0254;
         }
-        
+
         var outputValue = new OutputValue();
 
         outputValue.number.significand = value;
@@ -475,23 +481,29 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
         if (inputValue != null) {
             var unitIdentifier = new UnitIdentifier();
 
-            var unit = unitIdentifier.getMatchingUnit(inputValue.unit.text);
-            
-            if (unit != null) {
+            var unitMatches = unitIdentifier.getMatchingUnits(inputValue.unit.text);
 
-                $scope.identifiedUnits.push(unit);
+            $scope.identifiedUnits = unitMatches;
 
-                if (unit.baseUnit.symbol == "m") {
+            if (unitMatches.length > 0) {
 
-                    console.log(inputValue.coefficient);
+                var mostLikelyMatch = unitMatches[0];
 
-                    var outputValue = unitIdentifier.convertValue(parseFloat(inputValue.coefficient.text), unit, new Inch());
+                if (mostLikelyMatch.baseUnit.symbol == "m") {
+
+                    var outputValue = unitIdentifier.convertValue(parseFloat(inputValue.coefficient.text), mostLikelyMatch, new Inch());
 
                     $scope.commonResultsLeftColumn.push(outputValue);
 
                 }
 
             }
+
+
+
+
+
+
         }
     });
 
