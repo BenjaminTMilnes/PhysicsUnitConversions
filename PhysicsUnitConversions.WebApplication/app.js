@@ -109,213 +109,215 @@ class InputParser {
 }
 
 class BaseUnit {
-    constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix) {
+    constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, commonness) {
         this.singularName = singularName;
         this.pluralName = pluralName;
         this.symbol = symbol;
         this.alternateSymbols = alternateSymbols;
         this.dimensions = dimensions;
         this.canHaveSIPrefix = canHaveSIPrefix;
+        this.commonness = commonness;
     }
 }
 
 class Metre extends BaseUnit {
     constructor() {
-        super("Metre", "Metres", "m", [], "L", true);
+        super("Metre", "Metres", "m", [], "L", true, 1.0);
     }
 }
 
 class Inch extends BaseUnit {
     constructor() {
-        super("Inch", "Inches", "in", [], "L", false);
+        super("Inch", "Inches", "in", [], "L", false, 0.9);
     }
 }
 
 class Foot extends BaseUnit {
     constructor() {
-        super("Foot", "Feet", "ft", [], "L", false);
+        super("Foot", "Feet", "ft", [], "L", false, 0.8);
     }
 }
 
 class Yard extends BaseUnit {
     constructor() {
-        super("Yard", "Yards", "yd", [], "L", false);
+        super("Yard", "Yards", "yd", [], "L", false, 0.5);
     }
 }
 
 class Mile extends BaseUnit {
     constructor() {
-        super("Mile", "Miles", "m", ["mi"], "L", false);
+        super("Mile", "Miles", "m", ["mi"], "L", false, 1.0);
     }
 }
 
 class Second extends BaseUnit {
     constructor() {
-        super("Second", "Seconds", "s", [], "T", true);
+        super("Second", "Seconds", "s", [], "T", true, 1.0);
     }
 }
 
 class Minute extends BaseUnit {
     constructor() {
-        super("Minute", "Minutes", "min", ["m", "minute"], "T", false);
+        super("Minute", "Minutes", "min", ["m", "minute"], "T", false, 1.0);
     }
 }
 
 class Hour extends BaseUnit {
     constructor() {
-        super("Hour", "Hours", "h", ["hr", "hrs"], "T", false);
+        super("Hour", "Hours", "h", ["hr", "hrs"], "T", false, 1.0);
     }
 }
 
 class Day extends BaseUnit {
     constructor() {
-        super("Day", "Days", "d", ["dy", "dys"], "T", false);
+        super("Day", "Days", "d", ["dy", "dys"], "T", false, 0.8);
     }
 }
 
 class Year extends BaseUnit {
     constructor() {
-        super("Year", "Years", "y", ["yr", "yrs"], "T", true);
+        super("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9);
     }
 }
 
 class ElectronVolt extends BaseUnit {
     constructor() {
-        super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true);
+        super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0);
     }
 }
 
 class UnitPrefix {
-    constructor(name, symbol, multiplierExponent) {
+    constructor(name, symbol, multiplierExponent, commonness) {
         this.name = name;
         this.symbol = symbol;
         this.multiplierExponent = multiplierExponent;
+        this.commonness = commonness;
     }
 }
 
 class Deca extends UnitPrefix {
     constructor() {
-        super("deca", "da", 1);
+        super("deca", "da", 1, 0.6);
     }
 }
 
 class Hecto extends UnitPrefix {
     constructor() {
-        super("hecto", "h", 2);
+        super("hecto", "h", 2, 0.5);
     }
 }
 
 class Kilo extends UnitPrefix {
     constructor() {
-        super("kilo", "k", 3);
+        super("kilo", "k", 3, 1.0);
     }
 }
 
 class Mega extends UnitPrefix {
     constructor() {
-        super("mega", "M", 6);
+        super("mega", "M", 6, 0.9);
     }
 }
 
 class Giga extends UnitPrefix {
     constructor() {
-        super("giga", "G", 9);
+        super("giga", "G", 9, 0.8);
     }
 }
 
 class Tera extends UnitPrefix {
     constructor() {
-        super("tera", "T", 12);
+        super("tera", "T", 12, 0.7);
     }
 }
 
 class Peta extends UnitPrefix {
     constructor() {
-        super("peta", "P", 15);
+        super("peta", "P", 15, 0.3);
     }
 }
 
 class Exa extends UnitPrefix {
     constructor() {
-        super("exa", "E", 18);
+        super("exa", "E", 18, 0.2);
     }
 }
 
 class Zetta extends UnitPrefix {
     constructor() {
-        super("zetta", "Z", 21);
+        super("zetta", "Z", 21, 0.1);
     }
 }
 
 class Yotta extends UnitPrefix {
     constructor() {
-        super("yotta", "Y", 24);
+        super("yotta", "Y", 24, 0.1);
     }
 }
 
 class Deci extends UnitPrefix {
     constructor() {
-        super("deci", "d", -1);
+        super("deci", "d", -1, 0.8);
     }
 }
 
 class Centi extends UnitPrefix {
     constructor() {
-        super("centi", "c", -2);
+        super("centi", "c", -2, 1.0);
     }
 }
 
 class Milli extends UnitPrefix {
     constructor() {
-        super("milli", "m", -3);
+        super("milli", "m", -3, 1.0);
     }
 }
 
 class Micro extends UnitPrefix {
     constructor() {
-        super("micro", "μ", -6);
+        super("micro", "μ", -6, 0.8);
     }
 }
 
 class Nano extends UnitPrefix {
     constructor() {
-        super("nano", "n", -9);
+        super("nano", "n", -9, 0.9);
     }
 }
 
 class Pico extends UnitPrefix {
     constructor() {
-        super("pico", "p", -12);
+        super("pico", "p", -12, 0.5);
     }
 }
 
 class Femto extends UnitPrefix {
     constructor() {
-        super("femto", "f", -15);
+        super("femto", "f", -15, 0.3);
     }
 }
 
 class Atto extends UnitPrefix {
     constructor() {
-        super("atto", "a", -18);
+        super("atto", "a", -18, 0.1);
     }
 }
 
 class Zepto extends UnitPrefix {
     constructor() {
-        super("zepto", "z", -21);
+        super("zepto", "z", -21, 0.1);
     }
 }
 
 class Yocto extends UnitPrefix {
     constructor() {
-        super("yocto", "y", -24);
+        super("yocto", "y", -24, 0.1);
     }
 }
 
 class NonePrefix extends UnitPrefix {
     constructor() {
-        super("", "", 0);
+        super("", "", 0, 0.9);
     }
 }
 
@@ -348,7 +350,11 @@ class Unit {
     get hasPrefix() {
         return (this.unitPrefix != null && this.unitPrefix != undefined   && this.unitPrefix.symbol != "");
     }
+
+    get commonness() {
+        return this.unitPrefix.commonness * this.baseUnit.commonness;
     }
+      }
 
 class Number {
     constructor(significand, exponent) {
@@ -384,37 +390,36 @@ class UnitIdentifier {
 
         this.unitPrefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(),  new Pico(), new Femto(),  new Atto(), new Zepto(), new Yocto()];
     }
-    
-    applyPrefixToUnit(prefix, unit) {
-        return new Unit(prefix, unit);
-    }
 
     getMatchingUnitPrefixes(symbol) {
         var unitPrefixMatches = this.unitPrefixes.filter(p => symbol.length > p.symbol.length && symbol.startsWith(p.symbol));
 
         return unitPrefixMatches;
     }
-    
-    getMatchingUnit(symbol) {
+
+    getMatchingUnits(symbol) {
+
+        var unitMatches = [];
+
+        var baseUnitMatches = this.baseUnits.filter(u => u.symbol == symbol || u.singularName.toLowerCase() == symbol.toLowerCase() || u.pluralName.toLowerCase() == symbol.toLowerCase() || u.alternateSymbols.filter(as => as == symbol).length > 0);
+
+        baseUnitMatches.forEach(u => {
+            unitMatches.push(new Unit( new NonePrefix(), u));
+        });
 
         var unitPrefixMatches = this.getMatchingUnitPrefixes(symbol);
 
-        if (unitPrefixMatches.length > 0) {
-            symbol = symbol.substr(unitPrefixMatches[0].symbol.length);
-        }
+        unitPrefixMatches.forEach(p => {
 
-        var unitMatches = this.baseUnits.filter(u => u.symbol == symbol);
+            var s = symbol.substr(p.symbol.length);
+            var baseUnitMatches = this.baseUnits.filter(u => u.symbol == s || u.alternateSymbols.filter(as => as == symbol).length > 0);
 
-        if (unitMatches.length > 0) {
+            baseUnitMatches.forEach(u => {
+                unitMatches.push(new Unit(p, u));
+            });
 
-            if (unitPrefixMatches.length > 0) {
-                return this.applyPrefixToUnit(unitPrefixMatches[0], unitMatches[0]);
-            }
+        });
 
-            return  this.applyPrefixToUnit( new NonePrefix(), unitMatches[0]);
-        }
-
-        return null;
     }
 
     convertValue(value, fromUnit, toUnit) {
