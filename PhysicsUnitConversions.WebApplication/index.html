@@ -22,19 +22,20 @@
     <div class="mainpage" ng-controller="UnitConversionController">
         <h1>Physics Unit Conversions</h1>
 
-        <input type="text" class="maininput"  ng-model="mainInput" />
+        <input type="text" class="maininput" ng-model="mainInput" />
+        <h2>Common Conversions</h2>
         <div class="results">
             <div class="results-leftcolumn">
-                <div class="result">
-                    {{mainOutput}}
-                       </div>
+                <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
+                    {{outputValue.toString()}}
+             </div>
             </div>
             <div class="results-rightcolumn">
                 <div class="result"></div>
 
             </div>
         </div>
-
+        <h2>Metric Conversions</h2>
     </div>
 </body>
 </html>

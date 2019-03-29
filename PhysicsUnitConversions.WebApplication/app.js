@@ -205,6 +205,24 @@ class Kilo extends UnitPrefix {
     }
 }
 
+class Number {
+    constructor(significand, exponent) {
+        this.significand = significand;
+        this.exponent = exponent;
+    }
+}
+
+class OutputValue {
+    constructor() {
+        this.number = new Number();
+        this.unit = new Unit();
+    }
+
+    toString() {
+        return this.number.significand + " × 10<sup>" + this.number.exponent + "</sup> " + this.unit.symbol;
+    }
+}
+
 class UnitIdentifier {
     constructor() {
 
@@ -241,7 +259,14 @@ var application = angular.module("PhysicsUnitConversions", []);
 
 application.controller("UnitConversionController", ["$scope", function UnitConversionController($scope) {
 
+    $scope.commonResultsLeftColumn = [];
+    $scope.commonResultsRightColumn = [];
+
     $scope.$watch("mainInput", function (newValue, oldValue) {
+
+        $scope.commonResultsLeftColumn = [];
+        $scope.commonResultsRightColumn = [];
+
         var inputParser = new InputParser();
 
         var inputValue = inputParser.parseInput(newValue);
@@ -255,7 +280,13 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
             
             if (unit != null) {
 
-                $scope.mainOutput = unit.pluralName;
+                var outputValue = new OutputValue();
+
+                outputValue.number.significand = parseFloat(inputValue.coefficient);
+                outputValue.unit = unit;
+
+
+                $scope.commonResultsLeftColumn.push(outputValue);
             }
         }
     });
