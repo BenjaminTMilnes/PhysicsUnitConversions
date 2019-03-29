@@ -25,14 +25,16 @@
          <input type="text" class="maininput" ng-model="mainInput" />
         <div class="inputinformation">
             <span ng-show="mostLikelyUnit != null">
-                Recognised unit: {{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}}) <span class="tag" title="This unit is a measure of {{mostLikelyUnit.measure.toLowerCase()}}.">{{mostLikelyUnit.measure}}</span><span ng-show="otherUnits != []"><span style="display:inline-block; width: 40px;"></span> other possible units: <span ng-repeat="unit in otherUnits"> {{unit.pluralName}} ({{unit.symbol}})</span></span>
+                Recognised unit: <span style="font-weight:normal;">{{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}})</span> <span ng-show="mostLikelyUnit.isMetric" class="tag">Metric</span> <span class="tag" title="This unit is a measure of {{mostLikelyUnit.measure.toLowerCase()}}.">{{mostLikelyUnit.measure}}</span><span ng-show="otherUnits != []"><span style="display:inline-block; width: 40px;"></span> other possible units: <span ng-repeat="unit in otherUnits"> {{unit.pluralName}} ({{unit.symbol}})</span></span>
             </span>
         </div>
         <h2>Common Conversions</h2>
         <div class="results">
             <div class="results-leftcolumn">
                 <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
-                    {{outputValue.toString()}}
+                       <button class="copybutton">Copy Text</button>
+                      <button class="copybutton">Copy LaTeX</button>
+                    <span title="{{outputValue.number.significand}} {{outputValue.unit.pluralName.toLowerCase()}}">{{outputValue.toString()}}</span>
                 </div>
             </div>
             <div class="results-rightcolumn">

@@ -26,7 +26,7 @@ class Marker {
 }
 
 class InputParser {
-    constructor() {    }
+    constructor() { }
 
     parseInput(inputText) {
 
@@ -124,7 +124,7 @@ var measures = [{ "dimensions": "L", "name": "Length" },
 ];
 
 class BaseUnit {
-    constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, commonness) {
+    constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, commonness, isMetric) {
         this.singularName = singularName;
         this.pluralName = pluralName;
         this.symbol = symbol;
@@ -132,102 +132,103 @@ class BaseUnit {
         this.dimensions = dimensions;
         this.canHaveSIPrefix = canHaveSIPrefix;
         this.commonness = commonness;
+        this.isMetric = isMetric;
     }
 }
 
 class Metre extends BaseUnit {
     constructor() {
-        super("Metre", "Metres", "m", [], "L", true, 1.0);
+        super("Metre", "Metres", "m", [], "L", true, 1.0, true);
     }
 }
 
 class Inch extends BaseUnit {
     constructor() {
-        super("Inch", "Inches", "in", [], "L", false, 0.9);
+        super("Inch", "Inches", "in", [], "L", false, 0.9, false);
     }
 }
 
 class Foot extends BaseUnit {
     constructor() {
-        super("Foot", "Feet", "ft", [], "L", false, 0.8);
+        super("Foot", "Feet", "ft", [], "L", false, 0.8, false);
     }
 }
 
 class Yard extends BaseUnit {
     constructor() {
-        super("Yard", "Yards", "yd", [], "L", false, 0.5);
+        super("Yard", "Yards", "yd", [], "L", false, 0.5, false);
     }
 }
 
 class Mile extends BaseUnit {
     constructor() {
-        super("Mile", "Miles", "m", ["mi"], "L", false, 1.0);
+        super("Mile", "Miles", "m", ["mi"], "L", false, 1.0, false);
     }
 }
 
 class Second extends BaseUnit {
     constructor() {
-        super("Second", "Seconds", "s", [], "T", true, 1.0);
+        super("Second", "Seconds", "s", [], "T", true, 1.0, true);
     }
 }
 
 class Minute extends BaseUnit {
     constructor() {
-        super("Minute", "Minutes", "min", ["m", "minute"], "T", false, 1.0);
+        super("Minute", "Minutes", "min", ["m", "minute"], "T", false, 1.0, false);
     }
 }
 
 class Hour extends BaseUnit {
     constructor() {
-        super("Hour", "Hours", "h", ["hr", "hrs"], "T", false, 1.0);
+        super("Hour", "Hours", "h", ["hr", "hrs"], "T", false, 1.0, false);
     }
 }
 
 class Day extends BaseUnit {
     constructor() {
-        super("Day", "Days", "d", ["dy", "dys"], "T", false, 0.8);
+        super("Day", "Days", "d", ["dy", "dys"], "T", false, 0.8, false);
     }
 }
 
 class Year extends BaseUnit {
     constructor() {
-        super("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9);
+        super("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9, false);
     }
 }
 
 class ElectronVolt extends BaseUnit {
     constructor() {
-        super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0);
+        super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0, true);
     }
 }
 
 class Gram extends BaseUnit {
     constructor() {
-        super("Gram", "Grams", "g", [], "M", true, 1.0);
+        super("Gram", "Grams", "g", [], "M", true, 1.0, true);
     }
 }
 
 class Joule extends BaseUnit {
     constructor() {
-        super("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0);
+        super("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0, true);
     }
 }
 
 class Watt extends BaseUnit {
     constructor() {
-        super("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, 1.0);
+        super("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, 1.0, true);
     }
 }
 
 class Volt extends BaseUnit {
     constructor() {
-        super("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, 1.0);
+        super("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, 1.0, true);
     }
 }
 
 class Amp extends BaseUnit {
     constructor() {
-        super("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0);
+        super("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0, true);
     }
 }
 
@@ -409,6 +410,10 @@ class Unit {
     get commonness() {
         return this.unitPrefix.commonness * this.baseUnit.commonness;
     }
+
+    get isMetric() {
+        return this.baseUnit.isMetric;
+    }
 }
 
 class Number {
@@ -437,6 +442,14 @@ class OutputValue {
 function capitaliseFirstLetter(text) {
     return text.substr(0, 1).toUpperCase() + text.substr(1);
 }
+
+var ratios = [["metres", "inches", 0.0254],
+    ["metres", "feet", 0.0254 * 12],
+    ["metres", "yards", 0.0254 * 12 * 3],
+    ["feet", "inches", 1 / 12],
+    ["yards", "inches", 1 / (12 * 3)]
+
+];
 
 class UnitIdentifier {
     constructor() {
@@ -472,7 +485,7 @@ class UnitIdentifier {
             baseUnitMatches = this.baseUnits.filter(u => u.canHaveSIPrefix && (u.symbol == s || u.alternateSymbols.filter(as => as == s).length > 0));
 
             baseUnitMatches.forEach(u => {
-                unitMatches.push(  new Unit(p, u));
+                unitMatches.push(new Unit(p, u));
             });
 
         });
@@ -484,6 +497,27 @@ class UnitIdentifier {
         return unitMatches;
     }
 
+    getUnitsWithDimensions(dimensions, minimumCommonness) {
+        var units = [];
+        
+        this.baseUnits.forEach(u => {
+
+            if (u.canHaveSIPrefix) {
+                this.unitPrefixes.forEach(p => {
+                    units.push(new Unit(p, u));
+                });
+            }
+            else {
+                units.push(new Unit(new NonePrefix(), u));
+                      }
+
+        });
+        
+        units = units.filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
+
+        return units;
+    }
+    
     convertValue(value, fromUnit, toUnit) {
 
         if (fromUnit.hasPrefix) {
@@ -494,14 +528,28 @@ class UnitIdentifier {
             value = value * Math.pow(10, -toUnit.unitPrefix.multiplierExponent);
         }
 
-        if (fromUnit.baseUnit.symbol == "m" && toUnit.symbol == "in") {
-            value = value / 0.0254;
-        }
+        var a = false;
+
+        ratios.forEach(r => {
+            if (fromUnit.baseUnit.pluralName.toLowerCase() == r[0] && toUnit.baseUnit.pluralName.toLowerCase() == r[1]) {
+                value = value / r[2];
+                a = true;
+            }
+            if (fromUnit.baseUnit.pluralName.toLowerCase() == r[1] && toUnit.baseUnit.pluralName.toLowerCase() == r[0]) {
+                value = value * r[2];
+                a = true;
+            }
+            if (fromUnit.baseUnit.pluralName.toLowerCase() == toUnit.baseUnit.pluralName.toLowerCase()) {
+                a = true;
+            }
+        });
 
         var outputValue = new OutputValue();
 
-        outputValue.number.significand = value;
-        outputValue.unit = toUnit;
+        if (a) {
+            outputValue.number.significand = value;
+            outputValue.unit = toUnit;
+        }
 
         return outputValue;
 
@@ -550,21 +598,18 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
                 var mostLikelyMatch = unitMatches[0];
 
-                if (mostLikelyMatch.baseUnit.symbol == "m") {
+                var convertibleTo = unitIdentifier.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7);
 
-                    var outputValue = unitIdentifier.convertValue(parseFloat(inputValue.coefficient.text), mostLikelyMatch, new Inch());
+                console.log(convertibleTo);
+
+                convertibleTo.forEach(u => {
+
+                    var outputValue = unitIdentifier.convertValue(parseFloat(inputValue.coefficient.text), mostLikelyMatch, u);
 
                     $scope.commonResultsLeftColumn.push(outputValue);
 
-                }
-
+                });
             }
-
-
-
-
-
-
         }
     });
 

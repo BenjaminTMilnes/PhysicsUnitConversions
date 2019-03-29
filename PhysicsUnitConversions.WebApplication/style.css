@@ -19,16 +19,15 @@ h1 {
 }
 
 h2 {
-    font-size: 14px;
+    font-size: 17px;
     margin: 20px 0px;
 }
 
-p{
+p {
     font-size: 14px;
     width: 60%;
-      text-align:center;
-        margin: 0px auto;
-
+    text-align: center;
+    margin: 0px auto;
 }
 
 @media (min-width:400px) {
@@ -38,7 +37,7 @@ p{
     }
 
     h2 {
-        font-size: 20px;
+        font-size: 22px;
         margin: 20px 0px;
     }
 }
@@ -81,15 +80,40 @@ p{
     font-size: 14px;
     text-align: center;
     margin: 20px 0px 20px 0px;
-      min-height:27px;
+    min-height: 27px;
 }
 
 .tag {
     display: inline-block;
     padding: 2px 7px;
-    margin: 0px 4px;
+    margin: 0px 0px 0px 4px;
     background-color: #105ecc;
     font-weight: normal;
     color: #ffffff;
     border-radius: 2px;
 }
+
+.result{
+     background-color:#F8F8F8;
+       padding:7px;
+       margin:4px;
+        border-radius:2px;
+          font-weight:normal;
+    font-size: 17px;
+}
+
+
+.copybutton {
+    font-size: 17px;
+    padding: 7px 17px;
+    margin: 0px 4px 0px 0px;
+    border-radius: 2px;
+    color: #FFFFFF;
+    background-color: #105ecc;
+    border: none;
+    cursor: pointer;
+}
+
+    .copybutton:hover {
+        background-color: #2f7ae2;
+    }
