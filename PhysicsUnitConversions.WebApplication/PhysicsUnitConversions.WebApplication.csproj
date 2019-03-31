@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="colour-codes.txt" />
+    <Content Include="input_parsing.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -79,6 +80,8 @@
     <Content Include="app.js" />
     <Content Include="index.html" />
     <Content Include="style.css" />
+    <Content Include="test_framework.js" />
+    <Content Include="units.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
