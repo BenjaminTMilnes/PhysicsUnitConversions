@@ -10,4 +10,7 @@ function assertEqual(expectedValue, actualValue) {
     if (actualValue != expectedValue) {
         throw new AssertionError("Expected a value of '" + expectedValue + "'; got a value of '" + actualValue + "'.");
     }
+    else {
+        console.log("Test passed.");
+    }
 }

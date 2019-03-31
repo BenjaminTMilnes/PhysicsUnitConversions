@@ -1,4 +1,8 @@
 ﻿
+function isAnyOf(characters, character) {
+    return (characters.split("").filter(c => c == character).length > 0);
+}
+
 
 class InputCoefficient {
     constructor(text) {
@@ -29,8 +33,7 @@ class InputParser {
     constructor() { }
 
     parseInput(inputText) {
-
-        if (inputText == null || inputText == undefined) {
+        if (inputText == null || inputText == undefined || inputText == "") {
             return null;
         }
 
@@ -48,11 +51,9 @@ class InputParser {
         else {
             return null;
         }
-
     }
 
     parseCoefficient(inputText, marker, container) {
-
         var t = "";
 
         if (inputText.substr(marker.position, 1) == "-") {
@@ -65,8 +66,10 @@ class InputParser {
         }
 
         while (marker.position < inputText.length) {
-            if ("0123456789.".split("").filter(c =>     c == inputText.substr(marker.position, 1)).length > 0) {
-                t += inputText.substr(marker.position, 1);
+            var c = inputText.substr(marker.position, 1);
+
+            if (isAnyOf("0123456789.", c)) {
+                t += c;
                 marker.position += 1;
             }
             else {
@@ -78,12 +81,13 @@ class InputParser {
     }
 
     parseUnit(inputText, marker, container) {
-
         var t = "";
 
         while (marker.position < inputText.length) {
-            if ("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ^-{}".split("").filter(c =>     c == inputText.substr(marker.position, 1)).length > 0) {
-                t += inputText.substr(marker.position, 1);
+            var c = inputText.substr(marker.position, 1);
+
+            if (isAnyOf("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ^-+{}0123456789", c)) {
+                t += c;
                 marker.position += 1;
             }
             else {
@@ -96,7 +100,9 @@ class InputParser {
 
     parseWhiteSpace(inputText, marker, container) {
         while (marker.position < inputText.length) {
-            if (" \t\n".split("").filter(c =>     c == inputText.substr(marker.position, 1)).length > 0) {
+            var c = inputText.substr(marker.position, 1);
+
+            if (isAnyOf(" \t\n", c)) {
                 marker.position += 1;
             }
             else {
@@ -105,4 +111,28 @@ class InputParser {
         }
     }
 }
+
+function runInputParserTests() {
+    var inputParser = new InputParser();
+
+    assertEqual("123.456", inputParser.parseInput("123.456 km").coefficient.text);
+    assertEqual("km", inputParser.parseInput("123.456 km").unit.text);
+
+    assertEqual("-123.456", inputParser.parseInput("-123.456 km").coefficient.text);
+    assertEqual("km", inputParser.parseInput("-123.456 km").unit.text);
+
+    assertEqual("-123.456", inputParser.parseInput("     -123.456 km").coefficient.text);
+    assertEqual("km", inputParser.parseInput("     -123.456 km").unit.text);
+
+    assertEqual("-123.456", inputParser.parseInput("     -123.456     km").coefficient.text);
+    assertEqual("km", inputParser.parseInput("     -123.456     km").unit.text);
+
+    assertEqual("123456", inputParser.parseInput("     +123456     km").coefficient.text);
+    assertEqual("km", inputParser.parseInput("     +123456     km").unit.text);
+
+    assertEqual("123456", inputParser.parseInput("     +123456     m^{3}").coefficient.text);
+    assertEqual("m^{3}", inputParser.parseInput("     +123456     m^{3}").unit.text);
+}
+
+runInputParserTests();
 
