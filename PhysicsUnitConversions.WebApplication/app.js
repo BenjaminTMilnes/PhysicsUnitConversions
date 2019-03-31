@@ -430,6 +430,8 @@ class OutputValue {
     }
 
     toString() {
+        return writeNumber(this.number.significand, 3, false) + " " + this.unit.symbol;
+
         if (this.number.exponent == 0) {
             return this.number.significand.toString() + " " + this.unit.symbol;
         }
@@ -554,6 +556,76 @@ class UnitIdentifier {
         return outputValue;
 
     }
+}
+
+function getOrderOfMagnitude(n) {
+    if (n == 0) {
+        return 0;
+    }
+
+    return  Math.floor( Math.log10(Math.abs(n)));
+}
+
+function writeNumber(n, nsf, sf) {
+
+    var e = 0;
+
+    if (sf) {
+        var o = getOrderOfMagnitude(n);
+
+        n = n * Math.pow(10, -o);
+        e = o;
+    }
+
+    var t1 = n.toString(); // the input number as a string
+    var t2 = ""; // the output string
+    var m = 0; // the number of significant figures that have been seen
+    var p = 0; // the number of decimal points that have been seen
+
+    for (var i = 0; i < t1.length; i++) {
+        var c1 = t1[i];
+
+        if (c1 == "-") {
+            t2 += c1;
+        }
+        if ("123456789".split("").filter(c2 => c2 == c1).length > 0) {
+            m += 1;
+            if (m <= nsf) {
+                t2 += c1;
+            }
+            else if (m > nsf) {
+                if (p == 0) {
+                    t2 += "0";
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        if (c1 == ".") {
+            p += 1;
+            if (m < nsf) {
+                t2 += c1;
+            }
+        }
+        if (c1 == "0") {
+        
+                if (m > 0) {
+                    m += 1;
+                }
+       
+            t2 += c1;
+        }
+        if (c1 == "e") {
+            break;
+        }
+    }
+
+    if (e != 0) {
+        t2 += " × 10<sup>" + e.toString() + "</sup> ";
+    }
+
+    return t2;
 }
 
 
