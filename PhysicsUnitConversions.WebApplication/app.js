@@ -162,7 +162,7 @@ class Yard extends BaseUnit {
 
 class Mile extends BaseUnit {
     constructor() {
-        super("Mile", "Miles", "m", ["mi"], "L", false, 1.0, false);
+        super("Mile", "Miles", "mi", ["m"], "L", false, 1.0, false);
     }
 }
 
@@ -448,8 +448,10 @@ function capitaliseFirstLetter(text) {
 var ratios = [["metres", "inches", 0.0254],
     ["metres", "feet", 0.0254 * 12],
     ["metres", "yards", 0.0254 * 12 * 3],
+    ["metres", "miles", 0.0254 * 12 * 3 * 1760],
     ["feet", "inches", 1 / 12],
-    ["yards", "inches", 1 / (12 * 3)]
+    ["yards", "inches", 1 / (12 * 3)],
+    ["miles", "inches", 1 / (12 * 3 * 1760)]
 
 ];
 
@@ -569,10 +571,9 @@ function getOrderOfMagnitude(n) {
 function writeNumber(n, nsf, sf) {
 
     var e = 0;
+    var o = getOrderOfMagnitude(n);
 
-    if (sf) {
-        var o = getOrderOfMagnitude(n);
-
+    if (sf || o > 7 || o < -7) {
         n = n * Math.pow(10, -o);
         e = o;
     }
@@ -681,6 +682,11 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                     $scope.commonResultsLeftColumn.push(outputValue);
 
                 });
+
+                var i = Math.ceil($scope.commonResultsLeftColumn.length / 2);
+
+                $scope.commonResultsRightColumn = $scope.commonResultsLeftColumn.slice(i);
+                $scope.commonResultsLeftColumn = $scope.commonResultsLeftColumn.slice(0, i);
             }
         }
     });
@@ -689,3 +695,13 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
 
 
+application.directive("compile", ["$compile", function ($compile) {
+    return function (scope, element, attributes) {
+        scope.$watch(function (scope) {
+            return scope.$eval(attributes.compile);
+        }, function (value) {
+            element.html(value);
+            $compile(element.contents())(scope);
+        });
+    };
+}]);

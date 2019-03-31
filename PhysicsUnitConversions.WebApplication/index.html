@@ -22,7 +22,7 @@
     <div class="mainpage" ng-controller="UnitConversionController">
         <h1>Physics Unit Conversions</h1>
         <p>Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
-         <input type="text" class="maininput" ng-model="mainInput" />
+        <input type="text" class="maininput" ng-model="mainInput" />
         <div class="inputinformation">
             <span ng-show="mostLikelyUnit != null">
                 Recognised unit: <span style="font-weight:normal;">{{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}})</span> <span ng-show="mostLikelyUnit.isMetric" class="tag">Metric</span> <span class="tag" title="This unit is a measure of {{mostLikelyUnit.measure.toLowerCase()}}.">{{mostLikelyUnit.measure}}</span><span ng-show="otherUnits != []"><span style="display:inline-block; width: 40px;"></span> other possible units: <span ng-repeat="unit in otherUnits"> {{unit.pluralName}} ({{unit.symbol}})</span></span>
@@ -32,14 +32,17 @@
         <div class="results">
             <div class="results-leftcolumn">
                 <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
-                       <button class="copybutton">Copy Text</button>
-                      <button class="copybutton">Copy LaTeX</button>
-                    <span title="{{outputValue.number.significand}} {{outputValue.unit.pluralName.toLowerCase()}}">{{outputValue.toString()}}</span>
+                    <button class="copybutton">Copy Text</button>
+                    <button class="copybutton">Copy LaTeX</button>
+                    <span class="result-text" title="{{outputValue.number.significand}} {{outputValue.unit.pluralName.toLowerCase()}}" compile="outputValue.toString()"></span>
                 </div>
             </div>
             <div class="results-rightcolumn">
-                <div class="result"></div>
-
+                <div class="result" ng-repeat="outputValue in commonResultsRightColumn">
+                    <span class="result-text" title="{{outputValue.number.significand}} {{outputValue.unit.pluralName.toLowerCase()}}" compile="outputValue.toString()"></span>
+                    <button class="copybutton">Copy LaTeX</button>
+                    <button class="copybutton">Copy Text</button>
+                </div>
             </div>
         </div>
         <h2>Metric Conversions</h2>
