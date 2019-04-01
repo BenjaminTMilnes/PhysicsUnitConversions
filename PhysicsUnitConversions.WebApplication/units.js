@@ -1,23 +1,32 @@
 ﻿
+class Quantity {
+    constructor(dimensions, name, colour) {
+        this.dimensions = dimensions;
+        this.name = name;
+        this.colour = colour;
+    }
+}
+
+class Length extends Quantity { constructor() { super("L", "Length", ""); } }
+class Area extends Quantity { constructor() { super("L^{2}", "Area", ""); } }
+class Volume extends Quantity { constructor() { super("L^{3}", "Volume", ""); } }
+class Time extends Quantity { constructor() { super("T", "Time", ""); } }
+class Speed extends Quantity { constructor() { super("L T^{-1}", "Speed", ""); } }
+class Acceleration extends Quantity { constructor() { super("L T^{-2}", "Acceleration", ""); } }
+class Mass extends Quantity { constructor() { super("M", "Mass", ""); } }
+class Density extends Quantity { constructor() { super("M L^{-3}", "Density", ""); } }
+class Momentum extends Quantity { constructor() { super("M L T^{-1}", "Momentum", ""); } }
+class Force extends Quantity { constructor() { super("M L T^{-2}", "Force", ""); } }
+class Energy extends Quantity { constructor() { super("M L^{2} T^{-2}", "Energy", ""); } }
+class Power extends Quantity { constructor() { super("M L^{2} T^{-3}", "Power", ""); } }
+class ElectricPotentialDifference extends Quantity { constructor() { super("M L^{2} T^{-3} Q^{-1}", "Electric Potential Difference", ""); } }
+class ElectricCurrent extends Quantity { constructor() { super("Q T^{-1}", "Electric Current", ""); } }
+
+var quantities = [new Length(), new Area(), new Volume(), new Time(), new Speed(), new Acceleration(), new Mass(), new Density(), new Momentum(), new Force(), new Energy(), new Power(), new ElectricPotentialDifference(), new ElectricCurrent()];
 
 
 
-var measures = [{ "dimensions": "L", "name": "Length" },
-    { "dimensions": "L^{2}", "name": "Area" },
-    { "dimensions": "L^{3}", "name": "Volume" },
-    { "dimensions": "T", "name": "Time" },
-    { "dimensions": "L T^{-1}", "name": "Speed" },
-    { "dimensions": "L T^{-2}", "name": "Acceleration" },
-    { "dimensions": "M", "name": "Mass" },
-    { "dimensions": "M L^{-3}", "name": "Density" },
-    { "dimensions": "M L T^{-1}", "name": "Momentum" },
-    { "dimensions": "M L T^{-2}", "name": "Force" },
-    { "dimensions": "M L^{2} T^{-2}", "name": "Energy" },
-    { "dimensions": "M L^{2} T^{-3}", "name": "Power" },
-    { "dimensions": "M L^{2} T^{-2} Q^{-1}", "name": "Electric Potential Difference" },
-    { "dimensions": "Q T^{-1}", "name": "Electric Current" },
-    { "dimensions": "", "name": "" },
-];
+
 
 
 var ratios = [["metres", "inches", 0.0254],
@@ -44,102 +53,72 @@ class BaseUnit {
 }
 
 class Metre extends BaseUnit {
-    constructor() {
-        super("Metre", "Metres", "m", [], "L", true, 1.0, true);
-    }
+    constructor() { super("Metre", "Metres", "m", [], "L", true, 1.0, true); }
 }
 
 class Inch extends BaseUnit {
-    constructor() {
-        super("Inch", "Inches", "in", [], "L", false, 0.9, false);
-    }
+    constructor() { super("Inch", "Inches", "in", [], "L", false, 0.9, false); }
 }
 
 class Foot extends BaseUnit {
-    constructor() {
-        super("Foot", "Feet", "ft", [], "L", false, 0.8, false);
-    }
+    constructor() { super("Foot", "Feet", "ft", [], "L", false, 0.8, false); }
 }
 
 class Yard extends BaseUnit {
-    constructor() {
-        super("Yard", "Yards", "yd", [], "L", false, 0.5, false);
-    }
+    constructor() { super("Yard", "Yards", "yd", [], "L", false, 0.5, false); }
 }
 
 class Mile extends BaseUnit {
-    constructor() {
-        super("Mile", "Miles", "mi", ["m"], "L", false, 1.0, false);
-    }
+    constructor() { super("Mile", "Miles", "mi", ["m"], "L", false, 1.0, false); }
 }
 
 class Second extends BaseUnit {
-    constructor() {
-        super("Second", "Seconds", "s", [], "T", true, 1.0, true);
-    }
+    constructor() { super("Second", "Seconds", "s", [], "T", true, 1.0, true); }
 }
 
 class Minute extends BaseUnit {
-    constructor() {
-        super("Minute", "Minutes", "min", ["m", "minute"], "T", false, 1.0, false);
-    }
+    constructor() { super("Minute", "Minutes", "min", ["m", "minute"], "T", false, 1.0, false); }
 }
 
 class Hour extends BaseUnit {
-    constructor() {
-        super("Hour", "Hours", "h", ["hr", "hrs"], "T", false, 1.0, false);
-    }
+    constructor() { super("Hour", "Hours", "h", ["hr", "hrs"], "T", false, 1.0, false); }
 }
 
 class Day extends BaseUnit {
-    constructor() {
-        super("Day", "Days", "d", ["dy", "dys"], "T", false, 0.8, false);
-    }
+    constructor() { super("Day", "Days", "d", ["dy", "dys"], "T", false, 0.8, false); }
 }
 
 class Year extends BaseUnit {
-    constructor() {
-        super("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9, false);
-    }
+    constructor() { super("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9, false); }
 }
 
 class ElectronVolt extends BaseUnit {
-    constructor() {
-        super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0, true);
-    }
+    constructor() { super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0, true); }
 }
 
 class Gram extends BaseUnit {
-    constructor() {
-        super("Gram", "Grams", "g", [], "M", true, 1.0, true);
-    }
+    constructor() { super("Gram", "Grams", "g", [], "M", true, 1.0, true); }
 }
 
 class Joule extends BaseUnit {
-    constructor() {
-        super("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0, true);
-    }
+    constructor() { super("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0, true); }
 }
 
 class Watt extends BaseUnit {
-    constructor() {
-        super("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, 1.0, true);
-    }
+    constructor() { super("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, 1.0, true); }
 }
 
 class Volt extends BaseUnit {
-    constructor() {
-        super("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, 1.0, true);
-    }
+    constructor() { super("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, 1.0, true); }
 }
 
 class Amp extends BaseUnit {
-    constructor() {
-        super("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0, true);
-    }
+    constructor() { super("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0, true); }
 }
 
-class UnitPrefix {
+
+
+class Prefix {
     constructor(name, symbol, multiplierExponent, commonness) {
         this.name = name;
         this.symbol = symbol;
@@ -148,160 +127,60 @@ class UnitPrefix {
     }
 }
 
-class Deca extends UnitPrefix {
-    constructor() {
-        super("deca", "da", 1, 0.6);
-    }
-}
+class Deca extends Prefix { constructor() { super("deca", "da", 1, 0.6); } }
+class Hecto extends Prefix { constructor() { super("hecto", "h", 2, 0.5); } }
+class Kilo extends Prefix { constructor() { super("kilo", "k", 3, 1.0); } }
+class Mega extends Prefix { constructor() { super("mega", "M", 6, 0.9); } }
+class Giga extends Prefix { constructor() { super("giga", "G", 9, 0.8); } }
+class Tera extends Prefix { constructor() { super("tera", "T", 12, 0.7); } }
+class Peta extends Prefix { constructor() { super("peta", "P", 15, 0.3); } }
+class Exa extends Prefix { constructor() { super("exa", "E", 18, 0.2); } }
+class Zetta extends Prefix { constructor() { super("zetta", "Z", 21, 0.1); } }
+class Yotta extends Prefix { constructor() { super("yotta", "Y", 24, 0.1); } }
 
-class Hecto extends UnitPrefix {
-    constructor() {
-        super("hecto", "h", 2, 0.5);
-    }
-}
+class Deci extends Prefix { constructor() { super("deci", "d", -1, 0.8); } }
+class Centi extends Prefix { constructor() { super("centi", "c", -2, 1.0); } }
+class Milli extends Prefix { constructor() { super("milli", "m", -3, 1.0); } }
+class Micro extends Prefix { constructor() { super("micro", "μ", -6, 0.8); } }
+class Nano extends Prefix { constructor() { super("nano", "n", -9, 0.9); } }
+class Pico extends Prefix { constructor() { super("pico", "p", -12, 0.5); } }
+class Femto extends Prefix { constructor() { super("femto", "f", -15, 0.3); } }
+class Atto extends Prefix { constructor() { super("atto", "a", -18, 0.1); } }
+class Zepto extends Prefix { constructor() { super("zepto", "z", -21, 0.1); } }
+class Yocto extends Prefix { constructor() { super("yocto", "y", -24, 0.1); } }
 
-class Kilo extends UnitPrefix {
-    constructor() {
-        super("kilo", "k", 3, 1.0);
-    }
-}
+class NonePrefix extends Prefix { constructor() { super("", "", 0, 0.9); } }
 
-class Mega extends UnitPrefix {
-    constructor() {
-        super("mega", "M", 6, 0.9);
-    }
-}
 
-class Giga extends UnitPrefix {
-    constructor() {
-        super("giga", "G", 9, 0.8);
-    }
-}
-
-class Tera extends UnitPrefix {
-    constructor() {
-        super("tera", "T", 12, 0.7);
-    }
-}
-
-class Peta extends UnitPrefix {
-    constructor() {
-        super("peta", "P", 15, 0.3);
-    }
-}
-
-class Exa extends UnitPrefix {
-    constructor() {
-        super("exa", "E", 18, 0.2);
-    }
-}
-
-class Zetta extends UnitPrefix {
-    constructor() {
-        super("zetta", "Z", 21, 0.1);
-    }
-}
-
-class Yotta extends UnitPrefix {
-    constructor() {
-        super("yotta", "Y", 24, 0.1);
-    }
-}
-
-class Deci extends UnitPrefix {
-    constructor() {
-        super("deci", "d", -1, 0.8);
-    }
-}
-
-class Centi extends UnitPrefix {
-    constructor() {
-        super("centi", "c", -2, 1.0);
-    }
-}
-
-class Milli extends UnitPrefix {
-    constructor() {
-        super("milli", "m", -3, 1.0);
-    }
-}
-
-class Micro extends UnitPrefix {
-    constructor() {
-        super("micro", "μ", -6, 0.8);
-    }
-}
-
-class Nano extends UnitPrefix {
-    constructor() {
-        super("nano", "n", -9, 0.9);
-    }
-}
-
-class Pico extends UnitPrefix {
-    constructor() {
-        super("pico", "p", -12, 0.5);
-    }
-}
-
-class Femto extends UnitPrefix {
-    constructor() {
-        super("femto", "f", -15, 0.3);
-    }
-}
-
-class Atto extends UnitPrefix {
-    constructor() {
-        super("atto", "a", -18, 0.1);
-    }
-}
-
-class Zepto extends UnitPrefix {
-    constructor() {
-        super("zepto", "z", -21, 0.1);
-    }
-}
-
-class Yocto extends UnitPrefix {
-    constructor() {
-        super("yocto", "y", -24, 0.1);
-    }
-}
-
-class NonePrefix extends UnitPrefix {
-    constructor() {
-        super("", "", 0, 0.9);
-    }
-}
 
 class Unit {
-    constructor(unitPrefix, baseUnit) {
-        this.unitPrefix = unitPrefix;
+    constructor(prefix, baseUnit) {
+        this.prefix = prefix;
         this.baseUnit = baseUnit;
     }
 
     get singularName() {
-        return capitaliseFirstLetter(this.unitPrefix.name.toLowerCase() + this.baseUnit.singularName.toLowerCase());
+        return capitaliseFirstLetter(this.prefix.name.toLowerCase() + this.baseUnit.singularName.toLowerCase());
     }
 
     get pluralName() {
-        return capitaliseFirstLetter(this.unitPrefix.name.toLowerCase() + this.baseUnit.pluralName.toLowerCase());
+        return capitaliseFirstLetter(this.prefix.name.toLowerCase() + this.baseUnit.pluralName.toLowerCase());
     }
 
     get symbol() {
-        return this.unitPrefix.symbol + this.baseUnit.symbol;
+        return this.prefix.symbol + this.baseUnit.symbol;
     }
 
     get alternateSymbols() {
-        return this.baseUnit.alternateSymbols.map(s =>  this.unitPrefix.symbol + s);
+        return this.baseUnit.alternateSymbols.map(s =>  this.prefix.symbol + s);
     }
 
     get dimensions() {
         return this.baseUnit.dimensions;
     }
 
-    get measure() {
-        var a = measures.filter(m => m.dimensions == this.dimensions);
+    get quantity() {
+        var a = quantities.filter(q => q.dimensions == this.dimensions);
 
         if (a.length > 0) {
             return a[0].name;
@@ -311,11 +190,11 @@ class Unit {
     }
 
     get hasPrefix() {
-        return (this.unitPrefix != null && this.unitPrefix != undefined && this.unitPrefix.symbol != "");
+        return (this.prefix != null && this.prefix != undefined && this.prefix.symbol != "");
     }
 
     get commonness() {
-        return this.unitPrefix.commonness * this.baseUnit.commonness;
+        return this.prefix.commonness * this.baseUnit.commonness;
     }
 
     get isMetric() {
