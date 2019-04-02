@@ -213,7 +213,7 @@ class OutputValue {
     }
 
     toString() {
-        return writeNumber(this.number, 3, false) + " " + this.unit.symbol;
+        return writeNumber(this.number, 3, true) + " " + this.unit.symbol;
     }
 
     toLaTeX() {
@@ -374,11 +374,10 @@ class UnitConverter {
         return unitMatches;
     }
 
-    getUnitsWithDimensions(dimensions, minimumCommonness) {
+    getAllUnits() {
         var units = [];
 
         this.baseUnits.forEach(u => {
-
             if (u.canHaveSIPrefix) {
                 this.prefixes.forEach(p => {
                     units.push(new Unit(p, u));
@@ -387,12 +386,17 @@ class UnitConverter {
             else {
                 units.push(new Unit(NONE, u));
             }
-
         });
 
-        units = units.filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
-
         return units;
+    }
+
+    getUnitsWithDimensions(dimensions, minimumCommonness) {
+        return this.getAllUnits().filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
+    }
+
+    getMetricUnitsWithDimensions(dimensions) {
+        return this.getAllUnits().filter(u => u.dimensions == dimensions && u.isMetric);
     }
 
     convertValue(value, fromUnit, toUnit) {
