@@ -204,45 +204,70 @@ class Unit {
 
 
 
-
-
-class Number {
-    constructor(significand, exponent) {
-        this.significand = significand;
-        this.exponent = exponent;
-    }
-}
-
 class OutputValue {
-    constructor() {
-        this.number = new Number(0, 0);
-        this.unit = new Unit();
+    constructor(number, unit) {
+        this.number = number;
+        this.unit = unit;
     }
 
     toString() {
-        return writeNumber(this.number.significand, 3, false) + " " + this.unit.symbol;
+        return writeNumber(this.number, 3, false) + " " + this.unit.symbol;
+    }
 
-        if (this.number.exponent == 0) {
-            return this.number.significand.toString() + " " + this.unit.symbol;
-        }
-        else {
-            return this.number.significand.toString() + " × 10<sup>" + this.number.exponent.toString() + "</sup> " + this.unit.symbol;
-        }
+    toLaTeX() {
+
     }
 }
+
+
 
 function capitaliseFirstLetter(text) {
     return text.substr(0, 1).toUpperCase() + text.substr(1);
 }
 
+function getNumberOfSignificantFigures(t, assumeLower) {
 
+    var m = 0; // the number of significant figures that have been seen
+    var p = 0; // the number of decimal points that have been seen
+    var d = 0; // deferred significant digits
 
-function getOrderOfMagnitude(n) {
-    if (n == 0) {
-        return 0;
+    for (var i = 0; i < t.length; i++) {
+        var c = t[i];
+
+        if (isAnyOf("123456789", c)) {
+            m += d;
+            d = 0;
+
+            m++;
+        }
+        else if (c == ".") {
+            m += d;
+            d = 0;
+
+            p++;
+        }
+        else if (c == "0") {
+            if (m > 0) {
+                d++;
+            }
+        }
+        else if (isAnyOf("+-", c)) {
+            continue;
+        }
+        else {
+            break;
+        }
     }
 
-    return Math.floor(Math.log10(Math.abs(n)));
+    if (p > 0) {
+        m += d;
+    }
+
+    return m;
+}
+
+function getOrderOfMagnitude(n) {
+    return ((n == 0) ? Math.floor(Math.log10(Math.abs(n))) : 0);
 }
 
 function writeNumber(n, nsf, sf) {
@@ -305,6 +330,8 @@ function writeNumber(n, nsf, sf) {
 
     return t2;
 }
+
+
 
 class UnitIdentifier {
     constructor() {
