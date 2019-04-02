@@ -1,10 +1,5 @@
 ﻿
-
-
-
 var application = angular.module("PhysicsUnitConversions", []);
-
-
 
 application.directive("compile", ["$compile", function ($compile) {
     return function (scope, element, attributes) {
@@ -23,8 +18,13 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
     $scope.mostLikelyUnit = null;
     $scope.otherUnits = [];
 
+    $scope.identifiedNumberOfSignificantFigures = 0;
+
     $scope.commonResultsLeftColumn = [];
     $scope.commonResultsRightColumn = [];
+
+    $scope.inputParser = new InputParser();
+    $scope.unitConverter = new UnitConverter();
 
     $scope.$watch("mainInput", function (newValue, oldValue) {
 
@@ -32,19 +32,16 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
         $scope.mostLikelyUnit = null;
         $scope.otherUnits = [];
 
+        $scope.identifiedNumberOfSignificantFigures = 0;
+
         $scope.commonResultsLeftColumn = [];
         $scope.commonResultsRightColumn = [];
 
-        var inputParser = new InputParser();
-
-        var inputValue = inputParser.parseInput(newValue);
-
-        $scope.mainOutput = "";
+        var inputValue = $scope.inputParser.parseInput(newValue);
 
         if (inputValue != null) {
-            var unitIdentifier = new UnitIdentifier();
 
-            var unitMatches = unitIdentifier.getMatchingUnits(inputValue.unit.text);
+            var unitMatches = $scope.unitConverter.getMatchingUnits(inputValue.unit.text);
 
             $scope.identifiedUnits = unitMatches;
 
@@ -55,16 +52,12 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
                 var mostLikelyMatch = unitMatches[0];
 
-                var convertibleTo = unitIdentifier.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7);
-
-                console.log(convertibleTo);
+                var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7);
 
                 convertibleTo.forEach(u => {
-
-                    var outputValue = unitIdentifier.convertValue(parseFloat(inputValue.coefficient.text), mostLikelyMatch, u);
+                    var outputValue = $scope.unitConverter.convertValue(parseFloat(inputValue.coefficient.text), mostLikelyMatch, u);
 
                     $scope.commonResultsLeftColumn.push(outputValue);
-
                 });
 
                 var i = Math.ceil($scope.commonResultsLeftColumn.length / 2);
@@ -74,7 +67,4 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
             }
         }
     });
-
 }]);
-
-

@@ -151,6 +151,8 @@ class Yocto extends Prefix { constructor() { super("yocto", "y", -24, 0.1); } }
 
 class NonePrefix extends Prefix { constructor() { super("", "", 0, 0.9); } }
 
+var NONE = new NonePrefix();
+
 
 
 class Unit {
@@ -333,37 +335,32 @@ function writeNumber(n, nsf, sf) {
 
 
 
-class UnitIdentifier {
+class UnitConverter {
     constructor() {
+        this.prefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(), new Pico(), new Femto(), new Atto(), new Zepto(), new Yocto()];
 
         this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt(), new Gram(), new Joule(), new Watt(), new Volt(), new Amp()];
-
-        this.unitPrefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(), new Pico(), new Femto(), new Atto(), new Zepto(), new Yocto()];
     }
 
-    getMatchingUnitPrefixes(symbol) {
-        var unitPrefixMatches = this.unitPrefixes.filter(p => symbol.length > p.symbol.length && symbol.startsWith(p.symbol));
-
-        return unitPrefixMatches;
+    getMatchingPrefixes(symbol) {
+        return this.prefixes.filter(p => symbol.length > p.symbol.length && symbol.startsWith(p.symbol));
     }
 
     getMatchingUnits(symbol) {
-
         var unitMatches = [];
 
         var baseUnitMatches = this.baseUnits.filter(u => u.symbol == symbol || u.singularName.toLowerCase() == symbol.toLowerCase() || u.pluralName.toLowerCase() == symbol.toLowerCase() || u.alternateSymbols.filter(as => as == symbol).length > 0);
 
         baseUnitMatches.forEach(u => {
-            unitMatches.push(new Unit(new NonePrefix(), u));
+            unitMatches.push(new Unit(NONE, u));
         });
 
-        var unitPrefixMatches = this.getMatchingUnitPrefixes(symbol);
+        var prefixMatches = this.getMatchingPrefixes(symbol);
 
-        console.log(unitPrefixMatches);
-
-        unitPrefixMatches.forEach(p => {
+        prefixMatches.forEach(p => {
 
             var s = symbol.substr(p.symbol.length);
+
             baseUnitMatches = this.baseUnits.filter(u => u.canHaveSIPrefix && (u.symbol == s || u.alternateSymbols.filter(as => as == s).length > 0));
 
             baseUnitMatches.forEach(u => {
@@ -374,8 +371,6 @@ class UnitIdentifier {
 
         unitMatches.sort(function (a, b) { return b.commonness - a.commonness });
 
-        console.log(unitMatches);
-
         return unitMatches;
     }
 
@@ -385,12 +380,12 @@ class UnitIdentifier {
         this.baseUnits.forEach(u => {
 
             if (u.canHaveSIPrefix) {
-                this.unitPrefixes.forEach(p => {
+                this.prefixes.forEach(p => {
                     units.push(new Unit(p, u));
                 });
             }
             else {
-                units.push(new Unit(new NonePrefix(), u));
+                units.push(new Unit(NONE, u));
             }
 
         });
@@ -403,11 +398,10 @@ class UnitIdentifier {
     convertValue(value, fromUnit, toUnit) {
 
         if (fromUnit.hasPrefix) {
-            value = value * Math.pow(10, fromUnit.unitPrefix.multiplierExponent);
+            value = value * Math.pow(10, fromUnit.prefix.multiplierExponent);
         }
-
         if (toUnit.hasPrefix) {
-            value = value * Math.pow(10, -toUnit.unitPrefix.multiplierExponent);
+            value = value * Math.pow(10, -toUnit.prefix.multiplierExponent);
         }
 
         var a = false;
@@ -426,14 +420,10 @@ class UnitIdentifier {
             }
         });
 
-        var outputValue = new OutputValue();
-
-        if (a) {
-            outputValue.number.significand = value;
-            outputValue.unit = toUnit;
+        if (!a) {
+            return null;
         }
 
-        return outputValue;
-
+        return new OutputValue(value, toUnit);
     }
 }
