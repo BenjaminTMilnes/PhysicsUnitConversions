@@ -7,18 +7,18 @@ class Quantity {
     }
 }
 
-class Length extends Quantity { constructor() { super("L", "Length", ""); } }
-class Area extends Quantity { constructor() { super("L^{2}", "Area", ""); } }
-class Volume extends Quantity { constructor() { super("L^{3}", "Volume", ""); } }
-class Time extends Quantity { constructor() { super("T", "Time", ""); } }
-class Speed extends Quantity { constructor() { super("L T^{-1}", "Speed", ""); } }
-class Acceleration extends Quantity { constructor() { super("L T^{-2}", "Acceleration", ""); } }
-class Mass extends Quantity { constructor() { super("M", "Mass", ""); } }
-class Density extends Quantity { constructor() { super("M L^{-3}", "Density", ""); } }
-class Momentum extends Quantity { constructor() { super("M L T^{-1}", "Momentum", ""); } }
-class Force extends Quantity { constructor() { super("M L T^{-2}", "Force", ""); } }
-class Energy extends Quantity { constructor() { super("M L^{2} T^{-2}", "Energy", ""); } }
-class Power extends Quantity { constructor() { super("M L^{2} T^{-3}", "Power", ""); } }
+class Length extends Quantity { constructor() { super("L", "Length", "#1096cc"); } }
+class Area extends Quantity { constructor() { super("L^{2}", "Area", "#277f4a"); } }
+class Volume extends Quantity { constructor() { super("L^{3}", "Volume", "#214ab2"); } }
+class Time extends Quantity { constructor() { super("T", "Time", "#09297a"); } }
+class Speed extends Quantity { constructor() { super("L T^{-1}", "Speed", "#cc4210"); } }
+class Acceleration extends Quantity { constructor() { super("L T^{-2}", "Acceleration", "#b20c0c"); } }
+class Mass extends Quantity { constructor() { super("M", "Mass", "#6b300e"); } }
+class Density extends Quantity { constructor() { super("M L^{-3}", "Density", "#404040"); } }
+class Momentum extends Quantity { constructor() { super("M L T^{-1}", "Momentum", "#9e0f29"); } }
+class Force extends Quantity { constructor() { super("M L T^{-2}", "Force", "#890c5f"); } }
+class Energy extends Quantity { constructor() { super("M L^{2} T^{-2}", "Energy", "#7c0c89"); } }
+class Power extends Quantity { constructor() { super("M L^{2} T^{-3}", "Power", "#590c89"); } }
 class ElectricPotentialDifference extends Quantity { constructor() { super("M L^{2} T^{-3} Q^{-1}", "Electric Potential Difference", ""); } }
 class ElectricCurrent extends Quantity { constructor() { super("Q T^{-1}", "Electric Current", ""); } }
 
@@ -185,10 +185,10 @@ class Unit {
         var a = quantities.filter(q => q.dimensions == this.dimensions);
 
         if (a.length > 0) {
-            return a[0].name;
+            return a[0];
         }
 
-        return "";
+        return { name: "" };
     }
 
     get hasPrefix() {
@@ -212,8 +212,19 @@ class OutputValue {
         this.unit = unit;
     }
 
-    toString() {
-        return writeNumber(this.number, 3, true) + " " + this.unit.symbol;
+    toString(nsf) {
+
+        return writeNumberDecimal(this.number, nsf, false) + " " + this.unit.symbol;
+
+        var t = this.number.toPrecision(3);
+        var r = /e([\+\-]\d+)/gi;
+
+        t = t.replace(r, " × 10<sup>$1</sup> ");
+        t = t.replace("+", "");
+
+        t += " " + this.unit.symbol;
+
+        return t;
     }
 
     toLaTeX() {
@@ -269,15 +280,19 @@ function getNumberOfSignificantFigures(t, assumeLower) {
 }
 
 function getOrderOfMagnitude(n) {
-    return ((n == 0) ? Math.floor(Math.log10(Math.abs(n))) : 0);
+    return ((n == 0) ? 0 : Math.floor(Math.log10(Math.abs(n))) );
+}
+
+function getOrderOfMagnitudeDecimal(n) {
+    return ((n == 0) ? 0 : n.abs().log().floor().toFixed(0) );
 }
 
 function writeNumber(n, nsf, sf) {
 
     var e = 0;
     var o = getOrderOfMagnitude(n);
-
-    if (sf || o > 7 || o < -7) {
+    
+    if (sf || o > 5 || o < -5) {
         n = n * Math.pow(10, -o);
         e = o;
     }
@@ -332,6 +347,121 @@ function writeNumber(n, nsf, sf) {
 
     return t2;
 }
+
+function writeNumberDecimal(n, nsf, sf) {
+
+    var e = 0;
+    var o = getOrderOfMagnitudeDecimal(n);
+    
+    if (sf || o > 5 || o < -5) {
+        n = n.times((new Decimal(10)).toPower(-o));
+        e = o;
+    }
+
+    var t1 = n.toFixed(20); // the input number as a string
+    var t2 = ""; // the output string
+    var m = 0; // the number of significant figures that have been seen
+    var p = 0; // the number of decimal points that have been seen
+
+    for (var i = 0; i < t1.length; i++) {
+        var c1 = t1[i];
+
+        if (c1 == "-") {
+            t2 += c1;
+        }
+        if ("123456789".split("").filter(c2 => c2 == c1).length > 0) {
+            m += 1;
+            if (m <= nsf) {
+                t2 += c1;
+            }
+            else if (m > nsf) {
+                if (p == 0) {
+                    t2 += "0";
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        if (c1 == ".") {
+            p += 1;
+            if (m < nsf) {
+                t2 += c1;
+            }
+        }
+        if (c1 == "0") {
+
+            if (m > 0) {
+                m += 1;
+            }
+
+            if (m <= nsf || p == 0) {
+                t2 += c1;
+            }
+        }
+        if (c1 == "e") {
+            break;
+        }
+    }
+
+    if (e != 0) {
+        t2 += " × 10<sup>" + e.toString() + "</sup> ";
+    }
+
+    return t2;
+}
+
+
+
+function runWriteNumberDecimalTests() {
+    assertEqual("100000", writeNumberDecimal(new Decimal("123456"), 1, false));
+    assertEqual("120000", writeNumberDecimal(new Decimal("123456"), 2, false));
+    assertEqual("123000", writeNumberDecimal(new Decimal("123456"), 3, false));
+    assertEqual("123500", writeNumberDecimal(new Decimal("123456"), 4, false));
+    assertEqual("123460", writeNumberDecimal(new Decimal("123456"), 5, false));
+    assertEqual("123456", writeNumberDecimal(new Decimal("123456"), 6, false));
+
+    assertEqual("100000", writeNumberDecimal(new Decimal("101010"), 1, false));
+    assertEqual("100000", writeNumberDecimal(new Decimal("101010"), 2, false));
+    assertEqual("101000", writeNumberDecimal(new Decimal("101010"), 3, false));
+    assertEqual("101000", writeNumberDecimal(new Decimal("101010"), 4, false));
+    assertEqual("101010", writeNumberDecimal(new Decimal("101010"), 5, false));
+    assertEqual("101010", writeNumberDecimal(new Decimal("101010"), 6, false));
+
+    assertEqual("100", writeNumberDecimal(new Decimal("000000123"), 1, false));
+    assertEqual("120", writeNumberDecimal(new Decimal("000000123"), 2, false));
+    assertEqual("123", writeNumberDecimal(new Decimal("000000123"), 3, false));
+
+    assertEqual("0.1", writeNumberDecimal(new Decimal("0.100000"), 1, false));
+    assertEqual("0.10", writeNumberDecimal(new Decimal("0.100000"), 2, false));
+    assertEqual("0.100", writeNumberDecimal(new Decimal("0.100000"), 3, false));
+    assertEqual("0.1000", writeNumberDecimal(new Decimal("0.100000"), 4, false));
+    assertEqual("0.10000", writeNumberDecimal(new Decimal("0.100000"), 5, false));
+    assertEqual("0.100000", writeNumberDecimal(new Decimal("0.100000"), 6, false));
+
+    assertEqual("0.01", writeNumberDecimal(new Decimal("0.0100000"), 1, false));
+    assertEqual("0.010", writeNumberDecimal(new Decimal("0.0100000"), 2, false));
+    assertEqual("0.0100", writeNumberDecimal(new Decimal("0.0100000"), 3, false));
+    assertEqual("0.01000", writeNumberDecimal(new Decimal("0.0100000"), 4, false));
+    assertEqual("0.010000", writeNumberDecimal(new Decimal("0.0100000"), 5, false));
+    assertEqual("0.0100000", writeNumberDecimal(new Decimal("0.0100000"), 6, false));
+
+    assertEqual("0.01", writeNumberDecimal(new Decimal("0.0101010"), 1, false));
+    assertEqual("0.010", writeNumberDecimal(new Decimal("0.0101010"), 2, false));
+    assertEqual("0.0101", writeNumberDecimal(new Decimal("0.0101010"), 3, false));
+    assertEqual("0.01010", writeNumberDecimal(new Decimal("0.0101010"), 4, false));
+    assertEqual("0.010101", writeNumberDecimal(new Decimal("0.0101010"), 5, false));
+    assertEqual("0.0101010", writeNumberDecimal(new Decimal("0.0101010"), 6, false));
+
+    assertEqual("100", writeNumberDecimal(new Decimal("101.101"), 1, false));
+    assertEqual("100", writeNumberDecimal(new Decimal("101.101"), 2, false));
+    assertEqual("101", writeNumberDecimal(new Decimal("101.101"), 3, false));
+    assertEqual("101.1", writeNumberDecimal(new Decimal("101.101"), 4, false));
+    assertEqual("101.10", writeNumberDecimal(new Decimal("101.101"), 5, false));
+    assertEqual("101.101", writeNumberDecimal(new Decimal("101.101"), 6, false));
+}
+
+runWriteNumberDecimalTests();
 
 
 
@@ -402,21 +532,21 @@ class UnitConverter {
     convertValue(value, fromUnit, toUnit) {
 
         if (fromUnit.hasPrefix) {
-            value = value * Math.pow(10, fromUnit.prefix.multiplierExponent);
+            value = value.times((new Decimal(10)).toPower(fromUnit.prefix.multiplierExponent));
         }
         if (toUnit.hasPrefix) {
-            value = value * Math.pow(10, -toUnit.prefix.multiplierExponent);
+            value = value.times((new Decimal(10)).toPower(-toUnit.prefix.multiplierExponent));
         }
 
         var a = false;
 
         ratios.forEach(r => {
             if (fromUnit.baseUnit.pluralName.toLowerCase() == r[0] && toUnit.baseUnit.pluralName.toLowerCase() == r[1]) {
-                value = value / r[2];
+                value = value.dividedBy(r[2]);
                 a = true;
             }
             if (fromUnit.baseUnit.pluralName.toLowerCase() == r[1] && toUnit.baseUnit.pluralName.toLowerCase() == r[0]) {
-                value = value * r[2];
+                value = value.times(r[2]);
                 a = true;
             }
             if (fromUnit.baseUnit.pluralName.toLowerCase() == toUnit.baseUnit.pluralName.toLowerCase()) {

@@ -8,6 +8,14 @@ class InputCoefficient {
     constructor(text) {
         this.text = text;
     }
+
+    asFloat() {
+        return parseFloat(this.text);
+    }
+
+    asDecimal() {
+        return new Decimal(this.text);
+    }
 }
 
 class InputUnit {

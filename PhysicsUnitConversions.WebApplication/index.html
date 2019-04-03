@@ -14,6 +14,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
 
+    <script type="text/javascript" src="decimal.min.js"></script>
     <script type="text/javascript" src="test_framework.js"></script>
     <script type="text/javascript" src="input_parsing.js"></script>
     <script type="text/javascript" src="units.js"></script>
@@ -32,7 +33,7 @@
                     Recognised unit:
                     <span style="font-weight:normal;">{{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}})</span>
                     <span ng-show="mostLikelyUnit.isMetric" class="tag">Metric</span>
-                    <span class="tag" title="This unit is a measure of {{mostLikelyUnit.quantity.toLowerCase()}}.">{{mostLikelyUnit.quantity}}</span>
+                    <span class="tag" style="background-color: {{mostLikelyUnit.quantity.colour}}" title="This unit is a measure of {{mostLikelyUnit.quantity.name.toLowerCase()}}.">{{mostLikelyUnit.quantity.name}}</span>
                     <span ng-show="otherUnits.length > 0">
                         <span style="display:inline-block; width: 40px;"></span>
                         other possible units:
@@ -42,6 +43,9 @@
                 <div class="inputinformation-significantfigures">
                     Number of significant figures:
                     <span style="font-weight:normal;">{{identifiedNumberOfSignificantFigures}}</span>
+                    <span style="display:inline-block; width: 40px;"></span>
+              round conversions to same number of significant figures as the input value:
+            <input type="checkbox" ng-model="roundOutput" />
                 </div>
             </div>
         </div>
@@ -51,12 +55,12 @@
                 <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
                     <button class="copybutton">Copy Text</button>
                     <button class="copybutton">Copy LaTeX</button>
-                    <span class="result-text" compile="outputValue.toString()"></span>
+                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
                 </div>
             </div>
             <div class="results-rightcolumn">
                 <div class="result" ng-repeat="outputValue in commonResultsRightColumn">
-                    <span class="result-text" compile="outputValue.toString()"></span>
+                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
                     <button class="copybutton">Copy LaTeX</button>
                     <button class="copybutton">Copy Text</button>
                 </div>
@@ -68,12 +72,12 @@
                 <div class="result" ng-repeat="outputValue in metricResultsLeftColumn">
                     <button class="copybutton">Copy Text</button>
                     <button class="copybutton">Copy LaTeX</button>
-                    <span class="result-text" compile="outputValue.toString()"></span>
+                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
                 </div>
             </div>
             <div class="results-rightcolumn">
                 <div class="result" ng-repeat="outputValue in metricResultsRightColumn">
-                    <span class="result-text" compile="outputValue.toString()"></span>
+                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
                     <button class="copybutton">Copy LaTeX</button>
                     <button class="copybutton">Copy Text</button>
                 </div>

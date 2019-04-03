@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="colour-codes.txt" />
+    <Content Include="decimal.min.js" />
     <Content Include="input_parsing.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
