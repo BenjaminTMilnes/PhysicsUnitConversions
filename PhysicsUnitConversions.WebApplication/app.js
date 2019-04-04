@@ -26,6 +26,9 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
     $scope.metricResultsLeftColumn = [];
     $scope.metricResultsRightColumn = [];
 
+    $scope.nonMetricResultsLeftColumn = [];
+    $scope.nonMetricResultsRightColumn = [];
+
     $scope.inputParser = new InputParser();
     $scope.unitConverter = new UnitConverter();
 
@@ -42,6 +45,9 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
         $scope.metricResultsLeftColumn = [];
         $scope.metricResultsRightColumn = [];
+
+        $scope.nonMetricResultsLeftColumn = [];
+        $scope.nonMetricResultsRightColumn = [];
 
         var inputValue = $scope.inputParser.parseInput(newValue);
 
@@ -60,7 +66,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
                 var mostLikelyMatch = unitMatches[0];
 
-                var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7 );
+                var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7 ).filter(u => u.pluralName != mostLikelyMatch.pluralName);
                 
                 convertibleTo.forEach(u => {
                     var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
@@ -77,7 +83,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
 
 
-                var convertibleToMetric = $scope.unitConverter.getMetricUnitsWithDimensions(mostLikelyMatch.dimensions);
+                var convertibleToMetric = $scope.unitConverter.getMetricUnitsWithDimensions(mostLikelyMatch.dimensions, 0.3).filter(u => u.pluralName != mostLikelyMatch.pluralName);
 
                 convertibleToMetric.forEach(u => {
                     var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
@@ -91,7 +97,26 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
                 $scope.metricResultsRightColumn = $scope.metricResultsLeftColumn.slice(j);
                 $scope.metricResultsLeftColumn = $scope.metricResultsLeftColumn.slice(0, j);
+
+
+
+                var convertibleToNonMetric = $scope.unitConverter.getNonMetricUnitsWithDimensions(mostLikelyMatch.dimensions, 0.3).filter(u => u.pluralName != mostLikelyMatch.pluralName);
+
+                convertibleToNonMetric.forEach(u => {
+                    var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
+
+                    if (outputValue != null) {
+                        $scope.nonMetricResultsLeftColumn.push(outputValue);
+                    }
+                });
+
+                var j = Math.ceil($scope.nonMetricResultsLeftColumn.length / 2);
+
+                $scope.nonMetricResultsRightColumn = $scope.nonMetricResultsLeftColumn.slice(j);
+                $scope.nonMetricResultsLeftColumn = $scope.nonMetricResultsLeftColumn.slice(0, j);
             }
         }
     });
+
+    new ClipboardJS(".copybutton");
 }]);

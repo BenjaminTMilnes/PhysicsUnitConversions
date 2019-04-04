@@ -37,12 +37,12 @@
                         <span class="tag" style="background-color: {{mostLikelyUnit.quantity.colour}}" title="This unit is a measure of {{mostLikelyUnit.quantity.name.toLowerCase()}}.">{{mostLikelyUnit.quantity.name}}</span>
                     </div>
                 </div>
-                <div class="table-row" ng-style="( otherUnits.length == 0) ? {'visibility': 'hidden'}:{};">
+                <div class="table-row" ng-style="( otherUnits.length == 0) ? {'display': 'none'}:{};">
                     <div class="table-row-label">Other possible units:</div>
                     <div class="table-row-value">
                         <span ng-repeat="unit in otherUnits" style="font-weight:normal;">
                             <span ng-show="$index > 0">, </span>
-                            {{unit.pluralName}} ({{unit.symbol}})
+                            {{unit.pluralName.toLowerCase()}} ({{unit.symbol}})
                         </span>
                     </div>
                 </div>
@@ -62,16 +62,16 @@
         <div class="results">
             <div class="results-leftcolumn">
                 <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
-                    <button class="copybutton">Copy Text</button>
-                    <button class="copybutton">Copy LaTeX</button>
+                    <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.identifiedNumberOfSignificantFigures)}}">Copy Text</button>
+                    <button class="copybutton" data-clipboard-text="{{outputValue.toLaTeX($parent.identifiedNumberOfSignificantFigures)}}">Copy LaTeX</button>
                     <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
                 </div>
             </div>
             <div class="results-rightcolumn">
                 <div class="result" ng-repeat="outputValue in commonResultsRightColumn">
                     <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
-                    <button class="copybutton">Copy LaTeX</button>
-                    <button class="copybutton">Copy Text</button>
+                    <button class="copybutton" data-clipboard-text="{{outputValue.toLaTeX($parent.identifiedNumberOfSignificantFigures)}}">Copy LaTeX</button>
+                    <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.identifiedNumberOfSignificantFigures)}}">Copy Text</button>
                 </div>
             </div>
         </div>
@@ -86,6 +86,23 @@
             </div>
             <div class="results-rightcolumn">
                 <div class="result" ng-repeat="outputValue in metricResultsRightColumn">
+                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
+                    <button class="copybutton">Copy LaTeX</button>
+                    <button class="copybutton">Copy Text</button>
+                </div>
+            </div>
+        </div>
+        <h2>Non-metric Conversions</h2>
+        <div class="results">
+            <div class="results-leftcolumn">
+                <div class="result" ng-repeat="outputValue in nonMetricResultsLeftColumn">
+                    <button class="copybutton">Copy Text</button>
+                    <button class="copybutton">Copy LaTeX</button>
+                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
+                </div>
+            </div>
+            <div class="results-rightcolumn">
+                <div class="result" ng-repeat="outputValue in nonMetricResultsRightColumn">
                     <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
                     <button class="copybutton">Copy LaTeX</button>
                     <button class="copybutton">Copy Text</button>

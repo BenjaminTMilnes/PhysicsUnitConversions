@@ -84,9 +84,8 @@ p {
 
 .table {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-direction: column;
+      align-items:center;
 }
 
 .table-row {
@@ -99,11 +98,14 @@ p {
 }
 
 .table-row-label {
-    width: 170px;
+    width: 350px;
+      margin-right:20px;
+        text-align:right;
+          
 }
 
 .table-row-value {
-    width: 270px;
+    width: 350px;
 }
 
 .tag {

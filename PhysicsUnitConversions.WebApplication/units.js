@@ -100,11 +100,15 @@ class ElectronVolt extends BaseUnit {
 }
 
 class FootPoundForce extends BaseUnit {
-    constructor() { super("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, 1.0, false); }
+    constructor() { super("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, 0.1, false); }
 }
 
 class BritishThermalUnitISO extends BaseUnit {
-    constructor() { super("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, 1.0, false); }
+    constructor() { super("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, 0.1, false); }
+}
+
+class  WattHour extends BaseUnit {
+    constructor() { super( "Watt-hour", "Watt-hours", "Wh", [  ""], "M L^{2} T^{-2}", true, 0.5, true); }
 }
 
 class Watt extends BaseUnit {
@@ -130,7 +134,8 @@ var ratios = [[new Metre(), new Inch(), 25.4 / 1000],
     [new Yard(), new Inch(), 1 / (12 * 3)],
     [new Mile(), new Inch(), 1 / (12 * 3 * 1760)],
       [new FootPoundForce(), new Joule(), 1.3558179483314004],
-      [new BritishThermalUnitISO(), new Joule(), 1055.06]
+      [new BritishThermalUnitISO(), new Joule(), 1055.06],
+      [new WattHour(), new Joule(), 1/3600]
 ];
 
 
@@ -230,22 +235,11 @@ class OutputValue {
     }
 
     toString(nsf) {
-
-        return writeNumberDecimal(this.number, nsf, false) + " " + this.unit.symbol;
-
-        var t = this.number.toPrecision(3);
-        var r = /e([\+\-]\d+)/gi;
-
-        t = t.replace(r, " × 10<sup>$1</sup> ");
-        t = t.replace("+", "");
-
-        t += " " + this.unit.symbol;
-
-        return t;
+        return writeNumberDecimal(this.number, nsf, false, false) + " " + this.unit.symbol;
     }
 
-    toLaTeX() {
-
+    toLaTeX(nsf) {
+        return writeNumberDecimal(this.number, nsf, false, true) + " \\,\\mathrm{" + this.unit.symbol + "}";
     }
 }
 
@@ -365,7 +359,7 @@ function writeNumber(n, nsf, sf) {
     return t2;
 }
 
-function writeNumberDecimal(n, nsf, sf) {
+function writeNumberDecimal(n, nsf, sf, asLaTeX) {
 
     var e = 0;
     var o = getOrderOfMagnitudeDecimal(n);
@@ -422,7 +416,12 @@ function writeNumberDecimal(n, nsf, sf) {
     }
 
     if (e != 0) {
-        t2 += " × 10<sup>" + e.toString() + "</sup> ";
+        if (asLaTeX) {
+            t2 += " \\times 10^{" + e.toString() + "} ";
+        }
+        else {
+            t2 += " × 10<sup>" + e.toString() + "</sup> ";
+        }
     }
 
     return t2;
@@ -486,7 +485,7 @@ class UnitConverter {
     constructor() {
         this.prefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(), new Pico(), new Femto(), new Atto(), new Zepto(), new Yocto()];
 
-        this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt(), new Gram(), new Joule(), new FootPoundForce(), new BritishThermalUnitISO(), new Watt(), new Volt(), new Amp()];
+        this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt(), new Gram(), new Joule(), new FootPoundForce(), new BritishThermalUnitISO(), new WattHour(), new Watt(), new Volt(), new Amp()];
     }
 
     getMatchingPrefixes(symbol) {
@@ -541,8 +540,12 @@ class UnitConverter {
         return this.getAllUnits().filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
     }
 
-    getMetricUnitsWithDimensions(dimensions) {
-        return this.getAllUnits().filter(u => u.dimensions == dimensions && u.isMetric);
+    getMetricUnitsWithDimensions(dimensions, minimumCommonness) {
+        return this.getAllUnits().filter(u => u.dimensions == dimensions && u.isMetric && u.commonness >= minimumCommonness);
+    }
+
+    getNonMetricUnitsWithDimensions(dimensions, minimumCommonness) {
+        return this.getAllUnits().filter(u => u.dimensions == dimensions && !u.isMetric && u.commonness >= minimumCommonness);
     }
 
     convertValue(value, fromUnit, toUnit) {
