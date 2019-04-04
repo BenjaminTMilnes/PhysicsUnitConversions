@@ -60,8 +60,8 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
                 var mostLikelyMatch = unitMatches[0];
 
-                var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7);
-
+                var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7 );
+                
                 convertibleTo.forEach(u => {
                     var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
 
@@ -80,7 +80,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                 var convertibleToMetric = $scope.unitConverter.getMetricUnitsWithDimensions(mostLikelyMatch.dimensions);
 
                 convertibleToMetric.forEach(u => {
-                    var outputValue = $scope.unitConverter.convertValue(parseFloat(inputValue.coefficient.text), mostLikelyMatch, u);
+                    var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
 
                     if (outputValue != null) {
                         $scope.metricResultsLeftColumn.push(outputValue);

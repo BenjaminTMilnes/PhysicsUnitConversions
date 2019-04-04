@@ -26,19 +26,6 @@ var quantities = [new Length(), new Area(), new Volume(), new Time(), new Speed(
 
 
 
-
-
-
-var ratios = [["metres", "inches", 0.0254],
-    ["metres", "feet", 0.0254 * 12],
-    ["metres", "yards", 0.0254 * 12 * 3],
-    ["metres", "miles", 0.0254 * 12 * 3 * 1760],
-    ["feet", "inches", 1 / 12],
-    ["yards", "inches", 1 / (12 * 3)],
-    ["miles", "inches", 1 / (12 * 3 * 1760)]
-
-];
-
 class BaseUnit {
     constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, commonness, isMetric) {
         this.singularName = singularName;
@@ -49,6 +36,14 @@ class BaseUnit {
         this.canHaveSIPrefix = canHaveSIPrefix;
         this.commonness = commonness;
         this.isMetric = isMetric;
+    }
+
+    equals(unit) {
+        if (unit == null || unit == undefined) {
+            return false;
+        }
+
+        return unit.pluralName == this.pluralName;
     }
 }
 
@@ -92,16 +87,24 @@ class Year extends BaseUnit {
     constructor() { super("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9, false); }
 }
 
-class ElectronVolt extends BaseUnit {
-    constructor() { super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0, true); }
-}
-
 class Gram extends BaseUnit {
     constructor() { super("Gram", "Grams", "g", [], "M", true, 1.0, true); }
 }
 
 class Joule extends BaseUnit {
     constructor() { super("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0, true); }
+}
+
+class ElectronVolt extends BaseUnit {
+    constructor() { super("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0, true); }
+}
+
+class FootPoundForce extends BaseUnit {
+    constructor() { super("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, 1.0, false); }
+}
+
+class BritishThermalUnitISO extends BaseUnit {
+    constructor() { super("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, 1.0, false); }
 }
 
 class Watt extends BaseUnit {
@@ -115,6 +118,20 @@ class Volt extends BaseUnit {
 class Amp extends BaseUnit {
     constructor() { super("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0, true); }
 }
+
+
+
+
+var ratios = [[new Metre(), new Inch(), 25.4 / 1000],
+    [new Metre(), new Foot(), (25.4 / 1000) * 12],
+    [new Metre(), new Yard(), (25.4 / 1000) * 12 * 3],
+    [new Metre(), new Mile(), (25.4 / 1000) * 12 * 3 * 1760],
+    [new Foot(), new Inch(), 1 / 12],
+    [new Yard(), new Inch(), 1 / (12 * 3)],
+    [new Mile(), new Inch(), 1 / (12 * 3 * 1760)],
+      [new FootPoundForce(), new Joule(), 1.3558179483314004],
+      [new BritishThermalUnitISO(), new Joule(), 1055.06]
+];
 
 
 
@@ -280,18 +297,18 @@ function getNumberOfSignificantFigures(t, assumeLower) {
 }
 
 function getOrderOfMagnitude(n) {
-    return ((n == 0) ? 0 : Math.floor(Math.log10(Math.abs(n))) );
+    return ((n == 0) ? 0 : Math.floor(Math.log10(Math.abs(n))));
 }
 
 function getOrderOfMagnitudeDecimal(n) {
-    return ((n == 0) ? 0 : n.abs().log().floor().toFixed(0) );
+    return ((n == 0) ? 0 : n.abs().log().floor().toFixed(0));
 }
 
 function writeNumber(n, nsf, sf) {
 
     var e = 0;
     var o = getOrderOfMagnitude(n);
-    
+
     if (sf || o > 5 || o < -5) {
         n = n * Math.pow(10, -o);
         e = o;
@@ -352,7 +369,7 @@ function writeNumberDecimal(n, nsf, sf) {
 
     var e = 0;
     var o = getOrderOfMagnitudeDecimal(n);
-    
+
     if (sf || o > 5 || o < -5) {
         n = n.times((new Decimal(10)).toPower(-o));
         e = o;
@@ -469,7 +486,7 @@ class UnitConverter {
     constructor() {
         this.prefixes = [new Deca(), new Hecto(), new Kilo(), new Mega(), new Giga(), new Tera(), new Peta(), new Exa(), new Zetta(), new Yotta(), new Deci(), new Centi(), new Milli(), new Micro(), new Nano(), new Pico(), new Femto(), new Atto(), new Zepto(), new Yocto()];
 
-        this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt(), new Gram(), new Joule(), new Watt(), new Volt(), new Amp()];
+        this.baseUnits = [new Metre(), new Inch(), new Foot(), new Yard(), new Mile(), new Second(), new Minute(), new Hour(), new Day(), new Year(), new ElectronVolt(), new Gram(), new Joule(), new FootPoundForce(), new BritishThermalUnitISO(), new Watt(), new Volt(), new Amp()];
     }
 
     getMatchingPrefixes(symbol) {
@@ -508,13 +525,12 @@ class UnitConverter {
         var units = [];
 
         this.baseUnits.forEach(u => {
+            units.push(new Unit(NONE, u));
+
             if (u.canHaveSIPrefix) {
                 this.prefixes.forEach(p => {
                     units.push(new Unit(p, u));
                 });
-            }
-            else {
-                units.push(new Unit(NONE, u));
             }
         });
 
@@ -539,17 +555,17 @@ class UnitConverter {
         }
 
         var a = false;
-
+        
         ratios.forEach(r => {
-            if (fromUnit.baseUnit.pluralName.toLowerCase() == r[0] && toUnit.baseUnit.pluralName.toLowerCase() == r[1]) {
+            if (fromUnit.baseUnit.equals(r[0]) && toUnit.baseUnit.equals(r[1])) {
                 value = value.dividedBy(r[2]);
                 a = true;
             }
-            if (fromUnit.baseUnit.pluralName.toLowerCase() == r[1] && toUnit.baseUnit.pluralName.toLowerCase() == r[0]) {
+            if (fromUnit.baseUnit.equals(r[1]) && toUnit.baseUnit.equals(r[0])) {
                 value = value.times(r[2]);
                 a = true;
             }
-            if (fromUnit.baseUnit.pluralName.toLowerCase() == toUnit.baseUnit.pluralName.toLowerCase()) {
+            if (fromUnit.baseUnit.equals(toUnit.baseUnit)) {
                 a = true;
             }
         });
