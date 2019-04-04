@@ -1,1 +1,2 @@
 ﻿﻿main blue: 105ecc
+main red: cc1051

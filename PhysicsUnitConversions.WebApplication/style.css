@@ -67,7 +67,7 @@ p {
     border-radius: 2px;
     width: 70%;
     box-sizing: border-box;
-    margin: 20px auto 20px auto;
+    margin: 20px auto;
     display: block;
     outline: none;
 }
@@ -76,11 +76,34 @@ p {
         border: 1px solid #105ecc;
     }
 
+
 .inputinformation {
     font-size: 14px;
-    text-align: center;
-    margin: 20px 0px 20px 0px;
-    min-height: 44px;
+    margin: 20px auto;
+}
+
+.table {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.table-row {
+    display: flex;
+    flex-direction: row;
+    padding: 4px 10px;
+}
+
+.table-row-label, .table-row-value {
+}
+
+.table-row-label {
+    width: 170px;
+}
+
+.table-row-value {
+    width: 270px;
 }
 
 .tag {
@@ -93,52 +116,52 @@ p {
     border-radius: 2px;
 }
 
-.results{
-     display:flex;
-      flex-direction:row;
+    .tag-metric{
+         background-color: #cc1051;
+    }
+
+.results {
+    display: flex;
+    flex-direction: row;
 }
 
-.results-leftcolumn {
-         flex-grow:1;
-     display:flex;
-      flex-direction: column;
-
+.results-leftcolumn ,.results-rightcolumn {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
 }
 
-.results-leftcolumn .result{
-     display:flex;
-      flex-direction:row;
-    justify-content:flex-start;
-      align-items:  baseline;
+    .results-leftcolumn .result {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: baseline;
+    }
 
-}
+    .results-rightcolumn .result {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        align-items: baseline;
+    }
 
-.results-rightcolumn{
-         flex-grow:1;
-     display:flex;
-      flex-direction: column;
-
-}
-
-.results-rightcolumn .result{
-     display:flex;
-      flex-direction:row;
-        justify-content:flex-end;
-      align-items:  baseline;
-
-}
-
-.result{
-     background-color:#F8F8F8;
-       padding:7px;
-       margin:4px;
-        border-radius:2px;
-          font-weight:normal;
+.result {
+    background-color: #F8F8F8;
+    padding: 7px;
+    margin: 1px;
+    border-radius: 2px;
+    font-weight: normal;
     font-size: 17px;
 }
 
-.result-text{
-     margin:0px 20px;
+
+   .result:hover{
+    background-color: #F4F4F4;
+
+   }
+
+.result-text {
+    margin: 0px 20px;
 }
 
 
