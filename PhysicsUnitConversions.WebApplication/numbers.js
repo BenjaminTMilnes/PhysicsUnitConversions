@@ -1,7 +1,5 @@
 ﻿
 
-
-
 function getNumberOfSignificantFigures(t, assumeLower) {
 
     var m = 0; // the number of significant figures that have been seen
@@ -230,5 +228,44 @@ function runWriteNumberDecimalTests() {
     assertEqual("101.101", writeNumberDecimal(new Decimal("101.101"), 6, false));
 }
 
-runWriteNumberDecimalTests();
+function runGetNumberOfSignificantFiguresTests() {
+
+    assertEqual(1, getNumberOfSignificantFigures("1", true));
+    assertEqual(2, getNumberOfSignificantFigures("12", true));
+    assertEqual(3, getNumberOfSignificantFigures("123", true));
+    assertEqual(3, getNumberOfSignificantFigures("1230", true));
+    assertEqual(3, getNumberOfSignificantFigures("101", true));
+    assertEqual(3, getNumberOfSignificantFigures("1010", true));
+    assertEqual(5, getNumberOfSignificantFigures("10101", true));
+    assertEqual(1, getNumberOfSignificantFigures("01", true));
+    assertEqual(1, getNumberOfSignificantFigures("001", true));
+    assertEqual(1, getNumberOfSignificantFigures("0001", true));
+    assertEqual(2, getNumberOfSignificantFigures("011", true));
+    assertEqual(2, getNumberOfSignificantFigures("0011", true));
+    assertEqual(2, getNumberOfSignificantFigures("00011", true));
+    assertEqual(3, getNumberOfSignificantFigures("0101", true));
+    assertEqual(3, getNumberOfSignificantFigures("00101", true));
+    assertEqual(3, getNumberOfSignificantFigures("000101", true));
+    assertEqual(4, getNumberOfSignificantFigures("1001", true));
+    assertEqual(5, getNumberOfSignificantFigures("10001", true));
+
+    assertEqual(2, getNumberOfSignificantFigures("1.0", true));
+    assertEqual(3, getNumberOfSignificantFigures("1.00", true));
+    assertEqual(4, getNumberOfSignificantFigures("1.000", true));
+    assertEqual(6, getNumberOfSignificantFigures("1.00000", true));
+    assertEqual(3, getNumberOfSignificantFigures("1.01", true));
+    assertEqual(4, getNumberOfSignificantFigures("1.010", true));
+    assertEqual(5, getNumberOfSignificantFigures("1.0101", true));
+    assertEqual(3, getNumberOfSignificantFigures("1.10", true));
+    assertEqual(4, getNumberOfSignificantFigures("1.101", true));
+    assertEqual(4, getNumberOfSignificantFigures("10.01", true));
+    assertEqual(5, getNumberOfSignificantFigures("10.010", true));
+    assertEqual(8, getNumberOfSignificantFigures("00100.00100", true));
+
+}
+
+if (RUN_TESTS) {
+    runWriteNumberDecimalTests();
+    runGetNumberOfSignificantFiguresTests();
+}
 

@@ -14,3 +14,5 @@ function assertEqual(expectedValue, actualValue) {
         console.log("Test passed.");
     }
 }
+
+const RUN_TESTS = true;

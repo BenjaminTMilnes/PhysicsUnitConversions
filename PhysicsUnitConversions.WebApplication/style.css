@@ -20,7 +20,7 @@ h1 {
 
 h2 {
     font-size: 17px;
-        margin: 20px 0px;
+    margin: 20px 0px;
     text-align: center;
 }
 
@@ -28,7 +28,7 @@ p {
     font-size: 14px;
     text-align: center;
     width: 70%;
-       margin: 20px auto;
+    margin: 20px auto;
 }
 
 @media (min-width:400px) {
@@ -39,7 +39,7 @@ p {
 
     h2 {
         font-size: 22px;
-    margin: 70px 0px 20px 0px;
+        margin: 70px 0px 20px 0px;
     }
 }
 
@@ -87,7 +87,7 @@ p {
 .table {
     display: flex;
     flex-direction: column;
-      align-items:center;
+    align-items: center;
 }
 
 .table-row {
@@ -97,13 +97,12 @@ p {
 }
 
 .table-row-label, .table-row-value {
-        width: 350px;
+    width: 350px;
 }
 
 .table-row-label {
-      margin-right:20px;
-        text-align:right;
-          
+    margin-right: 20px;
+    text-align: right;
 }
 
 .table-row-value {
@@ -119,16 +118,16 @@ p {
     border-radius: 2px;
 }
 
-    .tag-metric{
-         background-color: #cc1051;
-    }
+.tag-metric {
+    background-color: #cc1051;
+}
 
 .results {
     display: flex;
     flex-direction: row;
 }
 
-.results-leftcolumn ,.results-rightcolumn {
+.results-leftcolumn, .results-rightcolumn {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -158,10 +157,9 @@ p {
 }
 
 
-   .result:hover{
-    background-color: #F4F4F4;
-
-   }
+    .result:hover {
+        background-color: #F4F4F4;
+    }
 
 .result-text {
     margin: 0px 20px;
