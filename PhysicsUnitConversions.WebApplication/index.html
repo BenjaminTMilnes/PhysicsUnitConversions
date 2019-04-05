@@ -17,6 +17,7 @@
     <script type="text/javascript" src="decimal.min.js"></script>
     <script type="text/javascript" src="test_framework.js"></script>
     <script type="text/javascript" src="input_parsing.js"></script>
+    <script type="text/javascript" src="numbers.js"></script>
     <script type="text/javascript" src="units.js"></script>
     <script type="text/javascript" src="app.js"></script>
 
@@ -58,8 +59,8 @@
                 </div>
             </div>
         </div>
-        <h2>Common Conversions</h2>
-        <div class="results">
+        <h2 ng-show="commonResultsLeftColumn.length > 0">Common Conversions</h2>
+        <div class="results" ng-show="commonResultsLeftColumn.length > 0">
             <div class="results-leftcolumn">
                 <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
                     <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.identifiedNumberOfSignificantFigures)}}">Copy Text</button>
@@ -75,8 +76,8 @@
                 </div>
             </div>
         </div>
-        <h2>Metric Conversions</h2>
-        <div class="results">
+        <h2 ng-show="metricResultsLeftColumn.length > 0">Metric Conversions</h2>
+        <div class="results" ng-show="commonResultsLeftColumn.length > 0">
             <div class="results-leftcolumn">
                 <div class="result" ng-repeat="outputValue in metricResultsLeftColumn">
                     <button class="copybutton">Copy Text</button>
@@ -92,8 +93,8 @@
                 </div>
             </div>
         </div>
-        <h2>Non-metric Conversions</h2>
-        <div class="results">
+        <h2 ng-show="nonMetricResultsLeftColumn.length > 0">Non-metric Conversions</h2>
+        <div class="results" ng-show="commonResultsLeftColumn.length > 0">
             <div class="results-leftcolumn">
                 <div class="result" ng-repeat="outputValue in nonMetricResultsLeftColumn">
                     <button class="copybutton">Copy Text</button>

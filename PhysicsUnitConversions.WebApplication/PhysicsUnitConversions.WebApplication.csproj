@@ -69,6 +69,7 @@
     <Content Include="colour-codes.txt" />
     <Content Include="decimal.min.js" />
     <Content Include="input_parsing.js" />
+    <Content Include="numbers.js" />
     <Content Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

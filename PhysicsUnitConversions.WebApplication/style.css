@@ -20,14 +20,15 @@ h1 {
 
 h2 {
     font-size: 17px;
-    margin: 20px 0px;
+        margin: 20px 0px;
+    text-align: center;
 }
 
 p {
     font-size: 14px;
-    width: 60%;
     text-align: center;
-    margin: 0px auto;
+    width: 70%;
+       margin: 20px auto;
 }
 
 @media (min-width:400px) {
@@ -38,7 +39,7 @@ p {
 
     h2 {
         font-size: 22px;
-        margin: 20px 0px;
+    margin: 70px 0px 20px 0px;
     }
 }
 
@@ -80,6 +81,7 @@ p {
 .inputinformation {
     font-size: 14px;
     margin: 20px auto;
+    width: 70%;
 }
 
 .table {
@@ -95,17 +97,16 @@ p {
 }
 
 .table-row-label, .table-row-value {
+        width: 350px;
 }
 
 .table-row-label {
-    width: 350px;
       margin-right:20px;
         text-align:right;
           
 }
 
 .table-row-value {
-    width: 350px;
 }
 
 .tag {
