@@ -48,26 +48,34 @@ class BaseUnit {
 }
 
 const Metre = new BaseUnit("Metre", "Metres", "m", [], "L", true, 1.0, true);
+const Angstrom = new BaseUnit("Ångström", "Ångströms", "Å", [], "L", false, 0.7, true);
 const Inch = new BaseUnit("Inch", "Inches", "in", [], "L", false, 0.9, false);
 const Foot = new BaseUnit("Foot", "Feet", "ft", [], "L", false, 0.8, false);
 const Yard = new BaseUnit("Yard", "Yards", "yd", [], "L", false, 0.5, false);
 const Mile = new BaseUnit("Mile", "Miles", "mi", ["m"], "L", false, 1.0, false);
+const League = new BaseUnit("League",  "Leagues", "leagues", [], "L", false, 0.1, false);
+
 const Second = new BaseUnit("Second", "Seconds", "s", [], "T", true, 1.0, true);
 const Minute = new BaseUnit("Minute", "Minutes", "min", ["m", "minute"], "T", false, 1.0, false);
 const Hour = new BaseUnit("Hour", "Hours", "h", ["hr", "hrs"], "T", false, 1.0, false);
 const Day = new BaseUnit("Day", "Days", "d", ["dy", "dys"], "T", false, 0.8, false);
 const Year = new BaseUnit("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9, false);
+
 const Gram = new BaseUnit("Gram", "Grams", "g", [], "M", true, 1.0, true);
+
 const Joule = new BaseUnit("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0, true);
 const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0, true);
 const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, 0.1, false);
 const BritishThermalUnitISO = new BaseUnit("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, 0.1, false);
 const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], "M L^{2} T^{-2}", true, 0.5, true);
+
 const Watt = new BaseUnit("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, 1.0, true);
+
 const Volt = new BaseUnit("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, 1.0, true);
+
 const Amp = new BaseUnit("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0, true);
 
-const baseUnits = [Metre, Inch, Foot, Yard, Mile, Second, Minute, Hour, Day, Year, Gram, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
+const baseUnits = [Metre, Angstrom, Inch, Foot, Yard, Mile, League, Second, Minute, Hour, Day, Year, Gram, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
 
 
 
@@ -95,10 +103,12 @@ class Ratio {
     }
 }
 
-var ratios = [new Ratio(Metre, Inch, 1000 / 25.4),
+var ratios = [new Ratio(Metre, Angstrom, 10e10),
+    new Ratio(Metre, Inch, 1000 / 25.4),
     new Ratio(Metre, Foot, 1000 / (25.4 * 12)),
     new Ratio(Metre, Yard, 1000 / (25.4 * 12 * 3)),
      new Ratio(Metre, Mile, 1000 / (25.4 * 12 * 3 * 1760)),
+     new Ratio(Metre, League, 1000 / (25.4 * 12 * 3 * 1760 * 3)),
      new Ratio(Foot, Inch, 12),
      new Ratio(Yard, Inch, 12 * 3),
      new Ratio(Mile, Inch, 12 * 3 * 1760),
