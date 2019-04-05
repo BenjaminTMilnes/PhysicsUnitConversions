@@ -1,0 +1,6 @@
+﻿
+<div class="result">
+    <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.$parent.$parent.identifiedNumberOfSignificantFigures)}}">Copy Text</button>
+    <button class="copybutton" data-clipboard-text="{{outputValue.toLaTeX($parent.$parent.$parent.identifiedNumberOfSignificantFigures)}}">Copy LaTeX</button>
+    <span class="result-text" compile="outputValue.toString($parent.$parent.$parent.identifiedNumberOfSignificantFigures)" title="{{outputValue.asWords($parent.$parent.$parent.identifiedNumberOfSignificantFigures)}}"></span>
+</div>

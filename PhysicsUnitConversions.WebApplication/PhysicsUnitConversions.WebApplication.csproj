@@ -81,6 +81,8 @@
   <ItemGroup>
     <Content Include="app.js" />
     <Content Include="index.html" />
+    <Content Include="result-set.html" />
+    <Content Include="result.html" />
     <Content Include="style.css" />
     <Content Include="test_framework.js" />
     <Content Include="units.js" />

@@ -27,14 +27,14 @@
     <div class="mainpage" ng-controller="UnitConversionController">
         <h1>Physics Unit Conversions</h1>
         <p>Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
-        <input type="text" class="maininput" ng-model="mainInput" />
+        <input type="text" class="maininput" ng-model="mainInput" placeholder="12 km" />
         <div class="inputinformation">
             <div class="table" ng-style="(mostLikelyUnit == null) ? {'visibility': 'hidden'}:{};">
                 <div class="table-row">
-                    <div class="table-row-label">{{(otherUnits.length > 0) ? 'Most likely unit:' : 'Recognised unit:';}}</div>
+                    <div class="table-row-label" style="margin-bottom:-2px;"><span style="display: inline-block; padding:2px 0px;">{{(otherUnits.length > 0) ? 'Most likely unit:' : 'Unit:';}}</span></div>
                     <div class="table-row-value">
                         <span style="font-weight:normal;">{{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}})</span>
-                        <span ng-show="mostLikelyUnit.isMetric" class="tag tag-metric">Metric</span>
+                        <span ng-show="mostLikelyUnit.isMetric" class="tag metric">Metric</span>
                         <span class="tag" style="background-color: {{mostLikelyUnit.quantity.colour}}" title="This unit is a measure of {{mostLikelyUnit.quantity.name.toLowerCase()}}.">{{mostLikelyUnit.quantity.name}}</span>
                     </div>
                 </div>
@@ -59,57 +59,12 @@
                 </div>
             </div>
         </div>
-        <h2 ng-show="commonResultsLeftColumn.length > 0">Common Conversions</h2>
-        <div class="results" ng-show="commonResultsLeftColumn.length > 0">
-            <div class="results-leftcolumn">
-                <div class="result" ng-repeat="outputValue in commonResultsLeftColumn">
-                    <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.identifiedNumberOfSignificantFigures)}}">Copy Text</button>
-                    <button class="copybutton" data-clipboard-text="{{outputValue.toLaTeX($parent.identifiedNumberOfSignificantFigures)}}">Copy LaTeX</button>
-                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
-                </div>
-            </div>
-            <div class="results-rightcolumn">
-                <div class="result" ng-repeat="outputValue in commonResultsRightColumn">
-                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
-                    <button class="copybutton" data-clipboard-text="{{outputValue.toLaTeX($parent.identifiedNumberOfSignificantFigures)}}">Copy LaTeX</button>
-                    <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.identifiedNumberOfSignificantFigures)}}">Copy Text</button>
-                </div>
-            </div>
-        </div>
-        <h2 ng-show="metricResultsLeftColumn.length > 0">Metric Conversions</h2>
-        <div class="results" ng-show="commonResultsLeftColumn.length > 0">
-            <div class="results-leftcolumn">
-                <div class="result" ng-repeat="outputValue in metricResultsLeftColumn">
-                    <button class="copybutton">Copy Text</button>
-                    <button class="copybutton">Copy LaTeX</button>
-                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
-                </div>
-            </div>
-            <div class="results-rightcolumn">
-                <div class="result" ng-repeat="outputValue in metricResultsRightColumn">
-                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
-                    <button class="copybutton">Copy LaTeX</button>
-                    <button class="copybutton">Copy Text</button>
-                </div>
-            </div>
-        </div>
-        <h2 ng-show="nonMetricResultsLeftColumn.length > 0">Non-metric Conversions</h2>
-        <div class="results" ng-show="commonResultsLeftColumn.length > 0">
-            <div class="results-leftcolumn">
-                <div class="result" ng-repeat="outputValue in nonMetricResultsLeftColumn">
-                    <button class="copybutton">Copy Text</button>
-                    <button class="copybutton">Copy LaTeX</button>
-                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
-                </div>
-            </div>
-            <div class="results-rightcolumn">
-                <div class="result" ng-repeat="outputValue in nonMetricResultsRightColumn">
-                    <span class="result-text" compile="outputValue.toString($parent.identifiedNumberOfSignificantFigures)"></span>
-                    <button class="copybutton">Copy LaTeX</button>
-                    <button class="copybutton">Copy Text</button>
-                </div>
-            </div>
-        </div>
+
+        <result-set heading="'Common Conversions'" left-column-results="commonResultsLeftColumn" right-column-results="commonResultsRightColumn" ></result-set>
+
+        <result-set heading="'Metric Conversions'" left-column-results="metricResultsLeftColumn" right-column-results="metricResultsRightColumn" ></result-set>
+
+        <result-set heading="'Non-metric Conversions'" left-column-results="nonMetricResultsLeftColumn" right-column-results="nonMetricResultsRightColumn" ></result-set>
     </div>
 </body>
 </html>

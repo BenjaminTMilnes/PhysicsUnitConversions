@@ -12,6 +12,28 @@ application.directive("compile", ["$compile", function ($compile) {
     };
 }]);
 
+application.directive("result", function () {
+    return {
+        restrict: "E",
+        templateUrl: "result.html",
+        scope: {
+            outputValue: "=outputValue"
+        }
+    };
+});
+
+application.directive("resultSet", function () {
+    return {
+        restrict: "E",
+        templateUrl: "result-set.html",
+        scope: {
+            heading: "=heading",
+            leftColumnResults: "=leftColumnResults",
+            rightColumnResults: "=rightColumnResults"
+        }
+    };
+});
+
 application.controller("UnitConversionController", ["$scope", function UnitConversionController($scope) {
 
     $scope.identifiedUnits = [];
@@ -66,8 +88,8 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
                 var mostLikelyMatch = unitMatches[0];
 
-                var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7 ).filter(u => u.pluralName != mostLikelyMatch.pluralName);
-                
+                var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7).filter(u => u.pluralName != mostLikelyMatch.pluralName);
+
                 convertibleTo.forEach(u => {
                     var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
 

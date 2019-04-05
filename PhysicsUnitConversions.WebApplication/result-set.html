@@ -1,0 +1,12 @@
+﻿
+<div class="resultset" ng-show="leftColumnResults.length > 0">
+    <h2>{{heading}}</h2>
+    <div class="results">
+        <div class="results-leftcolumn">
+            <result output-value="outputValue" ng-repeat="outputValue in leftColumnResults" />
+        </div>
+        <div class="results-rightcolumn">
+            <result output-value="outputValue" ng-repeat="outputValue in rightColumnResults" />
+        </div>
+    </div>
+</div>

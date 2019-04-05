@@ -77,6 +77,10 @@ p {
         border: 1px solid #105ecc;
     }
 
+    .maininput::placeholder{
+         color: #E0E0E0;
+    }
+
 
 .inputinformation {
     font-size: 14px;
@@ -118,8 +122,10 @@ p {
     border-radius: 2px;
 }
 
-.tag-metric {
-    background-color: #cc1051;
+.metric{
+}
+
+.nonmetric{
 }
 
 .results {
@@ -142,8 +148,8 @@ p {
 
     .results-rightcolumn .result {
         display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
+        flex-direction: row-reverse;
+        justify-content: flex-start;
         align-items: baseline;
     }
 
@@ -171,7 +177,7 @@ p {
     padding: 7px 17px;
     border-radius: 2px;
     color: #FFFFFF;
-    background-color: #105ecc;
+        background-color: #105ecc;
     border: none;
     cursor: pointer;
 }

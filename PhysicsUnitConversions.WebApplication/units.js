@@ -106,7 +106,8 @@ var ratios = [new Ratio(Metre, Inch, 1000 / 25.4),
      new Ratio(Mile, Yard, 1760),
       new Ratio(FootPoundForce, Joule, 1.3558179483314004),
        new Ratio(BritishThermalUnitISO, Joule, 1055.06),
-      new Ratio(WattHour, Joule, 1 / 3600)];
+      new Ratio(WattHour, Joule, 1 / 3600),
+      new Ratio(Joule, ElectronVolt, 1 / 1.6021766208e-19)];
 
 
 
@@ -118,7 +119,7 @@ class Prefix {
         this.commonness = commonness;
     }
 
-   multiplier(s) {
+    multiplier(s) {
         return (new Decimal(10)).toPower(s * this.multiplierExponent);
     }
 }
@@ -158,11 +159,11 @@ class Unit {
     }
 
     get singularName() {
-        return capitaliseFirstLetter(this.prefix.name.toLowerCase() + this.baseUnit.singularName.toLowerCase());
+        return capitaliseFirstLetter(this.prefix.name.toLowerCase()) + decapitaliseFirstLetter(this.baseUnit.singularName);
     }
 
     get pluralName() {
-        return capitaliseFirstLetter(this.prefix.name.toLowerCase() + this.baseUnit.pluralName.toLowerCase());
+        return capitaliseFirstLetter(this.prefix.name.toLowerCase()) + decapitaliseFirstLetter(this.baseUnit.pluralName);
     }
 
     get symbol() {
@@ -212,6 +213,10 @@ class OutputValue {
         return writeNumberDecimal(this.number, nsf, false, false) + " " + this.unit.symbol;
     }
 
+    asWords(nsf) {
+        return writeNumberDecimal(this.number, nsf, false, false) + " " + this.unit.pluralName.toLowerCase();
+    }
+
     toLaTeX(nsf) {
         return writeNumberDecimal(this.number, nsf, false, true) + " \\,\\mathrm{" + this.unit.symbol + "}";
     }
@@ -223,11 +228,15 @@ function capitaliseFirstLetter(text) {
     return text.substr(0, 1).toUpperCase() + text.substr(1);
 }
 
+function decapitaliseFirstLetter(text) {
+    return text.substr(0, 1).toLowerCase() + text.substr(1);
+}
+
 
 
 class UnitConverter {
     constructor() {
-        this.prefixes = prefixes;
+        this.prefixes = prefixes.sort(function (a, b) { return b.multiplierExponent - a.multiplierExponent });
         this.baseUnits = baseUnits;
         this.allUnits = this.getAllUnits();
     }
@@ -281,7 +290,7 @@ class UnitConverter {
     }
 
     getUnitsWithDimensions(dimensions, minimumCommonness) {
-        return   this.allUnits.filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
+        return this.allUnits.filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
     }
 
     getMetricUnitsWithDimensions(dimensions, minimumCommonness) {
