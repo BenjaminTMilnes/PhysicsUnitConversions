@@ -142,5 +142,7 @@ function runInputParserTests() {
     assertEqual("m^{3}", inputParser.parseInput("     +123456     m^{3}").unit.text);
 }
 
-runInputParserTests();
+if (RUN_TESTS) {
+    runInputParserTests();
+}
 

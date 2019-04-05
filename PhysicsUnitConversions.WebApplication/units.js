@@ -117,6 +117,10 @@ class Prefix {
         this.multiplierExponent = multiplierExponent;
         this.commonness = commonness;
     }
+
+   multiplier(s) {
+        return (new Decimal(10)).toPower(s * this.multiplierExponent);
+    }
 }
 
 const Deca = new Prefix("deca", "da", 1, 0.6);
@@ -225,6 +229,7 @@ class UnitConverter {
     constructor() {
         this.prefixes = prefixes;
         this.baseUnits = baseUnits;
+        this.allUnits = this.getAllUnits();
     }
 
     getMatchingPrefixes(symbol) {
@@ -276,24 +281,24 @@ class UnitConverter {
     }
 
     getUnitsWithDimensions(dimensions, minimumCommonness) {
-        return this.getAllUnits().filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
+        return   this.allUnits.filter(u => u.dimensions == dimensions && u.commonness >= minimumCommonness);
     }
 
     getMetricUnitsWithDimensions(dimensions, minimumCommonness) {
-        return this.getAllUnits().filter(u => u.dimensions == dimensions && u.isMetric && u.commonness >= minimumCommonness);
+        return this.allUnits.filter(u => u.dimensions == dimensions && u.isMetric && u.commonness >= minimumCommonness);
     }
 
     getNonMetricUnitsWithDimensions(dimensions, minimumCommonness) {
-        return this.getAllUnits().filter(u => u.dimensions == dimensions && !u.isMetric && u.commonness >= minimumCommonness);
+        return this.allUnits.filter(u => u.dimensions == dimensions && !u.isMetric && u.commonness >= minimumCommonness);
     }
 
     convertValue(value, fromUnit, toUnit) {
 
         if (fromUnit.hasPrefix) {
-            value = value.times((new Decimal(10)).toPower(fromUnit.prefix.multiplierExponent));
+            value = value.times(fromUnit.prefix.multiplier(1));
         }
         if (toUnit.hasPrefix) {
-            value = value.times((new Decimal(10)).toPower(-toUnit.prefix.multiplierExponent));
+            value = value.times(toUnit.prefix.multiplier(-1));
         }
 
         var a = false;
