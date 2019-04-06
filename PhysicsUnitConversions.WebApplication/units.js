@@ -59,6 +59,14 @@ const Foot = new BaseUnit("Foot", "Feet", "ft", [], "L", false, false, false, fa
 const Yard = new BaseUnit("Yard", "Yards", "yd", [], "L", false, false, false, false, (1000 / (25.4 * 12 * 3)), 0.5);
 const Mile = new BaseUnit("Mile", "Miles", "mi", ["m"], "L", false, false, false, false, (1000 / (25.4 * 12 * 3 * 1760)), 1.0);
 const League = new BaseUnit("League", "Leagues", "leagues", [], "L", false, false, false, false, (1000 / (25.4 * 12 * 3 * 1760 * 3)), 0.1);
+const Fathom = new BaseUnit("Fathom", "Fathoms", "fathoms", [], "L", false, false, false, false, (1000 / (25.4 * 12 * 3 * 2)), 0.1);
+const NauticalMile = new BaseUnit(   "Nautical Mile", "Nautical Miles", "NM", ["M", "nm", "nmi"], "L", false, false, false, false, (1000 / (25.4 * 12 * 3 * 2)), 0.1);
+const Chain = new BaseUnit("Chain", "Chains", "chains", [], "L", false, false, false, false, (1000 / (25.4 * 12 * 3 * 22)), 0.05);
+const Link = new BaseUnit("Link", "Links", "l", ["li", "lnk"], "L", false, false, false, false, (1000 * 100 / (25.4 * 12 * 3 * 22)), 0.05);
+const Rod = new BaseUnit("Rod", "Rods", "rods", [], "L", false, false, false, false, (1000 * 4 / (25.4 * 12 * 3 * 22)), 0.05);
+const AstronomicalUnit = new BaseUnit("Astronomical Unit", "Astronomical Units", "AU", [], "L", false, false, false, true, (1/149597870700), 0.9);
+const LightYear = new BaseUnit("Lightyear", "Lightyears", "ly", [], "L", true, false, false, true, (1 / 9460730472580800), 0.9);
+const Parsec = new BaseUnit("Parsec", "Parsecs", "pc", [], "L", true, false, false, true, (1 / 30856775814913673), 0.9);
 
 const Second = new BaseUnit("Second", "Seconds", "s", [], "T", true, true, false, true, (1.0), 1.0);
 const Minute = new BaseUnit("Minute", "Minutes", "min", ["m", "minute"], "T", false, false, false, false, (1 / 60), 1.0);
@@ -80,7 +88,7 @@ const Volt = new BaseUnit("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", tru
 
 const Amp = new BaseUnit("Amp", "Amps", "A", [], "Q T^{-1}", true, true, false, true, (1.0), 1.0);
 
-const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Second, Minute, Hour, Day, Year, Gram, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
+const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
 
 
 
