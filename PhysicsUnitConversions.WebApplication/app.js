@@ -42,6 +42,8 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
     $scope.identifiedNumberOfSignificantFigures = 0;
 
+    $scope.roundOutput = false;
+
     $scope.commonResultsLeftColumn = [];
     $scope.commonResultsRightColumn = [];
 
@@ -54,7 +56,9 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
     $scope.inputParser = new InputParser();
     $scope.unitConverter = new UnitConverter();
 
-    $scope.$watch("mainInput", function (newValue, oldValue) {
+    $scope.nsf = 5;
+
+    $scope.updateConversions = function (oldValue, newValue) {
 
         $scope.identifiedUnits = [];
         $scope.mostLikelyUnit = null;
@@ -76,6 +80,9 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
         if (inputValue != null) {
 
             $scope.identifiedNumberOfSignificantFigures = getNumberOfSignificantFigures(inputValue.coefficient.text);
+            $scope.nsf = ($scope.roundOutput) ? $scope.identifiedNumberOfSignificantFigures : 5;
+
+            console.log($scope.nsf);
 
             var unitMatches = $scope.unitConverter.getMatchingUnits(inputValue.unit.text);
 
@@ -94,7 +101,11 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                     var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
 
                     if (outputValue != null) {
-                        $scope.commonResultsLeftColumn.push(outputValue);
+                        var o = getOrderOfMagnitudeDecimal(outputValue.number);
+
+                        if ((outputValue.unit.hasPrefix == false) || (o >= -9 && o <= 9)) {
+                            $scope.commonResultsLeftColumn.push(outputValue);
+                        }
                     }
                 });
 
@@ -138,7 +149,11 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                 $scope.nonMetricResultsLeftColumn = $scope.nonMetricResultsLeftColumn.slice(0, j);
             }
         }
-    });
+    };
+
+
+    $scope.$watch("mainInput", function (newValue, oldValue) { $scope.updateConversions(oldValue, newValue); });
+    $scope.$watch("roundOutput", function (newValue, oldValue) { $scope.updateConversions("", $scope.mainInput); });
 
     new ClipboardJS(".copybutton");
 }]);

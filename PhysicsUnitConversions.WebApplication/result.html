@@ -1,7 +1,7 @@
 ﻿
 <div class="result">
-    <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.$parent.$parent.identifiedNumberOfSignificantFigures)}}">Copy Text</button>
-    <button class="copybutton" data-clipboard-text="{{outputValue.toLaTeX($parent.$parent.$parent.identifiedNumberOfSignificantFigures)}}">Copy LaTeX</button>
-    <span class="result-text" compile="outputValue.toString($parent.$parent.$parent.identifiedNumberOfSignificantFigures)" title="{{outputValue.asWords($parent.$parent.$parent.identifiedNumberOfSignificantFigures)}}"></span>
+    <button class="copybutton" data-clipboard-text="{{outputValue.toString($parent.$parent.$parent.nsf)}}">Copy Text</button>
+    <button class="copybutton" data-clipboard-text="{{outputValue.toLaTeX($parent.$parent.$parent.nsf)}}">Copy LaTeX</button>
+    <span class="result-text" compile="outputValue.toString($parent.$parent.$parent.nsf)" title="{{outputValue.asWords($parent.$parent.$parent.nsf)}}"></span>
     <span ng-show="outputValue.unit.isSIUnit" style="color:#00000022;" title="This is an SI unit.">SI</span>
 </div>
