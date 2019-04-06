@@ -27,15 +27,18 @@ const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Densi
 
 
 class BaseUnit {
-    constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, commonness, isMetric) {
+    constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, isSIBaseUnit, isSIDerivedUnit, isMetric, ratioToSIUnit, commonness) {
         this.singularName = singularName;
         this.pluralName = pluralName;
         this.symbol = symbol;
         this.alternateSymbols = alternateSymbols;
         this.dimensions = dimensions;
         this.canHaveSIPrefix = canHaveSIPrefix;
-        this.commonness = commonness;
+        this.isSIBaseUnit = isSIBaseUnit;
+        this.isSIDerivedUnit = isSIDerivedUnit;
         this.isMetric = isMetric;
+        this.ratioToSIUnit = ratioToSIUnit;
+        this.commonness = commonness;
     }
 
     equals(unit) {
@@ -47,77 +50,38 @@ class BaseUnit {
     }
 }
 
-const Metre = new BaseUnit("Metre", "Metres", "m", [], "L", true, 1.0, true);
-const Angstrom = new BaseUnit("Ångström", "Ångströms", "Å", [], "L", false, 0.7, true);
-const Inch = new BaseUnit("Inch", "Inches", "in", [], "L", false, 0.9, false);
-const Foot = new BaseUnit("Foot", "Feet", "ft", [], "L", false, 0.8, false);
-const Yard = new BaseUnit("Yard", "Yards", "yd", [], "L", false, 0.5, false);
-const Mile = new BaseUnit("Mile", "Miles", "mi", ["m"], "L", false, 1.0, false);
-const League = new BaseUnit("League",  "Leagues", "leagues", [], "L", false, 0.1, false);
+const Metre = new BaseUnit("Metre", "Metres", "m", [], "L", true, true, false, true, (1.0), 1.0);
+const Angstrom = new BaseUnit("Ångström", "Ångströms", "Å", [], "L", false, false, false, true, (1e10), 0.7);
+const Thou = new BaseUnit("Thou", "Thou", "thou", ["mil"], "L", false, false, false, false, ((1000 / 25.4) * 1000), 0.1);
+const Line = new BaseUnit("Line", "Lines", "L", ["l", "lin"], "L", false, false, false, false, ((1000 / 25.4) * 12), 0.1);
+const Inch = new BaseUnit("Inch", "Inches", "in", [], "L", false, false, false, false, (1000 / 25.4), 0.9);
+const Foot = new BaseUnit("Foot", "Feet", "ft", [], "L", false, false, false, false, (1000 / (25.4 * 12)), 0.8);
+const Yard = new BaseUnit("Yard", "Yards", "yd", [], "L", false, false, false, false, (1000 / (25.4 * 12 * 3)), 0.5);
+const Mile = new BaseUnit("Mile", "Miles", "mi", ["m"], "L", false, false, false, false, (1000 / (25.4 * 12 * 3 * 1760)), 1.0);
+const League = new BaseUnit("League", "Leagues", "leagues", [], "L", false, false, false, false, (1000 / (25.4 * 12 * 3 * 1760 * 3)), 0.1);
 
-const Second = new BaseUnit("Second", "Seconds", "s", [], "T", true, 1.0, true);
-const Minute = new BaseUnit("Minute", "Minutes", "min", ["m", "minute"], "T", false, 1.0, false);
-const Hour = new BaseUnit("Hour", "Hours", "h", ["hr", "hrs"], "T", false, 1.0, false);
-const Day = new BaseUnit("Day", "Days", "d", ["dy", "dys"], "T", false, 0.8, false);
-const Year = new BaseUnit("Year", "Years", "y", ["yr", "yrs"], "T", true, 0.9, false);
+const Second = new BaseUnit("Second", "Seconds", "s", [], "T", true, true, false, true, (1.0), 1.0);
+const Minute = new BaseUnit("Minute", "Minutes", "min", ["m", "minute"], "T", false, false, false, false, (1 / 60), 1.0);
+const Hour = new BaseUnit("Hour", "Hours", "h", ["hr", "hrs"], "T", false, false, false, false, (1 / 3600), 1.0);
+const Day = new BaseUnit("Day", "Days", "d", ["dy", "dys"], "T", false, false, false, false, (1 / (3600 * 24)), 0.8);
+const Year = new BaseUnit("Year", "Years", "y", ["yr", "yrs"], "T", true, false, false, false, (1 / (3600 * 24 * 365.25)), 0.9);
 
-const Gram = new BaseUnit("Gram", "Grams", "g", [], "M", true, 1.0, true);
+const Gram = new BaseUnit("Gram", "Grams", "g", [], "M", true, true, false, true, (1.0), 1.0);
 
-const Joule = new BaseUnit("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, 1.0, true);
-const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, 1.0, true);
-const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, 0.1, false);
-const BritishThermalUnitISO = new BaseUnit("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, 0.1, false);
-const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], "M L^{2} T^{-2}", true, 0.5, true);
+const Joule = new BaseUnit("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, false, true, true, (1.0), 1.0);
+const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, false, false, true, (1 / 1.6021766208e-19), 1.0);
+const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, false, false, false, (1 / 1.3558179483314004), 0.1);
+const BritishThermalUnitISO = new BaseUnit("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, false, false, false, (1 / 1055.06), 0.1);
+const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], "M L^{2} T^{-2}", true, false, false, true, (1/3600), 0.5);
 
-const Watt = new BaseUnit("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, 1.0, true);
+const Watt = new BaseUnit("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, false, true, true, (1.0), 1.0);
 
-const Volt = new BaseUnit("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, 1.0, true);
+const Volt = new BaseUnit("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, false, true, true, (1.0), 1.0);
 
-const Amp = new BaseUnit("Amp", "Amps", "A", [], "Q T^{-1}", true, 1.0, true);
+const Amp = new BaseUnit("Amp", "Amps", "A", [], "Q T^{-1}", true, true, false, true, (1.0), 1.0);
 
-const baseUnits = [Metre, Angstrom, Inch, Foot, Yard, Mile, League, Second, Minute, Hour, Day, Year, Gram, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
+const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Second, Minute, Hour, Day, Year, Gram, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
 
-
-
-class Ratio {
-    constructor(a, b, aToBRatio) {
-        this.a = a;
-        this.b = b;
-        this.aToBRatio = aToBRatio;
-    }
-
-    isMatch(c, d) {
-        return ((this.a.equals(c) && this.b.equals(d)) || (this.a.equals(d) && this.b.equals(c)));
-    }
-
-    getRatio(c, d) {
-        if (this.a.equals(c) && this.b.equals(d)) {
-            return this.aToBRatio;
-        }
-        else if (this.a.equals(d) && this.b.equals(c)) {
-            return 1 / this.aToBRatio;
-        }
-        else {
-            return 1;
-        }
-    }
-}
-
-var ratios = [new Ratio(Metre, Angstrom, 10e10),
-    new Ratio(Metre, Inch, 1000 / 25.4),
-    new Ratio(Metre, Foot, 1000 / (25.4 * 12)),
-    new Ratio(Metre, Yard, 1000 / (25.4 * 12 * 3)),
-     new Ratio(Metre, Mile, 1000 / (25.4 * 12 * 3 * 1760)),
-     new Ratio(Metre, League, 1000 / (25.4 * 12 * 3 * 1760 * 3)),
-     new Ratio(Foot, Inch, 12),
-     new Ratio(Yard, Inch, 12 * 3),
-     new Ratio(Mile, Inch, 12 * 3 * 1760),
-     new Ratio(Mile, Foot, 3 * 1760),
-     new Ratio(Mile, Yard, 1760),
-      new Ratio(FootPoundForce, Joule, 1.3558179483314004),
-       new Ratio(BritishThermalUnitISO, Joule, 1055.06),
-      new Ratio(WattHour, Joule, 1 / 3600),
-      new Ratio(Joule, ElectronVolt, 1 / 1.6021766208e-19)];
 
 
 
@@ -195,7 +159,7 @@ class Unit {
             return a[0];
         }
 
-        return { name: "" };
+        return new Quantity("", "", "");
     }
 
     get hasPrefix() {
@@ -312,6 +276,9 @@ class UnitConverter {
     }
 
     convertValue(value, fromUnit, toUnit) {
+        if (fromUnit.quantity != toUnit.quantity) {
+            return null;
+        }
 
         if (fromUnit.hasPrefix) {
             value = value.times(fromUnit.prefix.multiplier(1));
@@ -320,23 +287,7 @@ class UnitConverter {
             value = value.times(toUnit.prefix.multiplier(-1));
         }
 
-        var a = false;
-
-        ratios.forEach(r => {
-            if (r.isMatch(fromUnit.baseUnit, toUnit.baseUnit)) {
-                var c = r.getRatio(fromUnit.baseUnit, toUnit.baseUnit);
-
-                value = value.times(c);
-                a = true;
-            }
-            if (fromUnit.baseUnit.equals(toUnit.baseUnit)) {
-                a = true;
-            }
-        });
-
-        if (!a) {
-            return null;
-        }
+        value = value.dividedBy(fromUnit.baseUnit.ratioToSIUnit).times(toUnit.baseUnit.ratioToSIUnit);
 
         return new OutputValue(value, toUnit);
     }
