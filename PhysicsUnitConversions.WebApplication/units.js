@@ -82,6 +82,10 @@ const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"
 const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, [], false, false, false, (1 / 1.3558179483314004), 0.1);
 const BritishThermalUnitISO = new BaseUnit("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, [], false, false, false, (1 / 1055.06), 0.1);
 const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], "M L^{2} T^{-2}", true, [-30, 30], false, false, true, (1 / 3600), 0.5);
+const MechanicalHorsePowerHour = new BaseUnit("Horsepower-hour (Mechanical)", "Horsepower-hours (Mechanical)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (745.69987158227022 * 3600)), 0.1);
+const MetricHorsePowerHour = new BaseUnit("Horsepower-hour (Metric)", "Horsepower-hours (Metric)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (735.49875 * 3600)), 0.1);
+const ElectricHorsePowerHour = new BaseUnit("Horsepower-hour (Electric)", "Horsepower-hours (Electric)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (746 * 3600)), 0.1);
+const BoilerHorsePowerHour = new BaseUnit("Horsepower-hour (Boiler)", "Horsepower-hours (Boiler)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 /( 9812.5 * 3600)), 0.1);
 
 const Watt = new BaseUnit("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, [-30, 30], false, true, true, (1.0), 1.0);
 
