@@ -169,6 +169,14 @@ p {
 
 .result-text {
     margin: 0px 20px;
+         min-width:200px;
+            
+}
+.results-leftcolumn  .result-text {
+      text-align:left;
+}
+.results-rightcolumn  .result-text {
+       text-align:right;
 }
 
 

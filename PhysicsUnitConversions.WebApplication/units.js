@@ -109,7 +109,7 @@ const Exa = new Prefix("exa", "E", 18, 0.2);
 const Zetta = new Prefix("zetta", "Z", 21, 0.1);
 const Yotta = new Prefix("yotta", "Y", 24, 0.1);
 
-const Deci = new Prefix("deci", "d", -1, 0.8);
+const Deci = new Prefix("deci", "d", -1, 0.6);
 const Centi = new Prefix("centi", "c", -2, 1.0);
 const Milli = new Prefix("milli", "m", -3, 1.0);
 const Micro = new Prefix("micro", "μ", -6, 0.8);
@@ -166,12 +166,16 @@ class Unit {
         return (this.prefix != null && this.prefix != undefined && this.prefix.symbol != "");
     }
 
-    get commonness() {
-        return this.prefix.commonness * this.baseUnit.commonness;
+    get isSIUnit() {
+        return (this.baseUnit.isSIBaseUnit || this.baseUnit.isSIDerivedUnit);
     }
 
     get isMetric() {
         return this.baseUnit.isMetric;
+    }
+
+    get commonness() {
+        return this.prefix.commonness * this.baseUnit.commonness;
     }
 }
 

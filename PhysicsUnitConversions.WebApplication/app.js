@@ -122,7 +122,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
 
 
-                var convertibleToNonMetric = $scope.unitConverter.getNonMetricUnitsWithDimensions(mostLikelyMatch.dimensions, 0.3).filter(u => u.pluralName != mostLikelyMatch.pluralName);
+                var convertibleToNonMetric = $scope.unitConverter.getNonMetricUnitsWithDimensions(mostLikelyMatch.dimensions, 0).filter(u => u.pluralName != mostLikelyMatch.pluralName);
 
                 convertibleToNonMetric.forEach(u => {
                     var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
