@@ -51,6 +51,8 @@ class BaseUnit {
     }
 }
 
+
+
 const Metre = new BaseUnit("Metre", "Metres", "m", [], "L", true, [-30, 30], true, false, true, (1.0), 1.0);
 const Angstrom = new BaseUnit("Ångström", "Ångströms", "Å", [], "L", false, [], false, false, true, (1e10), 0.7);
 const Thou = new BaseUnit("Thou", "Thou", "thou", ["mil"], "L", false, [], false, false, false, ((1000 / 25.4) * 1000), 0.1);
@@ -69,11 +71,15 @@ const AstronomicalUnit = new BaseUnit("Astronomical Unit", "Astronomical Units",
 const LightYear = new BaseUnit("Lightyear", "Lightyears", "ly", [], "L", true, [0, 30], false, false, true, (1 / 9460730472580800), 0.9);
 const Parsec = new BaseUnit("Parsec", "Parsecs", "pc", [], "L", true, [0, 30], false, false, true, (1 / 30856775814913673), 0.9);
 
+
+
 const Second = new BaseUnit("Second", "Seconds", "s", [], "T", true, [-30, 0], true, false, true, (1.0), 1.0);
 const Minute = new BaseUnit("Minute", "Minutes", "min", ["m", "minute"], "T", false, [], false, false, false, (1 / 60), 1.0);
 const Hour = new BaseUnit("Hour", "Hours", "h", ["hr", "hrs"], "T", false, [], false, false, false, (1 / 3600), 1.0);
 const Day = new BaseUnit("Day", "Days", "d", ["dy", "dys"], "T", false, [], false, false, false, (1 / (3600 * 24)), 0.8);
 const Year = new BaseUnit("Year", "Years", "y", ["yr", "yrs"], "T", true, [0, 30], false, false, false, (1 / (3600 * 24 * 365.25)), 0.9);
+
+
 
 const Gram = new BaseUnit("Gram", "Grams", "g", [], "M", true, [-30, 30], true, false, true, (1.0), 1.0);
 const AtomicMassUnit = new BaseUnit("Atomic Mass Unit", "Atomic Mass Units", "u", ["Da", "AMU"], "M", false, [], false, false, true, (1/ 1.660539040e-24), 1.0);
@@ -85,7 +91,9 @@ const LongTon = new BaseUnit("Ton (Long)", "Tons (Long)", "tons", ["ton"], "M", 
 const Tonne = new BaseUnit("Tonne", "Tonnes", "t", [], "M", true, [ 0, 30], false, false, true, (1/1000000), 0.9);
 const Stone = new BaseUnit("Stone", "Stone", "st", [], "M", false, [], false, false, false, (1/(1000*6.35029318)), 0.7);
 const ShortHundredweight = new BaseUnit("Hundredweight (Short)", "Hundredweight (Short)", "cwt", [], "M", false, [], false, false, false, (1/45.359237), 0.5);
-const LongHundredweight = new BaseUnit("Hundredweight (Long)", "Hundredweight (Long)", "cwt", [], "M", false, [], false, false, false, (1/50.802345), 0.5);
+const LongHundredweight = new BaseUnit("Hundredweight (Long)", "Hundredweight (Long)", "cwt", [], "M", false, [], false, false, false, (1 / 50.802345), 0.5);
+
+
 
 const Joule = new BaseUnit("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, [-30, 30], false, true, true, (1.0), 1.0);
 const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, [-30, 30], false, false, true, (1 / 1.6021766208e-19), 1.0);
@@ -95,15 +103,23 @@ const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], "M L^{2} T^{-
 const MechanicalHorsePowerHour = new BaseUnit("Horsepower-hour (Mechanical)", "Horsepower-hours (Mechanical)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (745.69987158227022 * 3600)), 0.1);
 const MetricHorsePowerHour = new BaseUnit("Horsepower-hour (Metric)", "Horsepower-hours (Metric)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (735.49875 * 3600)), 0.1);
 const ElectricHorsePowerHour = new BaseUnit("Horsepower-hour (Electric)", "Horsepower-hours (Electric)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (746 * 3600)), 0.1);
-const BoilerHorsePowerHour = new BaseUnit("Horsepower-hour (Boiler)", "Horsepower-hours (Boiler)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 /( 9812.5 * 3600)), 0.1);
+const BoilerHorsePowerHour = new BaseUnit("Horsepower-hour (Boiler)", "Horsepower-hours (Boiler)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (9812.5 * 3600)), 0.1);
+const Erg = new BaseUnit("Erg", "Ergs", "erg", [], "M L^{2} T^{-2}",  true, [-30, 30], false, false, true,  (1e7), 0.4);
+
+
 
 const Watt = new BaseUnit("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, [-30, 30], false, true, true, (1.0), 1.0);
+const MechanicalHorsepower= new BaseUnit("Horsepower (Mechanical)", "Horsepower (Mechanical)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false,  (1/ 745.69987158227022), 0.3);
+const MetricHorsepower = new BaseUnit("Horsepower (Metric)", "Horsepower (Metric)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false, (1/ 735.49875), 0.3);
+const ElectricHorsepower = new BaseUnit("Horsepower (Electric)", "Horsepower (Electric)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false, (1/746), 0.1);
+const BoilerHorsepower = new BaseUnit("Horsepower (Boiler)", "Horsepower (Boiler)", "hp", [], "M L^{2} T^{-3}",false, [], false, false, false, (1/9812.5), 0.1);
+const HydraulicHorsepower = new BaseUnit("Horsepower (Hydraulic)", "Horsepower (Hydraulic)", "hp", [], "M L^{2} T^{-3}",false, [], false, false, false, (1/745.69987158227022), 0.1);
 
 const Volt = new BaseUnit("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, [-30, 30], false, true, true, (1.0), 1.0);
 
 const Amp = new BaseUnit("Amp", "Amps", "A", [], "Q T^{-1}", true, [-30, 30], true, false, true, (1.0), 1.0);
 
-const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
+const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, MechanicalHorsePowerHour, MetricHorsePowerHour, ElectricHorsePowerHour, BoilerHorsePowerHour, Erg, Watt, MechanicalHorsepower, MetricHorsepower, ElectricHorsepower, BoilerHorsepower, HydraulicHorsepower,  Volt, Amp];
 
 
 
