@@ -76,6 +76,16 @@ const Day = new BaseUnit("Day", "Days", "d", ["dy", "dys"], "T", false, [], fals
 const Year = new BaseUnit("Year", "Years", "y", ["yr", "yrs"], "T", true, [0, 30], false, false, false, (1 / (3600 * 24 * 365.25)), 0.9);
 
 const Gram = new BaseUnit("Gram", "Grams", "g", [], "M", true, [-30, 30], true, false, true, (1.0), 1.0);
+const AtomicMassUnit = new BaseUnit("Atomic Mass Unit", "Atomic Mass Units", "u", ["Da", "AMU"], "M", false, [], false, false, true, (1/ 1.660539040e-24), 1.0);
+const Carat = new BaseUnit("Carat", "Carats", "ct", [], "M", false, [], false, false, true, (1/ 0.2), 0.2);
+const AvoirdupoisOunce = new BaseUnit("Ounce", "Ounces", "oz", [], "M", false, [], false, false, false, (1/28.349523125), 0.8);
+const AvoirdupoisPound = new BaseUnit("Pound", "Pounds", "lb", [], "M", false, [], false, false, false, (1 / (1000 * 0.45359237)), 1.0);
+const ShortTon = new BaseUnit("Ton (Short)", "Tons (Short)", "tons", ["ton"], "M", false, [], false, false, false, (1/(1000 * 907.18474)), 0.9);
+const LongTon = new BaseUnit("Ton (Long)", "Tons (Long)", "tons", ["ton"], "M", false, [], false, false, false, ( 1/ (1000 *  1016.047)), 0.9);
+const Tonne = new BaseUnit("Tonne", "Tonnes", "t", [], "M", true, [ 0, 30], false, false, true, (1/1000000), 0.9);
+const Stone = new BaseUnit("Stone", "Stone", "st", [], "M", false, [], false, false, false, (1/(1000*6.35029318)), 0.7);
+const ShortHundredweight = new BaseUnit("Hundredweight (Short)", "Hundredweight (Short)", "cwt", [], "M", false, [], false, false, false, (1/45.359237), 0.5);
+const LongHundredweight = new BaseUnit("Hundredweight (Long)", "Hundredweight (Long)", "cwt", [], "M", false, [], false, false, false, (1/50.802345), 0.5);
 
 const Joule = new BaseUnit("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, [-30, 30], false, true, true, (1.0), 1.0);
 const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, [-30, 30], false, false, true, (1 / 1.6021766208e-19), 1.0);
@@ -93,7 +103,7 @@ const Volt = new BaseUnit("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", tru
 
 const Amp = new BaseUnit("Amp", "Amps", "A", [], "Q T^{-1}", true, [-30, 30], true, false, true, (1.0), 1.0);
 
-const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
+const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, Watt, Volt, Amp];
 
 
 

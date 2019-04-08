@@ -71,6 +71,7 @@
     <Content Include="input_parsing.js" />
     <Content Include="numbers.js" />
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\physicsunitconversions.com.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
