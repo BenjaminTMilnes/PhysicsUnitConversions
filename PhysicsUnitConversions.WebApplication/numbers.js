@@ -1,5 +1,25 @@
 ﻿
 
+const numbersString = "0123456789+-"
+const superscriptNumbers = "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻";
+const subscriptNumbers = "₀₁₂₃₄₅₆₇₈₉₊₋";
+
+function convertNumberToSuperscript(t1) {
+    var t2 = "";
+
+    for (var i = 0; i < t1.length; i++) {
+        var c1 = t1[i];
+        var j = numbersString.indexOf(c1);
+        var c2 = superscriptNumbers[j];
+
+        t2 += c2;
+    }
+
+    return t2;
+}
+
+
+
 function getNumberOfSignificantFigures(t, assumeLower) {
 
     var m = 0; // the number of significant figures that have been seen
@@ -110,7 +130,7 @@ function writeNumber(n, nsf, sf) {
     return t2;
 }
 
-function writeNumberDecimal(n, nsf, sf, asLaTeX) {
+function writeNumberDecimal(n, nsf, sf, usingSuperscriptNumbers, asLaTeX) {
 
     var e = 0;
     var o = getOrderOfMagnitudeDecimal(n);
@@ -169,6 +189,9 @@ function writeNumberDecimal(n, nsf, sf, asLaTeX) {
     if (e != 0) {
         if (asLaTeX) {
             t2 += " \\times 10^{" + e.toString() + "} ";
+        }
+        else if (usingSuperscriptNumbers) {
+            t2 += " × 10" + convertNumberToSuperscript(e.toString()) + " ";
         }
         else {
             t2 += " × 10<sup>" + e.toString() + "</sup> ";

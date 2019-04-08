@@ -103,7 +103,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                     if (outputValue != null) {
                         var o = getOrderOfMagnitudeDecimal(outputValue.number);
 
-                        if ((outputValue.unit.hasPrefix == false) || (o >= -9 && o <= 9)) {
+                        if ((outputValue.unit.hasPrefix == false) || (o >= -5 && o <= 5)) {
                             $scope.commonResultsLeftColumn.push(outputValue);
                         }
                     }

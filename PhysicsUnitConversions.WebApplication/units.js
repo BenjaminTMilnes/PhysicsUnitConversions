@@ -226,16 +226,16 @@ class OutputValue {
         this.unit = unit;
     }
 
-    toString(nsf) {
-        return writeNumberDecimal(this.number, nsf, false, false) + " " + this.unit.symbol;
+    toString(nsf, usingSuperscriptNumbers) {
+        return writeNumberDecimal(this.number, nsf, false, usingSuperscriptNumbers, false) + " " + this.unit.symbol;
     }
 
     asWords(nsf) {
-        return writeNumberDecimal(this.number, nsf, false, false) + " " + this.unit.pluralName.toLowerCase();
+        return writeNumberDecimal(this.number, nsf, false, true, false) + " " + this.unit.pluralName.toLowerCase();
     }
 
     toLaTeX(nsf) {
-        return writeNumberDecimal(this.number, nsf, false, true) + " \\,\\mathrm{" + this.unit.symbol + "}";
+        return writeNumberDecimal(this.number, nsf, false, false, true) + " \\,\\mathrm{" + this.unit.symbol + "}";
     }
 }
 
