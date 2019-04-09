@@ -98,7 +98,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                 var convertibleTo = $scope.unitConverter.getUnitsWithDimensions(mostLikelyMatch.dimensions, 0.7).filter(u => u.pluralName != mostLikelyMatch.pluralName);
 
                 convertibleTo.forEach(u => {
-                    var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
+                    var outputValue = $scope.unitConverter.convertValue(inputValue.getNumberAsDecimal(), mostLikelyMatch, u);
 
                     if (outputValue != null) {
                         var o = getOrderOfMagnitudeDecimal(outputValue.number);
@@ -119,7 +119,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                 var convertibleToMetric = $scope.unitConverter.getMetricUnitsWithDimensions(mostLikelyMatch.dimensions, 0.3).filter(u => u.pluralName != mostLikelyMatch.pluralName);
 
                 convertibleToMetric.forEach(u => {
-                    var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
+                    var outputValue = $scope.unitConverter.convertValue(inputValue.getNumberAsDecimal(), mostLikelyMatch, u);
 
                     if (outputValue != null) {
                         $scope.metricResultsLeftColumn.push(outputValue);
@@ -136,7 +136,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
                 var convertibleToNonMetric = $scope.unitConverter.getNonMetricUnitsWithDimensions(mostLikelyMatch.dimensions, 0).filter(u => u.pluralName != mostLikelyMatch.pluralName);
 
                 convertibleToNonMetric.forEach(u => {
-                    var outputValue = $scope.unitConverter.convertValue(inputValue.coefficient.asDecimal(), mostLikelyMatch, u);
+                    var outputValue = $scope.unitConverter.convertValue(inputValue.getNumberAsDecimal(), mostLikelyMatch, u);
 
                     if (outputValue != null) {
                         $scope.nonMetricResultsLeftColumn.push(outputValue);
