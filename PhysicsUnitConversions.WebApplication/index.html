@@ -26,7 +26,7 @@
 <body>
     <div class="mainpage" ng-controller="UnitConversionController">
         <h1>Physics Unit Conversions</h1>
-        <p>Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
+        <p class="instructions">Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
         <input type="text" class="maininput" ng-model="mainInput" placeholder="12 km" />
         <div class="inputinformation">
             <div class="table" ng-style="(mostLikelyUnit == null) ? {'visibility': 'hidden'}:{};">
@@ -60,11 +60,11 @@
             </div>
         </div>
 
-        <result-set heading="'Common Conversions'" left-column-results="commonResultsLeftColumn" right-column-results="commonResultsRightColumn" ></result-set>
+        <result-set heading="'Common Conversions'" left-column-results="commonResultsLeftColumn" right-column-results="commonResultsRightColumn"></result-set>
 
-        <result-set heading="'Metric Conversions'" left-column-results="metricResultsLeftColumn" right-column-results="metricResultsRightColumn" ></result-set>
+        <result-set heading="'Metric Conversions'" left-column-results="metricResultsLeftColumn" right-column-results="metricResultsRightColumn"></result-set>
 
-        <result-set heading="'Non-metric Conversions'" left-column-results="nonMetricResultsLeftColumn" right-column-results="nonMetricResultsRightColumn" ></result-set>
+        <result-set heading="'Non-metric Conversions'" left-column-results="nonMetricResultsLeftColumn" right-column-results="nonMetricResultsRightColumn"></result-set>
     </div>
 </body>
 </html>

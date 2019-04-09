@@ -10,41 +10,72 @@ h1, h2, h3, h4, h5, h6, p, ul, ol, table, div, input {
     font-weight: inherit;
 }
 
-h1 {
+h1, h2 {
     font-size: 17px;
-    text-transform: uppercase;
-    margin: 0px 0px 10px 0px;
     text-align: center;
+}
+
+h1 {
+    margin: 7px 0px 15px 0px;
+    text-transform: uppercase;
     color: #105ecc;
 }
 
 h2 {
-    font-size: 17px;
-    margin: 20px 0px;
-    text-align: center;
+    margin: 15px 0px;
 }
 
 p {
-    font-size: 14px;
-    text-align: center;
-    width: 70%;
-    margin: 20px auto;
+    font-size: 12px;
+    margin: 15px 0px;
+}
+
+.instructions {
+    display: none;
 }
 
 @media (min-width:400px) {
-    h1 {
+    h1, h2 {
         font-size: 22px;
+    }
+
+    h1 {
         margin: 0px 0px 20px 0px;
     }
 
     h2 {
-        font-size: 22px;
+        margin: 40px 0px 20px 0px;
+    }
+
+    p {
+        font-size: 14px;
+        margin: 20px 0px;
+    }
+
+    .instructions {
+        display: block;
+        text-align: justify;
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media (min-width:770px) {
+    h2 {
         margin: 70px 0px 20px 0px;
+    }
+
+    .instructions {
+        width: 70%;
+        margin: 20px auto;
+        text-align: center;
     }
 }
 
 .mainpage {
     padding: 20px;
+    max-width: 1400px;
+    margin: 0px auto;
 }
 
 @media (min-width:400px) {
@@ -53,22 +84,24 @@ p {
     }
 }
 
-@media (min-width:700px) {
+@media (min-width:770px) {
     .mainpage {
         padding: 70px;
     }
 }
 
+
+
 .maininput {
-    font-size: 70px;
-    padding: 20px;
+    font-size: 40px;
+    padding: 10px;
     text-align: center;
     outline: none;
     border: 1px solid #D0D0D0;
     border-radius: 2px;
-    width: 70%;
+    width: 100%;
     box-sizing: border-box;
-    margin: 20px auto;
+    margin: 15px auto;
     display: block;
     outline: none;
 }
@@ -77,39 +110,92 @@ p {
         border: 1px solid #105ecc;
     }
 
-    .maininput::placeholder{
-         color: #E0E0E0;
+    .maininput::placeholder {
+        color: #E0E0E0;
     }
 
+@media (min-width:400px) {
+    .maininput {
+        padding: 20px;
+        margin: 20px 0px;
+    }
+}
+
+@media (min-width:770px) {
+    .maininput {
+        font-size: 70px;
+        width: 70%;
+        margin: 20px auto;
+    }
+}
 
 .inputinformation {
-    font-size: 14px;
-    margin: 20px auto;
-    width: 70%;
+    font-size: 12px;
+    margin: 15px 0px;
+    width: 100%;
 }
+
+@media (min-width:400px) {
+    .inputinformation {
+        font-size: 14px;
+        margin: 20px 0px;
+    }
+}
+
+@media (min-width:770px) {
+    .inputinformation {
+        margin: 20px auto;
+        width: 70%;
+    }
+}
+
+
 
 .table {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .table-row {
     display: flex;
     flex-direction: row;
-    padding: 4px 10px;
-}
-
-.table-row-label, .table-row-value {
-    width: 350px;
+    padding: 4px 0px;
 }
 
 .table-row-label {
     margin-right: 20px;
-    text-align: right;
+    text-align: left;
+    max-width: 170px;
 }
 
 .table-row-value {
+}
+
+@media (min-width:400px) {
+
+    .table-row-label {
+        max-width: 200px;
+    }
+}
+
+@media (min-width:770px) {
+    .table {
+        align-items: center;
+    }
+
+    .table-row {
+        padding: 4px 10px;
+    }
+
+    .table-row-label, .table-row-value {
+        width: 350px;
+        max-width: 350px;
+    }
+
+    .table-row-label {
+        text-align: right;
+    }
 }
 
 .tag {
@@ -122,15 +208,17 @@ p {
     border-radius: 2px;
 }
 
-.metric{
+.metric {
 }
 
-.nonmetric{
+.nonmetric {
 }
+
+
 
 .results {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 
 .results-leftcolumn, .results-rightcolumn {
@@ -139,14 +227,7 @@ p {
     flex-direction: column;
 }
 
-    .results-leftcolumn .result {
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: baseline;
-    }
-
-    .results-rightcolumn .result {
+    .results-leftcolumn .result, .results-rightcolumn .result {
         display: flex;
         flex-direction: row-reverse;
         justify-content: flex-start;
@@ -155,37 +236,74 @@ p {
 
 .result {
     background-color: #F8F8F8;
-    padding: 7px;
-    margin: 1px;
-    border-radius: 2px;
+    padding: 4px;
+    margin: 2px;
+    border-radius: 4px;
     font-weight: normal;
-    font-size: 17px;
+    font-size: 12px;
 }
-
 
     .result:hover {
         background-color: #F4F4F4;
     }
 
 .result-text {
-    margin: 0px 20px;
-         min-width:200px;
-            
+    margin: 0px 10px;
 }
-.results-leftcolumn  .result-text {
-      text-align:left;
+
+@media (min-width:400px) {
+    .result {
+        font-size: 14px;
+    }
 }
-.results-rightcolumn  .result-text {
-       text-align:right;
+
+@media (min-width:770px) {
+    .results {
+        flex-direction: row;
+    }
+
+    .results-leftcolumn .result {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
+
+    .results-rightcolumn .result {
+        flex-direction: row-reverse;
+        justify-content: flex-start;
+    }
+
+    .result {
+        padding: 7px;
+        font-size: 17px;
+    }
+
+    .result-text {
+        margin: 0px 20px;
+    }
+
+    .results-leftcolumn .result-text {
+        text-align: left;
+    }
+
+    .results-rightcolumn .result-text {
+        text-align: right;
+    }
 }
+
+@media (min-width:1200px) {
+    .result-text {
+        min-width: 200px;
+    }
+}
+
 
 
 .copybutton {
-    font-size: 17px;
-    padding: 7px 17px;
+    font-size: 12px;
+    padding: 5px 15px;
     border-radius: 2px;
     color: #FFFFFF;
-        background-color: #105ecc;
+    background-color: #105ecc;
     border: none;
     cursor: pointer;
 }
@@ -194,10 +312,41 @@ p {
         background-color: #2f7ae2;
     }
 
-.results-leftcolumn .result .copybutton {
-    margin: 0px 4px 0px 0px;
+.results-leftcolumn .result .copybutton, .results-rightcolumn .result .copybutton {
+    margin: 0px;
 }
 
-.results-rightcolumn .result .copybutton {
-    margin: 0px 0px 0px 4px;
+.copybutton-text {
+    display: block;
+}
+
+.copybutton-latex {
+    display: none;
+}
+
+@media (min-width:400px) {
+    .copybutton {
+        font-size: 14px;
+    }
+}
+
+@media (min-width:770px) {
+    .copybutton {
+        font-size: 17px;
+        padding: 7px 17px;
+    }
+
+    .results-leftcolumn .result .copybutton {
+        margin: 0px 4px 0px 0px;
+    }
+
+    .results-rightcolumn .result .copybutton {
+        margin: 0px 0px 0px 4px;
+    }
+}
+
+@media (min-width:1200px) {
+    .copybutton-latex {
+        display: block;
+    }
 }
