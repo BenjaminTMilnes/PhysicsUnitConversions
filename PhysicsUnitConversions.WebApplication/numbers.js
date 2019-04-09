@@ -149,7 +149,12 @@ function writeNumberDecimal(n, nsf, sf, usingSuperscriptNumbers, asLaTeX) {
         var c1 = t1[i];
 
         if (c1 == "-") {
-            t2 += c1;
+            if (asLaTeX) {
+                t2 += "-";
+            }
+            else {
+                t2 += "−";
+            }
         }
         if ("123456789".split("").filter(c2 => c2 == c1).length > 0) {
             m += 1;
@@ -194,7 +199,12 @@ function writeNumberDecimal(n, nsf, sf, usingSuperscriptNumbers, asLaTeX) {
             t2 += " × 10" + convertNumberToSuperscript(e.toString()) + " ";
         }
         else {
-            t2 += " × 10<sup>" + e.toString() + "</sup> ";
+            if (e > 0) {
+                t2 += " × 10<sup>" + e.toString() + "</sup> ";
+            }
+            if (e < 0) {
+                t2 += " × 10<sup>−" + Math.abs(e).toString() + "</sup> ";
+            }
         }
     }
 
