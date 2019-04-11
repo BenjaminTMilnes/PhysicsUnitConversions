@@ -22,8 +22,21 @@ const Power = new Quantity("M L^{2} T^{-3}", "Power", "#590c89");
 const ElectricPotentialDifference = new Quantity("M L^{2} T^{-3} Q^{-1}", "Electric Potential Difference", "");
 const ElectricCurrent = new Quantity("Q T^{-1}", "Electric Current", "");
 const Temperature = new Quantity("K", "Temperature", "");
+const Frequency = new Quantity("T^{-1}", "Frequency", "");
+const Angle = new Quantity("", "Angle", "");
+const SolidAngle = new Quantity("", "Solid Angle", "");
+const Pressure = new Quantity("M L^{-1} T^{-2}", "Pressure", "");
+const ElectricCharge = new Quantity("Q", "Electric Charge", "");
+const ElectricalCapacitance = new Quantity("M^{-1} L^{-2} T^{2} Q^{2}", "Temperature", "");
+const ElectricalResistance = new Quantity("M L^{2} T^{2} Q^{-2}", "Electrical Resistance", "");
+const ElectricalConductance = new Quantity("M^{-1} L^{-2} T^{-2} Q^{2}", "Electrical Conductance", "");
+const MagneticFlux = new Quantity("M L^{2} T^{-1} Q^{-1}", "Magnetic Flux", "");
+const MagneticFluxDensity = new Quantity("M T^{-1} Q^{-1}", "Magnetic Flux Density", "");
+const ElectricalInductance = new Quantity("M L^{2} Q^{-2}", "Electrical Inductance", "");
+const  Jolt = new Quantity("L T^{-3}", "Jolt", "");
+const Snap = new Quantity("L T^{-4}", "Snap", "");
 
-const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Density, Momentum, Force, Energy, Power, ElectricPotentialDifference, ElectricCurrent, Temperature];
+const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Density, Momentum, Force, Energy, Power, ElectricPotentialDifference, ElectricCurrent, Temperature, Frequency, Angle, SolidAngle, Pressure, ElectricCharge, ElectricalCapacitance, ElectricalResistance, ElectricalConductance, MagneticFlux, MagneticFluxDensity, ElectricalInductance, Jolt, Snap];
 
 
 
@@ -105,29 +118,35 @@ const LongHundredweight = new BaseUnit("Hundredweight (Long)", "Hundredweight (L
 
 
 
-const Joule = new BaseUnit("Joule", "Joules", "J", [], "M L^{2} T^{-2}", true, [-30, 30], false, true, true, (1.0), 1.0);
-const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], "M L^{2} T^{-2}", true, [-30, 30], false, false, true, (1 / 1.6021766208e-19), 1.0);
-const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], "M L^{2} T^{-2}", false, [], false, false, false, (1 / 1.3558179483314004), 0.1);
-const BritishThermalUnitISO = new BaseUnit("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], "M L^{2} T^{-2}", false, [], false, false, false, (1 / 1055.06), 0.1);
-const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], "M L^{2} T^{-2}", true, [-30, 30], false, false, true, (1 / 3600), 0.5);
-const MechanicalHorsePowerHour = new BaseUnit("Horsepower-hour (Mechanical)", "Horsepower-hours (Mechanical)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (745.69987158227022 * 3600)), 0.1);
-const MetricHorsePowerHour = new BaseUnit("Horsepower-hour (Metric)", "Horsepower-hours (Metric)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (735.49875 * 3600)), 0.1);
-const ElectricHorsePowerHour = new BaseUnit("Horsepower-hour (Electric)", "Horsepower-hours (Electric)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (746 * 3600)), 0.1);
-const BoilerHorsePowerHour = new BaseUnit("Horsepower-hour (Boiler)", "Horsepower-hours (Boiler)", "hph", [], "M L^{2} T^{-2}", false, [], false, false, false, (1 / (9812.5 * 3600)), 0.1);
-const Erg = new BaseUnit("Erg", "Ergs", "erg", [], "M L^{2} T^{-2}", true, [-30, 30], false, false, true, (1e7), 0.4);
+const Joule = new BaseUnit("Joule", "Joules", "J", [], Energy.dimensions, true, [-30, 30], false, true, true, (1.0), 1.0);
+const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], Energy.dimensions, true, [-30, 30], false, false, true, (1 / 1.6021766208e-19), 1.0);
+const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], Energy.dimensions, false, [], false, false, false, (1 / 1.3558179483314004), 0.1);
+const BritishThermalUnitISO = new BaseUnit("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], Energy.dimensions, false, [], false, false, false, (1 / 1055.06), 0.1);
+const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], Energy.dimensions, true, [-30, 30], false, false, true, (1 / 3600), 0.5);
+const MechanicalHorsePowerHour = new BaseUnit("Horsepower-hour (Mechanical)", "Horsepower-hours (Mechanical)", "hph", [], Energy.dimensions, false, [], false, false, false, (1 / (745.69987158227022 * 3600)), 0.1);
+const MetricHorsePowerHour = new BaseUnit("Horsepower-hour (Metric)", "Horsepower-hours (Metric)", "hph", [], Energy.dimensions, false, [], false, false, false, (1 / (735.49875 * 3600)), 0.1);
+const ElectricHorsePowerHour = new BaseUnit("Horsepower-hour (Electric)", "Horsepower-hours (Electric)", "hph", [], Energy.dimensions, false, [], false, false, false, (1 / (746 * 3600)), 0.1);
+const BoilerHorsePowerHour = new BaseUnit("Horsepower-hour (Boiler)", "Horsepower-hours (Boiler)", "hph", [], Energy.dimensions, false, [], false, false, false, (1 / (9812.5 * 3600)), 0.1);
+const Erg = new BaseUnit("Erg", "Ergs", "erg", [], Energy.dimensions, true, [-30, 30], false, false, true, (1e7), 0.4);
 
 
 
-const Watt = new BaseUnit("Watt", "Watts", "W", [], "M L^{2} T^{-3}", true, [-30, 30], false, true, true, (1.0), 1.0);
-const MechanicalHorsepower = new BaseUnit("Horsepower (Mechanical)", "Horsepower (Mechanical)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false, (1 / 745.69987158227022), 0.3);
-const MetricHorsepower = new BaseUnit("Horsepower (Metric)", "Horsepower (Metric)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false, (1 / 735.49875), 0.3);
-const ElectricHorsepower = new BaseUnit("Horsepower (Electric)", "Horsepower (Electric)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false, (1 / 746), 0.1);
-const BoilerHorsepower = new BaseUnit("Horsepower (Boiler)", "Horsepower (Boiler)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false, (1 / 9812.5), 0.1);
-const HydraulicHorsepower = new BaseUnit("Horsepower (Hydraulic)", "Horsepower (Hydraulic)", "hp", [], "M L^{2} T^{-3}", false, [], false, false, false, (1 / 745.69987158227022), 0.1);
+const Watt = new BaseUnit("Watt", "Watts", "W", [],  Power.dimensions, true, [-30, 30], false, true, true, (1.0), 1.0);
+const MechanicalHorsepower = new BaseUnit("Horsepower (Mechanical)", "Horsepower (Mechanical)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 745.69987158227022), 0.3);
+const MetricHorsepower = new BaseUnit("Horsepower (Metric)", "Horsepower (Metric)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 735.49875), 0.3);
+const ElectricHorsepower = new BaseUnit("Horsepower (Electric)", "Horsepower (Electric)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 746), 0.1);
+const BoilerHorsepower = new BaseUnit("Horsepower (Boiler)", "Horsepower (Boiler)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 9812.5), 0.1);
+const HydraulicHorsepower = new BaseUnit("Horsepower (Hydraulic)", "Horsepower (Hydraulic)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 745.69987158227022), 0.1);
 
-const Volt = new BaseUnit("Volt", "Volts", "V", [], "M L^{2} T^{-2} Q^{-1}", true, [-30, 30], false, true, true, (1.0), 1.0);
 
-const Amp = new BaseUnit("Amp", "Amps", "A", [], "Q T^{-1}", true, [-30, 30], true, false, true, (1.0), 1.0);
+
+const Volt = new BaseUnit("Volt", "Volts", "V", [], ElectricPotentialDifference.dimensions, true, [-30, 30], false, true, true, (1.0), 1.0);
+
+
+
+const Amp = new BaseUnit("Amp", "Amps", "A", [], ElectricCurrent.dimensions, true, [-30, 30], true, false, true, (1.0), 1.0);
+
+
 
 const Kelvin = new BaseUnit("Kelvin", "Kelvin", "K", [], "K", true, [-30, 30], true, false, true, (1.0), 1.0, null, null);
 const Celsius = new BaseUnit("Degrees Celsius", "Degrees Celsius", "°C", [], "K", false, [], false, false, true, (0.0), 1.0, function (kelvin) { return kelvin.minus(273.15); }, function (celsius) { return celsius.plus(273.15); });
@@ -136,9 +155,24 @@ const Rankine = new BaseUnit("Degrees Rankine", "Degrees Rankine", "°R", ["°R"
 const Delisle = new BaseUnit("Degrees Delisle", "Degrees Delisle", "°De", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(-1).plus(100).times(3/2); }, function (delisle) { return delisle.times(-1).plus(100).times(2/3).plus(273.15); });
 const NewtonTemperature = new BaseUnit("Degrees Newton", "Degrees Newton", "°N", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(33/100); }, function (newton) { return  newton.times( 100/33).plus(273.15); });
 const Reaumur = new BaseUnit("Degrees Réaumur", "Degrees Réaumur", "°Ré", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(4/5); }, function (reaumur) { return reaumur.times(5/4).plus(273.15); });
-const Romer = new BaseUnit("Degrees Rømer", "Degrees Rømer", "°Rø", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(21/40).plus(7.5); }, function (romer) { return romer.minus(7.5).times(40/21).plus(273.15); });
+const Romer = new BaseUnit("Degrees Rømer", "Degrees Rømer", "°Rø", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(21 / 40).plus(7.5); }, function (romer) { return romer.minus(7.5).times(40 / 21).plus(273.15); });
 
-const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, MechanicalHorsePowerHour, MetricHorsePowerHour, ElectricHorsePowerHour, BoilerHorsePowerHour, Erg, Watt, MechanicalHorsepower, MetricHorsepower, ElectricHorsepower, BoilerHorsepower, HydraulicHorsepower, Volt, Amp, Kelvin, Celsius, Fahrenheit, Rankine, Delisle, NewtonTemperature, Reaumur, Romer];
+
+
+
+const Hertz = new BaseUnit("Hertz", "Hertz", "Hz", [], Frequency.dimensions, true, [0, 30], false, true, true, (1.0), 1.0);
+
+
+
+
+const Radian = new BaseUnit( "Radian", "Radians", "rad", [],  Angle.dimensions,  false, [], false, true, true,  (1.0), 1.0);
+
+
+const Steradian = new BaseUnit( "Steradian", "Steradians", "sr", [],  SolidAngle.dimensions,  false, [], false, true, true,  (1.0), 1.0);
+
+
+
+const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, MechanicalHorsePowerHour, MetricHorsePowerHour, ElectricHorsePowerHour, BoilerHorsePowerHour, Erg, Watt, MechanicalHorsepower, MetricHorsepower, ElectricHorsepower, BoilerHorsepower, HydraulicHorsepower, Volt, Amp, Kelvin, Celsius, Fahrenheit, Rankine, Delisle, NewtonTemperature, Reaumur, Romer, Hertz, Radian, Steradian];
 
 
 
