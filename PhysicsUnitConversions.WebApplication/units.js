@@ -33,7 +33,7 @@ const ElectricalConductance = new Quantity("M^{-1} L^{-2} T^{-2} Q^{2}", "Electr
 const MagneticFlux = new Quantity("M L^{2} T^{-1} Q^{-1}", "Magnetic Flux", "");
 const MagneticFluxDensity = new Quantity("M T^{-1} Q^{-1}", "Magnetic Flux Density", "");
 const ElectricalInductance = new Quantity("M L^{2} Q^{-2}", "Electrical Inductance", "");
-const  Jolt = new Quantity("L T^{-3}", "Jolt", "");
+const Jolt = new Quantity("L T^{-3}", "Jolt", "");
 const Snap = new Quantity("L T^{-4}", "Snap", "");
 
 const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Density, Momentum, Force, Energy, Power, ElectricPotentialDifference, ElectricCurrent, Temperature, Frequency, Angle, SolidAngle, Pressure, ElectricCharge, ElectricalCapacitance, ElectricalResistance, ElectricalConductance, MagneticFlux, MagneticFluxDensity, ElectricalInductance, Jolt, Snap];
@@ -131,7 +131,7 @@ const Erg = new BaseUnit("Erg", "Ergs", "erg", [], Energy.dimensions, true, [-30
 
 
 
-const Watt = new BaseUnit("Watt", "Watts", "W", [],  Power.dimensions, true, [-30, 30], false, true, true, (1.0), 1.0);
+const Watt = new BaseUnit("Watt", "Watts", "W", [], Power.dimensions, true, [-30, 30], false, true, true, (1.0), 1.0);
 const MechanicalHorsepower = new BaseUnit("Horsepower (Mechanical)", "Horsepower (Mechanical)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 745.69987158227022), 0.3);
 const MetricHorsepower = new BaseUnit("Horsepower (Metric)", "Horsepower (Metric)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 735.49875), 0.3);
 const ElectricHorsepower = new BaseUnit("Horsepower (Electric)", "Horsepower (Electric)", "hp", [], Power.dimensions, false, [], false, false, false, (1 / 746), 0.1);
@@ -152,9 +152,9 @@ const Kelvin = new BaseUnit("Kelvin", "Kelvin", "K", [], "K", true, [-30, 30], t
 const Celsius = new BaseUnit("Degrees Celsius", "Degrees Celsius", "°C", [], "K", false, [], false, false, true, (0.0), 1.0, function (kelvin) { return kelvin.minus(273.15); }, function (celsius) { return celsius.plus(273.15); });
 const Fahrenheit = new BaseUnit("Degrees Fahrenheit", "Degrees Fahrenheit", "°F", [], "K", false, [], false, false, false, (0.0), 0.8, function (kelvin) { return kelvin.minus(273.15).times(9 / 5).plus(32); }, function (fahrenheit) { return fahrenheit.minus(32).times(5 / 9).plus(273.15); });
 const Rankine = new BaseUnit("Degrees Rankine", "Degrees Rankine", "°R", ["°R"], "K", false, [], false, false, false, (0.0), 0.5, function (kelvin) { return kelvin.times(9 / 5); }, function (rankine) { return rankine.times(5 / 9); });
-const Delisle = new BaseUnit("Degrees Delisle", "Degrees Delisle", "°De", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(-1).plus(100).times(3/2); }, function (delisle) { return delisle.times(-1).plus(100).times(2/3).plus(273.15); });
-const NewtonTemperature = new BaseUnit("Degrees Newton", "Degrees Newton", "°N", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(33/100); }, function (newton) { return  newton.times( 100/33).plus(273.15); });
-const Reaumur = new BaseUnit("Degrees Réaumur", "Degrees Réaumur", "°Ré", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(4/5); }, function (reaumur) { return reaumur.times(5/4).plus(273.15); });
+const Delisle = new BaseUnit("Degrees Delisle", "Degrees Delisle", "°De", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(-1).plus(100).times(3 / 2); }, function (delisle) { return delisle.times(-1).plus(100).times(2 / 3).plus(273.15); });
+const NewtonTemperature = new BaseUnit("Degrees Newton", "Degrees Newton", "°N", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(33 / 100); }, function (newton) { return newton.times(100 / 33).plus(273.15); });
+const Reaumur = new BaseUnit("Degrees Réaumur", "Degrees Réaumur", "°Ré", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(4 / 5); }, function (reaumur) { return reaumur.times(5 / 4).plus(273.15); });
 const Romer = new BaseUnit("Degrees Rømer", "Degrees Rømer", "°Rø", [], "K", false, [], false, false, false, (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(21 / 40).plus(7.5); }, function (romer) { return romer.minus(7.5).times(40 / 21).plus(273.15); });
 
 
@@ -164,15 +164,30 @@ const Hertz = new BaseUnit("Hertz", "Hertz", "Hz", [], Frequency.dimensions, tru
 
 
 
+const Radian = new BaseUnit("Radian", "Radians", "rad", [], Angle.dimensions, false, [], false, true, true, (1.0), 1.0);
+const Degree = new BaseUnit("Degree", "Degrees", "°", [], Angle.dimensions, false, [], false, false, false, (360 / Math.PI), 1.0);
+const Gradian = new BaseUnit("Gradian", "Gradians", "grad", [], Angle.dimensions, false, [], false, false, false, (400 / Math.PI), 0.5);
+const Turn = new BaseUnit("Turn", "Turns", "turn", [], Angle.dimensions, false, [], false, false, false, (1 / Math.PI), 0.7);
+const Quadrant = new BaseUnit("Quadrant", "Quadrants", "quadrant", [], Angle.dimensions, false, [], false, false, false, (4 / Math.PI), 0.7);
+const Sextant = new BaseUnit("Sextant", "Sextants", "sextant", [], Angle.dimensions, false, [], false, false, false, (6 / Math.PI), 0.7);
+const Hexacontade = new BaseUnit("Hexacontade", "Hexacontades", "hexacontade", [], Angle.dimensions, false, [], false, false, false, (60 / Math.PI), 0.7);
 
-const Radian = new BaseUnit( "Radian", "Radians", "rad", [],  Angle.dimensions,  false, [], false, true, true,  (1.0), 1.0);
 
 
-const Steradian = new BaseUnit( "Steradian", "Steradians", "sr", [],  SolidAngle.dimensions,  false, [], false, true, true,  (1.0), 1.0);
+const Steradian = new BaseUnit("Steradian", "Steradians", "sr", [], SolidAngle.dimensions, false, [], false, true, true, (1.0), 1.0);
+
+
+const Pascal = new BaseUnit("Pascal", "Pascals", "Pa", [], Pressure.dimensions, true, [-30, 30], false, true, true, (1), 1.0);
+const Bar = new BaseUnit("Bar", "Bars", "bar", [], Pressure.dimensions, true, [-6, 6], false, true, true, (1/100000), 0.9);
+const  PoundForcePerSquareInch = new BaseUnit("Pound of Force per Square Inch", "Pounds of Force per Square Inch", "psi", ["lbf/in^{2}"], Pressure.dimensions,  false, [], false, false, false, (1/6895), 0.7);
+const TechnicalAtmosphere = new BaseUnit("Technical Atmosphere", "Technical Atmospheres", "at", [], Pressure.dimensions,  false, [], false, false, true, (1/98066.5), 0.5);
+const StandardAtmosphere = new BaseUnit("Atmosphere", "Atmospheres", "atm", [], Pressure.dimensions, false, [], false, false, true, (1 / 101325), 1.0);
+const Torr = new BaseUnit("Torr", "Torr", "Torr", [], Pressure.dimensions, true, [-30, 30], false, false, true, (760 / 101325), 0.3);
+const MillimetreOfMercury = new BaseUnit("Millimetre of Mercury", "Millimetres of Mercury", "mmHg", ["mm Hg"], Pressure.dimensions, false, [], false, false, true, (1 / 133.322387415), 0.7);
 
 
 
-const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, MechanicalHorsePowerHour, MetricHorsePowerHour, ElectricHorsePowerHour, BoilerHorsePowerHour, Erg, Watt, MechanicalHorsepower, MetricHorsepower, ElectricHorsepower, BoilerHorsepower, HydraulicHorsepower, Volt, Amp, Kelvin, Celsius, Fahrenheit, Rankine, Delisle, NewtonTemperature, Reaumur, Romer, Hertz, Radian, Steradian];
+const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, MechanicalHorsePowerHour, MetricHorsePowerHour, ElectricHorsePowerHour, BoilerHorsePowerHour, Erg, Watt, MechanicalHorsepower, MetricHorsepower, ElectricHorsepower, BoilerHorsepower, HydraulicHorsepower, Volt, Amp, Kelvin, Celsius, Fahrenheit, Rankine, Delisle, NewtonTemperature, Reaumur, Romer, Hertz, Radian, Degree, Gradian, Turn, Quadrant, Sextant, Hexacontade, Pascal, Bar, PoundForcePerSquareInch, TechnicalAtmosphere, StandardAtmosphere, Torr, MillimetreOfMercury];
 
 
 
