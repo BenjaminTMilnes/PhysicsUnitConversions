@@ -140,7 +140,8 @@ function writeNumberDecimal(n, nsf, sf, usingSuperscriptNumbers, asLaTeX) {
         e = o;
     }
 
-    var t1 = n.toFixed(20); // the input number as a string
+    var a = new Decimal(n.toPrecision(nsf)); // rounding step
+    var t1 = a.toFixed(20); // the input number as a string
     var t2 = ""; // the output string
     var m = 0; // the number of significant figures that have been seen
     var p = 0; // the number of decimal points that have been seen
