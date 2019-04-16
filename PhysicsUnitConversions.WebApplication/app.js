@@ -58,7 +58,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
 
     $scope.nsf = 5;
 
-    $scope.keys = ["μ", "Å", "°"];
+    $scope.keys = ["μ", "Å", "é", "ø", "°"];
 
     $scope.typeLetter = function (letter) {
         if ($scope.mainInput == "" || $scope.mainInput == undefined) {

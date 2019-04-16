@@ -4,4 +4,6 @@
     <button class="copybutton copybutton-latex" data-clipboard-text="{{outputValue.toLaTeX($parent.$parent.$parent.nsf)}}">Copy LaTeX</button>
     <span class="result-text" compile="outputValue.toString($parent.$parent.$parent.nsf, false)" title="{{outputValue.asWords($parent.$parent.$parent.nsf, true)}}"></span>
     <span ng-show="outputValue.unit.isSIUnit" style="color:#00000022;" title="This is an SI unit.">SI</span>
+    <span ng-show="outputValue.unit.isPartOfSystem('Imperial')" style="color:#00000022;" title="This is an Imperial unit.">Imperial</span>
+    <span ng-show="!outputValue.unit.isPartOfSystem('Imperial') && outputValue.unit.isPartOfSystem('US Customary')" style="color:#00000022;" title="This is a US Customary unit.">US Customary</span>
 </div>

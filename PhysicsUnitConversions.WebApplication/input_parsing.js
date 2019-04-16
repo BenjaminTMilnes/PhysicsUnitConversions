@@ -147,7 +147,7 @@ class InputParser {
         while (marker.position < inputText.length) {
             var c = inputText.substr(marker.position, 1);
 
-            if (isAnyOf("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ^-+{}0123456789°", c)) {
+            if (isAnyOf("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ^-+{}0123456789μÅéø°", c)) {
                 t += c;
                 marker.position += 1;
             }
