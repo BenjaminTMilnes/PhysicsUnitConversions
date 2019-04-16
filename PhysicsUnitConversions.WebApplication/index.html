@@ -28,6 +28,9 @@
         <h1>Physics Unit Conversions</h1>
         <p class="instructions">Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
         <input type="text" class="maininput" ng-model="mainInput" placeholder="12 km" />
+        <div class="inputkeys">
+               <span class="key" ng-repeat="key in keys" ng-click="typeLetter(key)">{{key}}</span>
+        </div>
         <div class="inputinformation">
             <div class="table" ng-style="(mostLikelyUnit == null) ? {'visibility': 'hidden'}:{};">
                 <div class="table-row">
