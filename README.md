@@ -2,6 +2,10 @@
 
 This project is a web-app that you can use for converting physical units.
 
+It aims to be as fast and straightforward as possible.
+
+You can view the live app here: www.physicsunitconversions.com
+
 ## Why make this at all?
 
 Why bother making a unit conversions site at all? There are already hundreds out there. A quick Google search returns an endless number of unit conversion websites.
