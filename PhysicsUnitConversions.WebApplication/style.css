@@ -299,6 +299,13 @@ p {
     margin: 0px 10px;
 }
 
+.result-system {
+    display: none;
+    color: #00000022;
+      cursor: default;
+           user-select:none;
+}
+
 @media (min-width:400px) {
     .result {
         font-size: 14px;
@@ -341,6 +348,12 @@ p {
 @media (min-width:1200px) {
     .result-text {
         min-width: 170px;
+    }
+}
+
+@media (min-width:1400px) {
+    .result-system {
+        display: inline-block;
     }
 }
 

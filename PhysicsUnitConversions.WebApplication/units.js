@@ -41,17 +41,19 @@ const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Densi
 
 
 class BaseUnit {
-    constructor(singularName, pluralName, symbol, alternateSymbols, dimensions, canHaveSIPrefix, prefixRange, isSIBaseUnit, isSIDerivedUnit, isMetric, systems, ratioToSIUnit, commonness, conversionFunctionFromSIUnit, conversionFunctionToSIUnit) {
+    constructor(singularName, pluralName, variant, symbol, alternateSymbols, dimensions, canHaveSIPrefix, prefixRange, preferredPrefixes,   systems, ratioToSIUnit, commonness, conversionFunctionFromSIUnit, conversionFunctionToSIUnit) {
         this.singularName = singularName;
         this.pluralName = pluralName;
+        this.variant = variant;
         this.symbol = symbol;
         this.alternateSymbols = alternateSymbols;
         this.dimensions = dimensions;
         this.canHaveSIPrefix = canHaveSIPrefix;
         this.prefixRange = prefixRange;
-        this.isSIBaseUnit = isSIBaseUnit;
-        this.isSIDerivedUnit = isSIDerivedUnit;
-        this.isMetric = isMetric;
+        this.preferredPrefixes = preferredPrefixes;
+        this.isSIBaseUnit = (systems.filter(s => s == "SI Base").length > 0);
+        this.isSIDerivedUnit = (systems.filter(s => s == "SI Derived").length > 0);
+        this.isMetric = (systems.filter(s => s == "Metric").length > 0);
         this.systems = systems;
         this.ratioToSIUnit = ratioToSIUnit;
         this.commonness = commonness;
@@ -77,114 +79,114 @@ class BaseUnit {
 
 
 
-const Metre = new BaseUnit("Metre", "Metres", "m", [], "L", true, [-30, 30], true, false, true, [], (1.0), 1.0);
-const Angstrom = new BaseUnit("Ångström", "Ångströms", "Å", [], "L", false, [], false, false, true, [], (1e10), 0.7);
-const Thou = new BaseUnit("Thou", "Thou", "thou", ["mil"], "L", false, [], false, false, false, ["Imperial", "US Customary"], ((1000 / 25.4) * 1000), 0.1);
-const Line = new BaseUnit("Line", "Lines", "L", ["l", "lin"], "L", false, [], false, false, false, ["English"], ((1000 / 25.4) * 12), 0.1);
-const Inch = new BaseUnit("Inch", "Inches", "in", [], "L", false, [], false, false, false, ["Imperial", "US Customary"], (1000 / 25.4), 0.9);
-const Foot = new BaseUnit("Foot", "Feet", "ft", [], "L", false, [], false, false, false, ["Imperial", "US Customary"], (1000 / (25.4 * 12)), 0.8);
-const Yard = new BaseUnit("Yard", "Yards", "yd", [], "L", false, [], false, false, false, ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3)), 0.5);
-const Mile = new BaseUnit("Mile", "Miles", "mi", ["m"], "L", false, [], false, false, false, ["Imperial", "US Customary", "English"], (1000 / (25.4 * 12 * 3 * 1760)), 1.0);
-const League = new BaseUnit("League", "Leagues", "leagues", [], "L", false, [], false, false, false, [], (1000 / (25.4 * 12 * 3 * 1760 * 3)), 0.1);
-const Fathom = new BaseUnit("Fathom", "Fathoms", "fathoms", [], "L", false, [], false, false, false, ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 2)), 0.1);
-const NauticalMile = new BaseUnit("Nautical Mile", "Nautical Miles", "NM", ["M", "nm", "nmi"], "L", false, [], false, false, false, [], (1000 / (25.4 * 12 * 3 * 2)), 0.1);
-const Chain = new BaseUnit("Chain", "Chains", "chains", [], "L", false, [], false, false, false, ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 22)), 0.05);
-const Link = new BaseUnit("Link", "Links", "l", ["li", "lnk"], "L", false, [], false, false, false, ["Imperial", "US Customary"], (1000 * 100 / (25.4 * 12 * 3 * 22)), 0.05);
-const Rod = new BaseUnit("Rod", "Rods", "rods", [], "L", false, [], false, false, false, ["Imperial", "US Customary"], (1000 * 4 / (25.4 * 12 * 3 * 22)), 0.05);
-const AstronomicalUnit = new BaseUnit("Astronomical Unit", "Astronomical Units", "AU", [], "L", false, [], false, false, true, [], (1 / 149597870700), 0.9);
-const LightYear = new BaseUnit("Lightyear", "Lightyears", "ly", [], "L", true, [0, 30], false, false, true, [], (1 / 9460730472580800), 0.9);
-const Parsec = new BaseUnit("Parsec", "Parsecs", "pc", [], "L", true, [0, 30], false, false, true, [], (1 / 30856775814913673), 0.9);
+const Metre = new BaseUnit("Metre", "Metres", "", "m", [], "L", true, [-30, 30], ["n", "μ", "m", "c", "d", "k"], ["Metric", "SI Base"], (1.0), 1.0);
+const Angstrom = new BaseUnit("Ångström", "Ångströms", "", "Å", [], "L", false, [], [], ["Metric"], (1e10), 0.7);
+const Thou = new BaseUnit("Thou", "Thou", "", "thou", ["mil"], "L", false, [], [], ["Imperial", "US Customary"], ((1000 / 25.4) * 1000), 0.1);
+const Line = new BaseUnit("Line", "Lines", "", "L", ["l", "lin"], "L", false, [], [], ["English"], ((1000 / 25.4) * 12), 0.1);
+const Inch = new BaseUnit("Inch", "Inches", "", "in", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / 25.4), 0.9);
+const Foot = new BaseUnit("Foot", "Feet", "", "ft", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12)), 0.8);
+const Yard = new BaseUnit("Yard", "Yards", "", "yd", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3)), 0.5);
+const Mile = new BaseUnit("Mile", "Miles", "", "mi", ["m"], "L", false, [], [], ["Imperial", "US Customary", "English"], (1000 / (25.4 * 12 * 3 * 1760)), 1.0);
+const League = new BaseUnit("League", "Leagues", "", "leagues", [], "L", false, [], [], [], (1000 / (25.4 * 12 * 3 * 1760 * 3)), 0.1);
+const Fathom = new BaseUnit("Fathom", "Fathoms", "", "fathoms", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 2)), 0.1);
+const NauticalMile = new BaseUnit("Nautical Mile", "Nautical Miles", "", "NM", ["M", "nm", "nmi"], "L", false, [], [], [], (1000 / (25.4 * 12 * 3 * 2)), 0.1);
+const Chain = new BaseUnit("Chain", "Chains", "", "chains", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 22)), 0.05);
+const Link = new BaseUnit("Link", "Links", "", "l", ["li", "lnk"], "L", false, [], [], ["Imperial", "US Customary"], (1000 * 100 / (25.4 * 12 * 3 * 22)), 0.05);
+const Rod = new BaseUnit("Rod", "Rods", "", "rods", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 * 4 / (25.4 * 12 * 3 * 22)), 0.05);
+const AstronomicalUnit = new BaseUnit("Astronomical Unit", "Astronomical Units", "", "AU", [], "L", false, [], [], ["Metric"], (1 / 149597870700), 0.9);
+const LightYear = new BaseUnit("Lightyear", "Lightyears", "", "ly", [], "L", true, [0, 30], [], ["Metric"], (1 / 9460730472580800), 0.9);
+const Parsec = new BaseUnit("Parsec", "Parsecs", "", "pc", [], "L", true, [0, 30], [], ["Metric"], (1 / 30856775814913673), 0.9);
 
 
 
-const Second = new BaseUnit("Second", "Seconds", "s", [], "T", true, [-30, 0], true, false, true, [], (1.0), 1.0);
-const Minute = new BaseUnit("Minute", "Minutes", "min", ["m", "minute"], "T", false, [], false, false, false, [], (1 / 60), 1.0);
-const Hour = new BaseUnit("Hour", "Hours", "h", ["hr", "hrs"], "T", false, [], false, false, false, [], (1 / 3600), 1.0);
-const Day = new BaseUnit("Day", "Days", "d", ["dy", "dys"], "T", false, [], false, false, false, [], (1 / (3600 * 24)), 0.8);
-const Year = new BaseUnit("Year", "Years", "y", ["yr", "yrs"], "T", true, [0, 30], false, false, false, [], (1 / (3600 * 24 * 365.25)), 0.9);
+const Second = new BaseUnit("Second", "Seconds", "", "s", [], "T", true, [-30, 0], [], ["Metric", "SI Base"], (1.0), 1.0);
+const Minute = new BaseUnit("Minute", "Minutes", "", "min", ["m", "minute"], "T", false, [], [], [], (1 / 60), 1.0);
+const Hour = new BaseUnit("Hour", "Hours", "", "h", ["hr", "hrs"], "T", false, [], [], [], (1 / 3600), 1.0);
+const Day = new BaseUnit("Day", "Days", "", "d", ["dy", "dys"], "T", false, [], [], [], (1 / (3600 * 24)), 0.8);
+const Year = new BaseUnit("Year", "Years", "", "y", ["yr", "yrs"], "T", true, [0, 30], [], [], (1 / (3600 * 24 * 365.25)), 0.9);
 
 
 
-const Gram = new BaseUnit("Gram", "Grams", "g", [], "M", true, [-30, 30], true, false, true, [], (1.0), 1.0);
-const AtomicMassUnit = new BaseUnit("Atomic Mass Unit", "Atomic Mass Units", "u", ["Da", "AMU"], "M", false, [], false, false, true, [], (1 / 1.660539040e-24), 1.0);
-const Carat = new BaseUnit("Carat", "Carats", "ct", [], "M", false, [], false, false, true, [], (1 / 0.2), 0.2);
-const AvoirdupoisOunce = new BaseUnit("Ounce", "Ounces", "oz", [], "M", false, [], false, false, false, [], (1 / 28.349523125), 0.8);
-const AvoirdupoisPound = new BaseUnit("Pound", "Pounds", "lb", [], "M", false, [], false, false, false, [], (1 / (1000 * 0.45359237)), 1.0);
-const ShortTon = new BaseUnit("Ton (Short)", "Tons (Short)", "tons", ["ton"], "M", false, [], false, false, false, [], (1 / (1000 * 907.18474)), 0.9);
-const LongTon = new BaseUnit("Ton (Long)", "Tons (Long)", "tons", ["ton"], "M", false, [], false, false, false, [], (1 / (1000 * 1016.047)), 0.9);
-const Tonne = new BaseUnit("Tonne", "Tonnes", "t", [], "M", true, [0, 30], false, false, true, [], (1 / 1000000), 0.9);
-const Stone = new BaseUnit("Stone", "Stone", "st", [], "M", false, [], false, false, false, [], (1 / (1000 * 6.35029318)), 0.7);
-const ShortHundredweight = new BaseUnit("Hundredweight (Short)", "Hundredweight (Short)", "cwt", [], "M", false, [], false, false, false, [], (1 / 45.359237), 0.5);
-const LongHundredweight = new BaseUnit("Hundredweight (Long)", "Hundredweight (Long)", "cwt", [], "M", false, [], false, false, false, [], (1 / 50.802345), 0.5);
+const Gram = new BaseUnit("Gram", "Grams", "", "g", [], "M", true, [-30, 30], ["n", "μ", "m", "k"], ["Metric", "SI Base"], (1.0), 1.0);
+const AtomicMassUnit = new BaseUnit("Atomic Mass Unit", "Atomic Mass Units", "", "u", ["Da", "AMU"], "M", false, [], [], ["Metric"], (1 / 1.660539040e-24), 1.0);
+const Carat = new BaseUnit("Carat", "Carats", "", "ct", [], "M", false, [], [], ["Metric"], (1 / 0.2), 0.2);
+const AvoirdupoisOunce = new BaseUnit("Ounce", "Ounces", "Avoirdupois", "oz", [], "M", false, [], [], [], (1 / 28.349523125), 0.8);
+const AvoirdupoisPound = new BaseUnit("Pound", "Pounds", "Avoirdupois", "lb", [], "M", false, [], [], [], (1 / (1000 * 0.45359237)), 1.0);
+const ShortTon = new BaseUnit("Ton", "Tons", "Short", "tons", ["ton"], "M", false, [], [], [], (1 / (1000 * 907.18474)), 0.9);
+const LongTon = new BaseUnit("Ton", "Tons", "Long", "tons", ["ton"], "M", false, [], [], [], (1 / (1000 * 1016.047)), 0.9);
+const Tonne = new BaseUnit("Tonne", "Tonnes", "", "t", [], "M", true, [0, 30], ["k", "M", "G"], ["Metric"], (1 / 1000000), 0.9);
+const Stone = new BaseUnit("Stone", "Stone", "", "st", [], "M", false, [], [], [], (1 / (1000 * 6.35029318)), 0.7);
+const ShortHundredweight = new BaseUnit("Hundredweight", "Hundredweight", "Short", "cwt", [], "M", false, [], [], [], (1 / 45.359237), 0.5);
+const LongHundredweight = new BaseUnit("Hundredweight", "Hundredweight", "Long", "cwt", [], "M", false, [], [], [], (1 / 50.802345), 0.5);
 
 
 
-const Joule = new BaseUnit("Joule", "Joules", "J", [], Energy.dimensions, true, [-30, 30], false, true, true, [], (1.0), 1.0);
-const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "eV", ["ev"], Energy.dimensions, true, [-30, 30], false, false, true, [], (1 / 1.6021766208e-19), 1.0);
-const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "ft lbf", ["ft lb"], Energy.dimensions, false, [], false, false, false, [], (1 / 1.3558179483314004), 0.1);
-const BritishThermalUnitISO = new BaseUnit("British Thermal Unit (ISO)", "British Thermal Units (ISO)", "Btu", ["BTU"], Energy.dimensions, false, [], false, false, false, [], (1 / 1055.06), 0.1);
-const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "Wh", [], Energy.dimensions, true, [-30, 30], false, false, true, [], (1 / 3600), 0.5);
-const MechanicalHorsePowerHour = new BaseUnit("Horsepower-hour (Mechanical)", "Horsepower-hours (Mechanical)", "hph", [], Energy.dimensions, false, [], false, false, false, [], (1 / (745.69987158227022 * 3600)), 0.1);
-const MetricHorsePowerHour = new BaseUnit("Horsepower-hour (Metric)", "Horsepower-hours (Metric)", "hph", [], Energy.dimensions, false, [], false, false, false, [], (1 / (735.49875 * 3600)), 0.1);
-const ElectricHorsePowerHour = new BaseUnit("Horsepower-hour (Electric)", "Horsepower-hours (Electric)", "hph", [], Energy.dimensions, false, [], false, false, false, [], (1 / (746 * 3600)), 0.1);
-const BoilerHorsePowerHour = new BaseUnit("Horsepower-hour (Boiler)", "Horsepower-hours (Boiler)", "hph", [], Energy.dimensions, false, [], false, false, false, [], (1 / (9812.5 * 3600)), 0.1);
-const Erg = new BaseUnit("Erg", "Ergs", "erg", [], Energy.dimensions, true, [-30, 30], false, false, true, [], (1e7), 0.4);
+const Joule = new BaseUnit("Joule", "Joules", "", "J", [], Energy.dimensions, true, [-30, 30], ["n", "m", "k", "M", "G", "T", "P"], ["Metric", "SI Derived"], (1.0), 1.0);
+const ElectronVolt = new BaseUnit("Electron-Volt", "Electron-Volts", "", "eV", ["ev"], Energy.dimensions, true, [-30, 30], ["m", "k", "M", "G", "T", "P"], ["Metric"], (1 / 1.6021766208e-19), 1.0);
+const FootPoundForce = new BaseUnit("Foot Pound-Force", "Foot Pound-Force", "", "ft lbf", ["ft lb"], Energy.dimensions, false, [], [], [], (1 / 1.3558179483314004), 0.1);
+const BritishThermalUnitISO = new BaseUnit("British Thermal Unit", "British Thermal Units", "ISO", "Btu", ["BTU"], Energy.dimensions, false, [], [], [], (1 / 1055.06), 0.1);
+const WattHour = new BaseUnit("Watt-hour", "Watt-hours", "", "Wh", [], Energy.dimensions, true, [-30, 30], ["m", "k", "M", "G", "T", "P"], ["Metric"], (1 / 3600), 0.5);
+const MechanicalHorsePowerHour = new BaseUnit("Horsepower-hour", "Horsepower-hours", "Mechanical", "hph", [], Energy.dimensions, false, [], [], [], (1 / (745.69987158227022 * 3600)), 0.1);
+const MetricHorsePowerHour = new BaseUnit("Horsepower-hour", "Horsepower-hours", "Metric", "hph", [], Energy.dimensions, false, [], [], [], (1 / (735.49875 * 3600)), 0.1);
+const ElectricHorsePowerHour = new BaseUnit("Horsepower-hour", "Horsepower-hours", "Electric", "hph", [], Energy.dimensions, false, [], [], [], (1 / (746 * 3600)), 0.1);
+const BoilerHorsePowerHour = new BaseUnit("Horsepower-hour", "Horsepower-hours", "Boiler", "hph", [], Energy.dimensions, false, [], [], [], (1 / (9812.5 * 3600)), 0.1);
+const Erg = new BaseUnit("Erg", "Ergs", "", "erg", [], Energy.dimensions, true, [-30, 30], [], ["Metric"], (1e7), 0.4);
 
 
 
-const Watt = new BaseUnit("Watt", "Watts", "W", [], Power.dimensions, true, [-30, 30], false, true, true, [], (1.0), 1.0);
-const MechanicalHorsepower = new BaseUnit("Horsepower (Mechanical)", "Horsepower (Mechanical)", "hp", [], Power.dimensions, false, [], false, false, false, [], (1 / 745.69987158227022), 0.3);
-const MetricHorsepower = new BaseUnit("Horsepower (Metric)", "Horsepower (Metric)", "hp", [], Power.dimensions, false, [], false, false, false, [], (1 / 735.49875), 0.3);
-const ElectricHorsepower = new BaseUnit("Horsepower (Electric)", "Horsepower (Electric)", "hp", [], Power.dimensions, false, [], false, false, false, [], (1 / 746), 0.1);
-const BoilerHorsepower = new BaseUnit("Horsepower (Boiler)", "Horsepower (Boiler)", "hp", [], Power.dimensions, false, [], false, false, false, [], (1 / 9812.5), 0.1);
-const HydraulicHorsepower = new BaseUnit("Horsepower (Hydraulic)", "Horsepower (Hydraulic)", "hp", [], Power.dimensions, false, [], false, false, false, [], (1 / 745.69987158227022), 0.1);
+const Watt = new BaseUnit("Watt", "Watts", "", "W", [], Power.dimensions, true, [-30, 30], ["n", "m", "k", "M", "G", "T", "P"], ["Metric", "SI Derived"], (1.0), 1.0);
+const MechanicalHorsepower = new BaseUnit("Horsepower", "Horsepower", "Mechanical", "hp", [], Power.dimensions, false, [], [], [], (1 / 745.69987158227022), 0.3);
+const MetricHorsepower = new BaseUnit("Horsepower", "Horsepower", "Metric", "hp", [], Power.dimensions, false, [], [], [], (1 / 735.49875), 0.3);
+const ElectricHorsepower = new BaseUnit("Horsepower", "Horsepower", "Electric", "hp", [], Power.dimensions, false, [], [], [], (1 / 746), 0.1);
+const BoilerHorsepower = new BaseUnit("Horsepower", "Horsepower", "Boiler", "hp", [], Power.dimensions, false, [], [], [], (1 / 9812.5), 0.1);
+const HydraulicHorsepower = new BaseUnit("Horsepower", "Horsepower", "Hydraulic", "hp", [], Power.dimensions, false, [], [], [], (1 / 745.69987158227022), 0.1);
 
 
 
-const Volt = new BaseUnit("Volt", "Volts", "V", [], ElectricPotentialDifference.dimensions, true, [-30, 30], false, true, true, [], (1.0), 1.0);
+const Volt = new BaseUnit("Volt", "Volts", "", "V", [], ElectricPotentialDifference.dimensions, true, [-30, 30], ["m", "k", "M", "G"], ["Metric", "SI Derived"], (1.0), 1.0);
 
 
 
-const Amp = new BaseUnit("Amp", "Amps", "A", [], ElectricCurrent.dimensions, true, [-30, 30], true, false, true, [], (1.0), 1.0);
+const Amp = new BaseUnit("Amp", "Amps", "", "A", [], ElectricCurrent.dimensions, true, [-30, 30], ["m", "k"], ["Metric", "SI Base"], (1.0), 1.0);
 
 
 
-const Kelvin = new BaseUnit("Kelvin", "Kelvin", "K", [], "K", true, [-30, 30], true, false, true, [], (1.0), 1.0, null, null);
-const Celsius = new BaseUnit("Degrees Celsius", "Degrees Celsius", "°C", [], "K", false, [], false, false, true, [], (0.0), 1.0, function (kelvin) { return kelvin.minus(273.15); }, function (celsius) { return celsius.plus(273.15); });
-const Fahrenheit = new BaseUnit("Degrees Fahrenheit", "Degrees Fahrenheit", "°F", [], "K", false, [], false, false, false, [], (0.0), 0.8, function (kelvin) { return kelvin.minus(273.15).times(9 / 5).plus(32); }, function (fahrenheit) { return fahrenheit.minus(32).times(5 / 9).plus(273.15); });
-const Rankine = new BaseUnit("Degrees Rankine", "Degrees Rankine", "°R", ["°R"], "K", false, [], false, false, false, [], (0.0), 0.5, function (kelvin) { return kelvin.times(9 / 5); }, function (rankine) { return rankine.times(5 / 9); });
-const Delisle = new BaseUnit("Degrees Delisle", "Degrees Delisle", "°De", [], "K", false, [], false, false, false, [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(-1).plus(100).times(3 / 2); }, function (delisle) { return delisle.times(-1).plus(100).times(2 / 3).plus(273.15); });
-const NewtonTemperature = new BaseUnit("Degrees Newton", "Degrees Newton", "°N", [], "K", false, [], false, false, false, [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(33 / 100); }, function (newton) { return newton.times(100 / 33).plus(273.15); });
-const Reaumur = new BaseUnit("Degrees Réaumur", "Degrees Réaumur", "°Ré", [], "K", false, [], false, false, false, [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(4 / 5); }, function (reaumur) { return reaumur.times(5 / 4).plus(273.15); });
-const Romer = new BaseUnit("Degrees Rømer", "Degrees Rømer", "°Rø", [], "K", false, [], false, false, false, [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(21 / 40).plus(7.5); }, function (romer) { return romer.minus(7.5).times(40 / 21).plus(273.15); });
+const Kelvin = new BaseUnit("Kelvin", "Kelvin", "", "K", [], "K", true, [-30, 30], [], ["Metric", "SI Base"], (1.0), 1.0, null, null);
+const Celsius = new BaseUnit("Degrees Celsius", "Degrees Celsius", "", "°C", [], "K", false, [], [], ["Metric"], (0.0), 1.0, function (kelvin) { return kelvin.minus(273.15); }, function (celsius) { return celsius.plus(273.15); });
+const Fahrenheit = new BaseUnit("Degrees Fahrenheit", "Degrees Fahrenheit", "", "°F", [], "K", false, [], [], [], (0.0), 0.8, function (kelvin) { return kelvin.minus(273.15).times(9 / 5).plus(32); }, function (fahrenheit) { return fahrenheit.minus(32).times(5 / 9).plus(273.15); });
+const Rankine = new BaseUnit("Degrees Rankine", "Degrees Rankine", "", "°R", ["°R"], "K", false, [], [], [], (0.0), 0.5, function (kelvin) { return kelvin.times(9 / 5); }, function (rankine) { return rankine.times(5 / 9); });
+const Delisle = new BaseUnit("Degrees Delisle", "Degrees Delisle", "", "°De", [], "K", false, [], [], [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(-1).plus(100).times(3 / 2); }, function (delisle) { return delisle.times(-1).plus(100).times(2 / 3).plus(273.15); });
+const NewtonTemperature = new BaseUnit("Degrees Newton", "Degrees Newton", "", "°N", [], "K", false, [], [], [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(33 / 100); }, function (newton) { return newton.times(100 / 33).plus(273.15); });
+const Reaumur = new BaseUnit("Degrees Réaumur", "Degrees Réaumur", "", "°Ré", [], "K", false, [], [], [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(4 / 5); }, function (reaumur) { return reaumur.times(5 / 4).plus(273.15); });
+const Romer = new BaseUnit("Degrees Rømer", "Degrees Rømer", "", "°Rø", [], "K", false, [], [], [], (0.0), 0.1, function (kelvin) { return kelvin.minus(273.15).times(21 / 40).plus(7.5); }, function (romer) { return romer.minus(7.5).times(40 / 21).plus(273.15); });
 
 
 
 
-const Hertz = new BaseUnit("Hertz", "Hertz", "Hz", [], Frequency.dimensions, true, [0, 30], false, true, true, [], (1.0), 1.0);
+const Hertz = new BaseUnit("Hertz", "Hertz", "", "Hz", [], Frequency.dimensions, true, [0, 30], [], ["Metric", "SI Derived"], (1.0), 1.0);
 
 
 
-const Radian = new BaseUnit("Radian", "Radians", "rad", [], Angle.dimensions, false, [], false, true, true, [], (1.0), 1.0);
-const Degree = new BaseUnit("Degree", "Degrees", "°", [], Angle.dimensions, false, [], false, false, false, [], (360 / Math.PI), 1.0);
-const Gradian = new BaseUnit("Gradian", "Gradians", "grad", [], Angle.dimensions, false, [], false, false, false, [], (400 / Math.PI), 0.5);
-const Turn = new BaseUnit("Turn", "Turns", "turn", [], Angle.dimensions, false, [], false, false, false, [], (1 / Math.PI), 0.7);
-const Quadrant = new BaseUnit("Quadrant", "Quadrants", "quadrant", [], Angle.dimensions, false, [], false, false, false, [], (4 / Math.PI), 0.7);
-const Sextant = new BaseUnit("Sextant", "Sextants", "sextant", [], Angle.dimensions, false, [], false, false, false, [], (6 / Math.PI), 0.7);
-const Hexacontade = new BaseUnit("Hexacontade", "Hexacontades", "hexacontade", [], Angle.dimensions, false, [], false, false, false, [], (60 / Math.PI), 0.7);
+const Radian = new BaseUnit("Radian", "Radians", "", "rad", [], Angle.dimensions, false, [], [], ["Metric", "SI Derived"], (1.0), 1.0);
+const Degree = new BaseUnit("Degree", "Degrees", "", "°", [], Angle.dimensions, false, [], [], [], (360 / Math.PI), 1.0);
+const Gradian = new BaseUnit("Gradian", "Gradians", "", "grad", [], Angle.dimensions, false, [], [], [], (400 / Math.PI), 0.5);
+const Turn = new BaseUnit("Turn", "Turns", "", "turn", [], Angle.dimensions, false, [], [], [], (1 / Math.PI), 0.7);
+const Quadrant = new BaseUnit("Quadrant", "Quadrants", "", "quadrant", [], Angle.dimensions, false, [], [], [], (4 / Math.PI), 0.7);
+const Sextant = new BaseUnit("Sextant", "Sextants", "", "sextant", [], Angle.dimensions, false, [], [], [], (6 / Math.PI), 0.7);
+const Hexacontade = new BaseUnit("Hexacontade", "Hexacontades", "", "hexacontade", [], Angle.dimensions, false, [], [], [], (60 / Math.PI), 0.7);
 
 
 
-const Steradian = new BaseUnit("Steradian", "Steradians", "sr", [], SolidAngle.dimensions, false, [], false, true, true, [], (1.0), 1.0);
+const Steradian = new BaseUnit("Steradian", "Steradians", "", "sr", [], SolidAngle.dimensions, false, [], [], ["Metric", "SI Derived"], (1.0), 1.0);
 
 
-const Pascal = new BaseUnit("Pascal", "Pascals", "Pa", [], Pressure.dimensions, true, [-30, 30], false, true, true, [], (1), 1.0);
-const Bar = new BaseUnit("Bar", "Bars", "bar", [], Pressure.dimensions, true, [-6, 6], false, true, true, [], (1 / 100000), 0.9);
-const PoundForcePerSquareInch = new BaseUnit("Pound of Force per Square Inch", "Pounds of Force per Square Inch", "psi", ["lbf/in^{2}"], Pressure.dimensions, false, [], false, false, false, [], (1 / 6895), 0.7);
-const TechnicalAtmosphere = new BaseUnit("Technical Atmosphere", "Technical Atmospheres", "at", [], Pressure.dimensions, false, [], false, false, true, [], (1 / 98066.5), 0.5);
-const StandardAtmosphere = new BaseUnit("Atmosphere", "Atmospheres", "atm", [], Pressure.dimensions, false, [], false, false, true, [], (1 / 101325), 1.0);
-const Torr = new BaseUnit("Torr", "Torr", "Torr", [], Pressure.dimensions, true, [-30, 30], false, false, true, [], (760 / 101325), 0.3);
-const MillimetreOfMercury = new BaseUnit("Millimetre of Mercury", "Millimetres of Mercury", "mmHg", ["mm Hg"], Pressure.dimensions, false, [], false, false, true, [], (1 / 133.322387415), 0.7);
+const Pascal = new BaseUnit("Pascal", "Pascals", "", "Pa", [], Pressure.dimensions, true, [-30, 30], [], ["Metric", "SI Derived"], (1), 1.0);
+const Bar = new BaseUnit("Bar", "Bars", "", "bar", [], Pressure.dimensions, true, [-6, 6], [], ["Metric", "SI Derived"], (1 / 100000), 0.9);
+const PoundForcePerSquareInch = new BaseUnit("Pound of Force per Square Inch", "Pounds of Force per Square Inch", "", "psi", ["lbf/in^{2}"], Pressure.dimensions, false, [], [], [], (1 / 6895), 0.7);
+const TechnicalAtmosphere = new BaseUnit("Atmosphere", "Atmospheres", "Technical", "at", [], Pressure.dimensions, false, [], [], ["Metric"], (1 / 98066.5), 0.5);
+const StandardAtmosphere = new BaseUnit("Atmosphere", "Atmospheres", "Standard", "atm", [], Pressure.dimensions, false, [], [], ["Metric"], (1 / 101325), 1.0);
+const Torr = new BaseUnit("Torr", "Torr", "", "Torr", [], Pressure.dimensions, true, [-30, 30], [], ["Metric"], (760 / 101325), 0.3);
+const MillimetreOfMercury = new BaseUnit("Millimetre of Mercury", "Millimetres of Mercury", "", "mmHg", ["mm Hg"], Pressure.dimensions, false, [], [], ["Metric"], (1 / 133.322387415), 0.7);
 
 
 
@@ -306,7 +308,7 @@ class OutputValue {
     }
 
     toString(nsf, usingSuperscriptNumbers) {
-        return writeNumberDecimal(this.number, nsf, false, usingSuperscriptNumbers, false) + " " + this.unit.symbol;
+        return writeNumberDecimal(this.number, nsf, false, usingSuperscriptNumbers, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "")? " (" + this.unit.baseUnit.variant.toLowerCase() + ")":"");
     }
 
     asWords(nsf) {
