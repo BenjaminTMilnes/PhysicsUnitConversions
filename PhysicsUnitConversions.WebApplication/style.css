@@ -30,6 +30,16 @@ p {
     margin: 15px 0px;
 }
 
+a {
+    color: #105ecc;
+       text-decoration:none;
+}
+
+a:hover{
+       text-decoration: underline;
+
+}
+
 .instructions {
     display: none;
 }

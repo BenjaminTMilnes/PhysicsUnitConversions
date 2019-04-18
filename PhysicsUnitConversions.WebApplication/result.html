@@ -1,8 +1,11 @@
 ﻿
 <div class="result">
-    <button class="copybutton copybutton-text" data-clipboard-text="{{outputValue.toString($parent.$parent.$parent.nsf, true)}}">Copy Text</button>
+    <button class="copybutton copybutton-text" data-clipboard-text="{{outputValue.toText($parent.$parent.$parent.nsf, false)}}">Copy Text</button>
     <button class="copybutton copybutton-latex" data-clipboard-text="{{outputValue.toLaTeX($parent.$parent.$parent.nsf)}}">Copy LaTeX</button>
-    <span class="result-text" compile="outputValue.toString($parent.$parent.$parent.nsf, false)" title="{{outputValue.asWords($parent.$parent.$parent.nsf, true)}}"></span>
+    <div  class="result-text">
+        <span class="result-value" compile="outputValue.toHTML($parent.$parent.$parent.nsf, false)" title="{{outputValue.toText($parent.$parent.$parent.nsf, true)}}"></span>
+        <span class="result-reference" ng-show="outputValue.unit.baseUnit.reference != null && outputValue.unit.baseUnit.reference != ''"><sup><a title="The reference for this result. (Date Accessed: {{outputValue.unit.baseUnit.dateAccessed}})" href="{{outputValue.unit.baseUnit.reference}}" target="_blank">[ref.]</a></sup></span>
+    </div>
     <div>
         <span class="result-system" ng-show="outputValue.unit.isPartOfSystem('SI Base')" title="This is an SI base unit.">SI Base Unit</span>
         <span class="result-system" ng-show="outputValue.unit.isPartOfSystem('SI Derived')" title="This is an SI derived unit.">SI Derived Unit</span>

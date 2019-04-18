@@ -41,7 +41,7 @@ const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Densi
 
 
 class BaseUnit {
-    constructor(singularName, pluralName, variant, symbol, alternateSymbols, dimensions, canHaveSIPrefix, prefixRange, preferredPrefixes,   systems, ratioToSIUnit, commonness, conversionFunctionFromSIUnit, conversionFunctionToSIUnit) {
+    constructor(singularName, pluralName, variant, symbol, alternateSymbols, dimensions, canHaveSIPrefix, prefixRange, preferredPrefixes,   systems, ratioToSIUnit, commonness, conversionFunctionFromSIUnit, conversionFunctionToSIUnit, reference, dateAccessed) {
         this.singularName = singularName;
         this.pluralName = pluralName;
         this.variant = variant;
@@ -66,6 +66,9 @@ class BaseUnit {
         if (this.conversionFunctionToSIUnit == null) {
             this.conversionFunctionToSIUnit = function (value) { return value.dividedBy(this.ratioToSIUnit); }
         }
+
+        this.reference = reference;
+        this.dateAccessed = dateAccessed;
     }
 
     equals(unit) {
@@ -79,23 +82,23 @@ class BaseUnit {
 
 
 
-const Metre = new BaseUnit("Metre", "Metres", "", "m", [], "L", true, [-30, 30], ["n", "μ", "m", "c", "d", "k"], ["Metric", "SI Base"], (1.0), 1.0);
-const Angstrom = new BaseUnit("Ångström", "Ångströms", "", "Å", [], "L", false, [], [], ["Metric"], (1e10), 0.7);
-const Thou = new BaseUnit("Thou", "Thou", "", "thou", ["mil"], "L", false, [], [], ["Imperial", "US Customary"], ((1000 / 25.4) * 1000), 0.1);
-const Line = new BaseUnit("Line", "Lines", "", "L", ["l", "lin"], "L", false, [], [], ["English"], ((1000 / 25.4) * 12), 0.1);
-const Inch = new BaseUnit("Inch", "Inches", "", "in", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / 25.4), 0.9);
-const Foot = new BaseUnit("Foot", "Feet", "", "ft", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12)), 0.8);
-const Yard = new BaseUnit("Yard", "Yards", "", "yd", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3)), 0.5);
-const Mile = new BaseUnit("Mile", "Miles", "", "mi", ["m"], "L", false, [], [], ["Imperial", "US Customary", "English"], (1000 / (25.4 * 12 * 3 * 1760)), 1.0);
-const League = new BaseUnit("League", "Leagues", "", "leagues", [], "L", false, [], [], [], (1000 / (25.4 * 12 * 3 * 1760 * 3)), 0.1);
-const Fathom = new BaseUnit("Fathom", "Fathoms", "", "fathoms", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 2)), 0.1);
-const NauticalMile = new BaseUnit("Nautical Mile", "Nautical Miles", "", "NM", ["M", "nm", "nmi"], "L", false, [], [], [], (1000 / (25.4 * 12 * 3 * 2)), 0.1);
-const Chain = new BaseUnit("Chain", "Chains", "", "chains", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 22)), 0.05);
+const Metre = new BaseUnit("Metre", "Metres", "", "m", [], "L", true, [-30, 30], ["n", "μ", "m", "c", "d", "k"], ["Metric", "SI Base"], (1.0), 1.0, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Angstrom = new BaseUnit("Ångström", "Ångströms", "", "Å", [], "L", false, [], [], ["Metric"], (1e10), 0.7, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Thou = new BaseUnit("Thou", "Thou", "", "thou", ["mil"], "L", false, [], [], ["Imperial", "US Customary"], ((1000 / 25.4) * 1000), 0.1, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Line = new BaseUnit("Line", "Lines", "", "L", ["l", "lin"], "L", false, [], [], ["English"], ((1000 / 25.4) * 12), 0.1, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Inch = new BaseUnit("Inch", "Inches", "", "in", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / 25.4), 0.9, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Foot = new BaseUnit("Foot", "Feet", "", "ft", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12)), 0.8, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Yard = new BaseUnit("Yard", "Yards", "", "yd", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3)), 0.5, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Mile = new BaseUnit("Mile", "Miles", "", "mi", ["m"], "L", false, [], [], ["Imperial", "US Customary", "English"], (1000 / (25.4 * 12 * 3 * 1760)), 1.0, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const League = new BaseUnit("League", "Leagues", "", "leagues", [], "L", false, [], [], [], (1000 / (25.4 * 12 * 3 * 1760 * 3)), 0.1, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Fathom = new BaseUnit("Fathom", "Fathoms", "", "fathoms", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 2)), 0.1, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const NauticalMile = new BaseUnit("Nautical Mile", "Nautical Miles", "", "NM", ["M", "nm", "nmi"], "L", false, [], [], [], (1000 / (25.4 * 12 * 3 * 2)), 0.1, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Chain = new BaseUnit("Chain", "Chains", "", "chains", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 / (25.4 * 12 * 3 * 22)), 0.05, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
 const Link = new BaseUnit("Link", "Links", "", "l", ["li", "lnk"], "L", false, [], [], ["Imperial", "US Customary"], (1000 * 100 / (25.4 * 12 * 3 * 22)), 0.05);
-const Rod = new BaseUnit("Rod", "Rods", "", "rods", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 * 4 / (25.4 * 12 * 3 * 22)), 0.05);
-const AstronomicalUnit = new BaseUnit("Astronomical Unit", "Astronomical Units", "", "AU", [], "L", false, [], [], ["Metric"], (1 / 149597870700), 0.9);
-const LightYear = new BaseUnit("Lightyear", "Lightyears", "", "ly", [], "L", true, [0, 30], [], ["Metric"], (1 / 9460730472580800), 0.9);
-const Parsec = new BaseUnit("Parsec", "Parsecs", "", "pc", [], "L", true, [0, 30], [], ["Metric"], (1 / 30856775814913673), 0.9);
+const Rod = new BaseUnit("Rod", "Rods", "", "rods", [], "L", false, [], [], ["Imperial", "US Customary"], (1000 * 4 / (25.4 * 12 * 3 * 22)), 0.05, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const AstronomicalUnit = new BaseUnit("Astronomical Unit", "Astronomical Units", "", "AU", [], "L", false, [], [], ["Metric"], (1 / 149597870700), 0.9, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const LightYear = new BaseUnit("Lightyear", "Lightyears", "", "ly", [], "L", true, [0, 30], [], ["Metric"], (1 / 9460730472580800), 0.9, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
+const Parsec = new BaseUnit("Parsec", "Parsecs", "", "pc", [], "L", true, [0, 30], [], ["Metric"], (1 / 30856775814913673), 0.9, null, null, "https://en.wikipedia.org/wiki/Unit_of_length", "2019.04.18");
 
 
 
@@ -307,12 +310,22 @@ class OutputValue {
         this.unit = unit;
     }
 
-    toString(nsf, usingSuperscriptNumbers) {
-        return writeNumberDecimal(this.number, nsf, false, usingSuperscriptNumbers, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "")? " (" + this.unit.baseUnit.variant.toLowerCase() + ")":"");
+    toText(nsf, asWords) {
+        if (!asWords) {
+            return writeNumberDecimal(this.number, nsf, false,  true, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
+        }
+        else {
+            return writeNumberDecimal(this.number, nsf, false, true, false) + " " + this.unit.pluralName.toLowerCase();
+        }
     }
 
-    asWords(nsf) {
-        return writeNumberDecimal(this.number, nsf, false, true, false) + " " + this.unit.pluralName.toLowerCase();
+    toHTML(nsf, asWords) {
+        if (!asWords) {
+            return writeNumberDecimal(this.number, nsf, false,   false, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
+        }
+        else {
+            return writeNumberDecimal(this.number, nsf, false, false, false) + " " + this.unit.pluralName.toLowerCase() + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
+        }
     }
 
     toLaTeX(nsf) {
