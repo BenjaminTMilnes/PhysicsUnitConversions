@@ -84,8 +84,10 @@
     <Content Include="index.html" />
     <Content Include="result-set.html" />
     <Content Include="result.html" />
+    <Content Include="settings.html" />
     <Content Include="style.css" />
     <Content Include="test_framework.js" />
+    <Content Include="unit-conversions.html" />
     <Content Include="units.js" />
     <Content Include="Web.config" />
   </ItemGroup>

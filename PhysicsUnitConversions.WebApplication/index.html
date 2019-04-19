@@ -4,6 +4,13 @@
     <title>Physics Unit Conversions</title>
     <meta charset="utf-8" />
 
+    <meta name="description" content="A fast and convenient web-based unit converter" />
+    <meta name="keywords" content="unit conversions, unit conversion, unit converter, convert units, physics units, physical units, physical measurements, physics, units, measurements, quantities, physical quantities, units of length, units of time, units of speed, units of acceleration, units of area, units of volume, units of energy, units of mass, units of weight" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="http://www.physicsunitconversions.com" />
+    <meta property="og:title" content="Physics Unit Conversions" />
+    <meta property="og:description" content="A fast and convenient web-based unit converter" />
+
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i&amp;subset=greek,greek-ext,latin-ext" rel="stylesheet">
 
     <link type="text/css" rel="stylesheet" href="style.css" />
@@ -25,49 +32,8 @@
 </head>
 <body>
     <div class="mainpage" ng-controller="UnitConversionController">
-        <h1>Physics Unit Conversions</h1>
-        <p class="instructions">Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
-        <input type="text" class="maininput" ng-model="mainInput" placeholder="12 km" />
-        <div class="inputkeys">
-               <span class="key" ng-repeat="key in keys" ng-click="typeLetter(key)">{{key}}</span>
-        </div>
-        <div class="inputinformation">
-            <div class="table" ng-style="(mostLikelyUnit == null) ? {'visibility': 'hidden'}:{};">
-                <div class="table-row">
-                    <div class="table-row-label" style="margin-bottom:-2px;"><span style="display: inline-block; padding:2px 0px;">{{(otherUnits.length > 0) ? 'Most likely unit:' : 'Unit:';}}</span></div>
-                    <div class="table-row-value">
-                        <span style="font-weight:normal;">{{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}})</span>
-                        <span ng-show="mostLikelyUnit.isMetric" class="tag metric">Metric</span>
-                        <span class="tag" style="background-color: {{mostLikelyUnit.quantity.colour}}" title="This unit is a measure of {{mostLikelyUnit.quantity.name.toLowerCase()}}.">{{mostLikelyUnit.quantity.name}}</span>
-                    </div>
-                </div>
-                <div class="table-row" ng-style="( otherUnits.length == 0) ? {'display': 'none'}:{};">
-                    <div class="table-row-label">Other possible units:</div>
-                    <div class="table-row-value">
-                        <span ng-repeat="unit in otherUnits" style="font-weight:normal;">
-                            <span ng-show="$index > 0">, </span>
-                            {{unit.pluralName.toLowerCase()}} ({{unit.symbol}})
-                        </span>
-                    </div>
-                </div>
-                <div class="table-row">
-                    <div class="table-row-label">Number of significant figures:</div>
-                    <div class="table-row-value" style="font-weight: normal;">{{identifiedNumberOfSignificantFigures}}</div>
-                </div>
-                <div class="table-row">
-                    <div class="table-row-label">Round conversions to the same number of significant figures as the input value:</div>
-                    <div class="table-row-value">
-                        <input type="checkbox" ng-model="roundOutput" />
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <result-set heading="'Common Conversions'" left-column-results="commonResultsLeftColumn" right-column-results="commonResultsRightColumn"></result-set>
-
-        <result-set heading="'Metric Conversions'" left-column-results="metricResultsLeftColumn" right-column-results="metricResultsRightColumn"></result-set>
-
-        <result-set heading="'Non-metric Conversions'" left-column-results="nonMetricResultsLeftColumn" right-column-results="nonMetricResultsRightColumn"></result-set>
+        <h1><a href="/#/" title="Physics Unit Conversions">Physics Unit Conversions</a></h1>
+        <div ng-view autoscroll="true"></div>     
     </div>
 </body>
 </html>

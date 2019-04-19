@@ -1,5 +1,13 @@
 ﻿
-var application = angular.module("PhysicsUnitConversions", []);
+var application = angular.module("PhysicsUnitConversions", ["ngRoute"]);
+
+
+application.config(function ($routeProvider) {
+    $routeProvider
+        .when("/", { templateUrl: "unit-conversions.html", controller: "UnitConversionController" })
+        .when("/settings", { templateUrl:  "settings.html", controller: "SettingsController" });
+     
+});
 
 application.directive("compile", ["$compile", function ($compile) {
     return function (scope, element, attributes) {

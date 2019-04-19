@@ -1,0 +1,42 @@
+﻿
+<input type="text" class="maininput" ng-model="mainInput" placeholder="12 km" />
+
+<div class="inputkeys">
+    <span class="key" ng-repeat="key in keys" ng-click="typeLetter(key)">{{key}}</span>
+</div>
+
+<div class="inputinformation">
+    <div class="table" ng-style="(mostLikelyUnit == null) ? {'display': 'none'}:{};">
+        <div class="table-row">
+            <div class="table-row-label" style="margin-bottom:-2px;"><span style="display: inline-block; padding:2px 0px;">{{(otherUnits.length > 0) ? 'Most likely unit:' : 'Unit:';}}</span></div>
+            <div class="table-row-value">
+                <span style="font-weight:normal;">{{mostLikelyUnit.pluralName.toLowerCase()}} ({{mostLikelyUnit.symbol}})</span>
+               <span class="tag" style="background-color: {{mostLikelyUnit.quantity.colour}};" title="This unit is a measure of {{mostLikelyUnit.quantity.name.toLowerCase()}}.">{{mostLikelyUnit.quantity.name}}</span>
+            </div>
+        </div>
+        <div class="table-row" ng-style="(otherUnits.length == 0) ? {'display': 'none'}:{};">
+            <div class="table-row-label">Other possible units:</div>
+            <div class="table-row-value">
+                <span ng-repeat="unit in otherUnits" style="font-weight:normal;">
+                    <span ng-show="$index > 0">, </span>
+                    {{unit.pluralName.toLowerCase()}} ({{unit.symbol}})
+                </span>
+            </div>
+        </div>
+        <div class="table-row">
+            <div class="table-row-label">Number of significant figures:</div>
+            <div class="table-row-value" style="font-weight: normal;">{{identifiedNumberOfSignificantFigures}}</div>
+        </div>
+       </div>
+</div>
+
+<p class="instructions">
+    <a href="/#/settings"  title="About & Settings">About &amp; Settings</a>
+</p>
+
+<result-set heading="'Common Conversions'" left-column-results="commonResultsLeftColumn" right-column-results="commonResultsRightColumn"></result-set>
+
+<result-set heading="'Metric Conversions'" left-column-results="metricResultsLeftColumn" right-column-results="metricResultsRightColumn"></result-set>
+
+<result-set heading="'Non-metric Conversions'" left-column-results="nonMetricResultsLeftColumn" right-column-results="nonMetricResultsRightColumn"></result-set>
+
