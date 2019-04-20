@@ -42,8 +42,56 @@ application.directive("resultSet", function () {
     };
 });
 
+class Settings {
+    constructor() {
+        this._roundOutput = false;
+        this._showKeyboard = true;
+
+        this.loadFromLocalStorage();
+    }
+
+    loadFromLocalStorage() {
+        var hasBeenSet = window.localStorage.getItem("hasBeenSet");
+
+        if (hasBeenSet) {
+            this._roundOutput = (window.localStorage.getItem("roundOutput") == "true");
+            this._showKeyboard = (window.localStorage.getItem("showKeyboard") == "true");
+        }
+    }
+
+    saveToLocalStorage() {
+        window.localStorage.setItem("hasBeenSet", true);
+        window.localStorage.setItem("roundOutput", this._roundOutput);
+        window.localStorage.setItem("showKeyboard", this._showKeyboard);
+    }
+
+    get roundOutput() {
+        return this._roundOutput;
+    }
+
+    set roundOutput(value) {
+        if (value != this._roundOutput) {
+            this._roundOutput = value;
+
+            this.saveToLocalStorage();
+        }
+    }
+
+    get showKeyboard() {
+        return this._showKeyboard;
+    }
+
+    set showKeyboard(value) {
+        if (value != this._showKeyboard) {
+            this._showKeyboard = value;
+
+            this.saveToLocalStorage();
+        }
+    }
+}
+
 application.factory("settings", function () {
-    return { roundOutput: false, showKeyboard: true };
+    return new Settings();
 });
 
 application.controller("UnitConversionController", ["$scope", "settings", function UnitConversionController($scope, settings) {
