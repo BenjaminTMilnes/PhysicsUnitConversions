@@ -41,7 +41,7 @@ const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Densi
 
 
 class BaseUnit {
-    constructor(singularName, pluralName, variant, symbol, alternateSymbols, dimensions, canHaveSIPrefix, prefixRange, preferredPrefixes,   systems, ratioToSIUnit, commonness, conversionFunctionFromSIUnit, conversionFunctionToSIUnit, reference, dateAccessed) {
+    constructor(singularName, pluralName, variant, symbol, alternateSymbols, dimensions, canHaveSIPrefix, prefixRange, preferredPrefixes, systems, ratioToSIUnit, commonness, conversionFunctionFromSIUnit, conversionFunctionToSIUnit, reference, dateAccessed) {
         this.singularName = singularName;
         this.pluralName = pluralName;
         this.variant = variant;
@@ -312,7 +312,7 @@ class OutputValue {
 
     toText(nsf, asWords) {
         if (!asWords) {
-            return writeNumberDecimal(this.number, nsf, false,  true, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
+            return writeNumberDecimal(this.number, nsf, false, true, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
         }
         else {
             return writeNumberDecimal(this.number, nsf, false, true, false) + " " + this.unit.pluralName.toLowerCase();
@@ -321,7 +321,7 @@ class OutputValue {
 
     toHTML(nsf, asWords) {
         if (!asWords) {
-            return writeNumberDecimal(this.number, nsf, false,   false, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
+            return writeNumberDecimal(this.number, nsf, false, false, false) + " " + this.unit.symbol + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
         }
         else {
             return writeNumberDecimal(this.number, nsf, false, false, false) + " " + this.unit.pluralName.toLowerCase() + ((this.unit.baseUnit.variant != "") ? " (" + this.unit.baseUnit.variant.toLowerCase() + ")" : "");
@@ -353,7 +353,7 @@ class UnitConverter {
     }
 
     getMatchingPrefixes(symbol) {
-        return this.prefixes.filter(p => symbol.length > p.symbol.length && symbol.startsWith(p.symbol));
+        return this.prefixes.filter(p =>(symbol.length > p.symbol.length && symbol.startsWith(p.symbol)) || (symbol.length > p.name.length && symbol.toLowerCase().startsWith(p.name)));
     }
 
     getMatchingUnits(symbol) {
@@ -369,13 +369,24 @@ class UnitConverter {
 
         prefixMatches.forEach(p => {
 
-            var s = symbol.substr(p.symbol.length);
+            if (symbol.startsWith(p.symbol)) {
+                var s = symbol.substr(p.symbol.length);
 
-            baseUnitMatches = this.baseUnits.filter(u => u.canHaveSIPrefix && (u.symbol == s || u.alternateSymbols.filter(as => as == s).length > 0));
+                baseUnitMatches = this.baseUnits.filter(u => u.canHaveSIPrefix && (u.symbol == s || u.alternateSymbols.filter(as => as == s).length > 0));
 
-            baseUnitMatches.forEach(u => {
-                unitMatches.push(new Unit(p, u));
-            });
+                baseUnitMatches.forEach(u => {
+                    unitMatches.push(new Unit(p, u));
+                });
+            }
+            if (symbol.startsWith(p.name)) {
+                var s = symbol.substr(p.name.length);
+
+                baseUnitMatches = this.baseUnits.filter(u => u.canHaveSIPrefix && (u.singularName.toLowerCase() == s.toLowerCase() || u.pluralName.toLowerCase() == s.toLowerCase()));
+
+                baseUnitMatches.forEach(u => {
+                    unitMatches.push(new Unit(p, u));
+                });
+            }
 
         });
 
