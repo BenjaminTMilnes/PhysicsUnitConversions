@@ -15,13 +15,20 @@ h1, h2 {
     text-align: center;
 }
 
+h3 {
+    font-size: 15px;
+    text-align: center;
+    font-weight: normal;
+    text-decoration: underline;
+}
+
 h1 {
     margin: 7px 0px 15px 0px;
     text-transform: uppercase;
     color: #105ecc;
 }
 
-h2 {
+h2, h3 {
     margin: 15px 0px;
 }
 
@@ -32,13 +39,12 @@ p {
 
 a {
     color: #105ecc;
-       text-decoration:none;
+    text-decoration: none;
 }
 
-a:hover{
-       text-decoration: underline;
-
-}
+    a:hover {
+        text-decoration: underline;
+    }
 
 .instructions {
     display: none;
@@ -47,6 +53,10 @@ a:hover{
 @media (min-width:400px) {
     h1, h2 {
         font-size: 22px;
+    }
+
+    h3 {
+        font-size: 17px;
     }
 
     h1 {
@@ -312,8 +322,8 @@ a:hover{
 .result-system {
     display: none;
     color: #00000022;
-      cursor: default;
-           user-select:none;
+    cursor: default;
+    user-select: none;
 }
 
 @media (min-width:400px) {

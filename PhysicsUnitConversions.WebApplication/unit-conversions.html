@@ -1,7 +1,7 @@
 ﻿
 <input type="text" class="maininput" ng-model="mainInput" placeholder="12 km" />
 
-<div class="inputkeys">
+<div class="inputkeys" ng-show="settings.showKeyboard">
     <span class="key" ng-repeat="key in keys" ng-click="typeLetter(key)">{{key}}</span>
 </div>
 
@@ -31,7 +31,7 @@
 </div>
 
 <p class="instructions">
-    <a href="/#/settings"  title="About & Settings">About &amp; Settings</a>
+    <a href="/#/settings"  title="Settings">Settings</a>
 </p>
 
 <result-set heading="'Common Conversions'" left-column-results="commonResultsLeftColumn" right-column-results="commonResultsRightColumn"></result-set>

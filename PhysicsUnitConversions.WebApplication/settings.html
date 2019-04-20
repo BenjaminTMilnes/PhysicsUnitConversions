@@ -1,15 +1,26 @@
-﻿<h2>About &amp; Settings</h2>
+﻿<h2>Settings</h2>
 
-<p class="instructions">Type in the value you want to convert with its units. The app will automatically parse what you type, and try to interpret the units. Then it will convert that value into all of the common units that it can be expressed in.</p>
-
-
+<h3>Rounding</h3>
 
 <div class="inputinformation">
     <div class="table">
-         <div class="table-row">
+        <div class="table-row">
             <div class="table-row-label">Round conversions to the same number of significant figures as the input value:</div>
             <div class="table-row-value">
-                <input type="checkbox" ng-model="roundOutput" />
+                <input type="checkbox" ng-model="settings.roundOutput" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>Keyboard</h3>
+
+<div class="inputinformation">
+    <div class="table">
+        <div class="table-row">
+            <div class="table-row-label">Show the keyboard:</div>
+            <div class="table-row-value">
+                <input type="checkbox" ng-model="settings.showKeyboard" />
             </div>
         </div>
     </div>

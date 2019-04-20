@@ -5,8 +5,8 @@ var application = angular.module("PhysicsUnitConversions", ["ngRoute"]);
 application.config(function ($routeProvider) {
     $routeProvider
         .when("/", { templateUrl: "unit-conversions.html", controller: "UnitConversionController" })
-        .when("/settings", { templateUrl:  "settings.html", controller: "SettingsController" });
-     
+        .when("/settings", { templateUrl: "settings.html", controller: "SettingsController" });
+
 });
 
 application.directive("compile", ["$compile", function ($compile) {
@@ -42,7 +42,13 @@ application.directive("resultSet", function () {
     };
 });
 
-application.controller("UnitConversionController", ["$scope", function UnitConversionController($scope) {
+application.factory("settings", function () {
+    return { roundOutput: false, showKeyboard: true };
+});
+
+application.controller("UnitConversionController", ["$scope", "settings", function UnitConversionController($scope, settings) {
+
+    $scope.settings = settings;
 
     $scope.identifiedUnits = [];
     $scope.mostLikelyUnit = null;
@@ -99,7 +105,7 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
         if (inputValue != null) {
 
             $scope.identifiedNumberOfSignificantFigures = getNumberOfSignificantFigures(inputValue.coefficient.text);
-            $scope.nsf = ($scope.roundOutput) ? $scope.identifiedNumberOfSignificantFigures : 5;
+            $scope.nsf = ($scope.settings.roundOutput) ? $scope.identifiedNumberOfSignificantFigures : 5;
 
             console.log($scope.nsf);
 
@@ -175,4 +181,9 @@ application.controller("UnitConversionController", ["$scope", function UnitConve
     $scope.$watch("roundOutput", function (newValue, oldValue) { $scope.updateConversions("", $scope.mainInput); });
 
     new ClipboardJS(".copybutton");
+}]);
+
+
+application.controller("SettingsController", ["$scope", "settings", function SettingsController($scope, settings) {
+    $scope.settings = settings;
 }]);
