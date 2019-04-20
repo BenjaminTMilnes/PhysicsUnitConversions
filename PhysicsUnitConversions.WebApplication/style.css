@@ -95,6 +95,7 @@ a {
 .mainpage {
     padding: 20px;
     max-width: 1400px;
+    min-height:700px;
     margin: 0px auto;
 }
 
@@ -429,5 +430,88 @@ a {
 @media (min-width:1200px) {
     .copybutton-latex {
         display: block;
+    }
+}
+
+
+
+
+.relatedwebsites {
+    padding: 20px 20px 40px 20px;
+    background-color: #F4F4F4;
+    color: #000000;
+}
+
+.centrecolumn {
+    max-width: 1000px;
+    margin: 0px auto;
+}
+
+
+@media (min-width:400px) {
+    .relatedwebsites {
+        padding: 40px 40px 100px 40px;
+    }
+}
+
+.relatedwebsites h2 {
+    margin: 20px 0px;
+      text-align:left;
+}
+
+@media (min-width:400px) {
+    .relatedwebsites h2 {
+        margin: 40px 0px;
+    }
+}
+
+.website-cards {
+    display: flex;
+    flex-direction: column;
+}
+
+.website-card {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 1px;
+    margin: 0px 0px 20px 0px;
+    padding: 22px;
+    box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+    .website-card h3 {
+        font-weight: normal;
+        text-align: center;
+        margin: 0px;
+    }
+
+    .website-card p {
+        font-size: 12px;
+        margin: 20px 0px 0px 0px;
+        text-align: justify;
+    }
+
+@media (min-width:400px) {
+
+    .website-card {
+        padding: 27px;
+    }
+
+        .website-card p {
+            font-size: 14px;
+        }
+}
+
+@media (min-width:700px) {
+    .website-card {
+        margin: 0px 20px 20px 0px;
+    }
+
+    .website-cards {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .website-card {
+        flex-basis: 33%;
     }
 }
