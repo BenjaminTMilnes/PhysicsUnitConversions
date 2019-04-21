@@ -1,40 +1,62 @@
 ﻿
+function getColourOfWord(word) {
+    const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    var m = letters.length;
+    var p = [0, 0, 0];
+
+    for (var i = 0; i < word.length; i++) {
+        var c = word[i];
+        var j = letters.indexOf(c);
+
+        j = (j < 0) ? 0 : j;
+        j = Math.round( 255 * j / m);
+        p[i % 3] = p[i % 3] + j;
+    }
+
+    p = p.map(q => (q % 255).toString(16));
+    p = p.map(q => (q.length < 2) ? "0" + q : q);
+
+    return "#" + p.join("");
+}
+
+
 class Quantity {
-    constructor(dimensions, name, colour) {
+    constructor(dimensions, name) {
         this.dimensions = dimensions;
         this.name = name;
-        this.colour = colour;
+        this.colour = getColourOfWord(this.name);
     }
 }
 
-const Length = new Quantity("L", "Length", "#1096cc");
-const Area = new Quantity("L^{2}", "Area", "#277f4a");
-const Volume = new Quantity("L^{3}", "Volume", "#214ab2");
-const Time = new Quantity("T", "Time", "#09297a");
-const Speed = new Quantity("L T^{-1}", "Speed", "#cc4210");
-const Acceleration = new Quantity("L T^{-2}", "Acceleration", "#b20c0c");
-const Mass = new Quantity("M", "Mass", "#6b300e");
-const Density = new Quantity("M L^{-3}", "Density", "#404040");
-const Momentum = new Quantity("M L T^{-1}", "Momentum", "#9e0f29");
-const Force = new Quantity("M L T^{-2}", "Force", "#890c5f");
-const Energy = new Quantity("M L^{2} T^{-2}", "Energy", "#7c0c89");
-const Power = new Quantity("M L^{2} T^{-3}", "Power", "#590c89");
-const ElectricPotentialDifference = new Quantity("M L^{2} T^{-3} Q^{-1}", "Electric Potential Difference", "");
-const ElectricCurrent = new Quantity("Q T^{-1}", "Electric Current", "");
-const Temperature = new Quantity("K", "Temperature", "");
-const Frequency = new Quantity("T^{-1}", "Frequency", "");
-const Angle = new Quantity("", "Angle", "");
-const SolidAngle = new Quantity("", "Solid Angle", "");
-const Pressure = new Quantity("M L^{-1} T^{-2}", "Pressure", "");
-const ElectricCharge = new Quantity("Q", "Electric Charge", "");
-const ElectricalCapacitance = new Quantity("M^{-1} L^{-2} T^{2} Q^{2}", "Temperature", "");
-const ElectricalResistance = new Quantity("M L^{2} T^{2} Q^{-2}", "Electrical Resistance", "");
-const ElectricalConductance = new Quantity("M^{-1} L^{-2} T^{-2} Q^{2}", "Electrical Conductance", "");
-const MagneticFlux = new Quantity("M L^{2} T^{-1} Q^{-1}", "Magnetic Flux", "");
-const MagneticFluxDensity = new Quantity("M T^{-1} Q^{-1}", "Magnetic Flux Density", "");
-const ElectricalInductance = new Quantity("M L^{2} Q^{-2}", "Electrical Inductance", "");
-const Jolt = new Quantity("L T^{-3}", "Jolt", "");
-const Snap = new Quantity("L T^{-4}", "Snap", "");
+const Length = new Quantity("L", "Length");
+const Area = new Quantity("L^{2}", "Area");
+const Volume = new Quantity("L^{3}", "Volume");
+const Time = new Quantity("T", "Time");
+const Speed = new Quantity("L T^{-1}", "Speed");
+const Acceleration = new Quantity("L T^{-2}", "Acceleration");
+const Mass = new Quantity("M", "Mass");
+const Density = new Quantity("M L^{-3}", "Density");
+const Momentum = new Quantity("M L T^{-1}", "Momentum");
+const Force = new Quantity("M L T^{-2}", "Force");
+const Energy = new Quantity("M L^{2} T^{-2}", "Energy");
+const Power = new Quantity("M L^{2} T^{-3}", "Power");
+const ElectricPotentialDifference = new Quantity("M L^{2} T^{-3} Q^{-1}", "Electric Potential Difference");
+const ElectricCurrent = new Quantity("Q T^{-1}", "Electric Current");
+const Temperature = new Quantity("K", "Temperature");
+const Frequency = new Quantity("T^{-1}", "Frequency");
+const Angle = new Quantity("", "Angle");
+const SolidAngle = new Quantity("", "Solid Angle");
+const Pressure = new Quantity("M L^{-1} T^{-2}", "Pressure");
+const ElectricCharge = new Quantity("Q", "Electric Charge");
+const ElectricalCapacitance = new Quantity("M^{-1} L^{-2} T^{2} Q^{2}", "Temperature");
+const ElectricalResistance = new Quantity("M L^{2} T^{2} Q^{-2}", "Electrical Resistance");
+const ElectricalConductance = new Quantity("M^{-1} L^{-2} T^{-2} Q^{2}", "Electrical Conductance");
+const MagneticFlux = new Quantity("M L^{2} T^{-1} Q^{-1}", "Magnetic Flux");
+const MagneticFluxDensity = new Quantity("M T^{-1} Q^{-1}", "Magnetic Flux Density");
+const ElectricalInductance = new Quantity("M L^{2} Q^{-2}", "Electrical Inductance");
+const Jolt = new Quantity("L T^{-3}", "Jolt");
+const Snap = new Quantity("L T^{-4}", "Snap");
 
 const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Density, Momentum, Force, Energy, Power, ElectricPotentialDifference, ElectricCurrent, Temperature, Frequency, Angle, SolidAngle, Pressure, ElectricCharge, ElectricalCapacitance, ElectricalResistance, ElectricalConductance, MagneticFlux, MagneticFluxDensity, ElectricalInductance, Jolt, Snap];
 
@@ -202,8 +224,16 @@ const AsAFractionOfTheSpeedOfLight = new BaseUnit("Times the Speed of Light", "T
 
 
 
+const Newton = new BaseUnit("Newton", "Newtons", "", "N", [], Force.dimensions, true, [-30, 30], [], ["Metric", "SI Derived"], 1, 1.0, null, null, "https://en.wikipedia.org/wiki/Force#Units_of_measurement", "2019.04.21");
+const  Dyne = new BaseUnit("Dyne", "Dynes", "", "dyn", [], Force.dimensions, false, [], [], ["Metric"], 1e5, 0.7, null, null, "https://en.wikipedia.org/wiki/Force#Units_of_measurement", "2019.04.21");
+const KilogramForce = new BaseUnit("Kilogram-Force", "Kilogram-Force", "", "kgf", ["kp"], Force.dimensions, false, [], [], [], (1/9.80665), 0.4, null, null, "https://en.wikipedia.org/wiki/Force#Units_of_measurement", "2019.04.21");
+const PoundForce = new BaseUnit("Pound-Force", "Pound-Force", "", "lbf", [], Force.dimensions, false, [], [], [], (1 / 4.4482216152605), 0.2, null, null, "https://en.wikipedia.org/wiki/Force#Units_of_measurement", "2019.04.21");
+const Poundal = new BaseUnit("Poundal", "Poundals", "", "pdl", [], Force.dimensions, false, [], [], ["Imperial"], (1 / 0.138254954376), 0.2, null, null, "https://en.wikipedia.org/wiki/Poundal", "2019.04.21");
 
-const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, MechanicalHorsePowerHour, MetricHorsePowerHour, ElectricHorsePowerHour, BoilerHorsePowerHour, Erg, Watt, MechanicalHorsepower, MetricHorsepower, ElectricHorsepower, BoilerHorsepower, HydraulicHorsepower, Volt, Amp, Kelvin, Celsius, Fahrenheit, Rankine, Delisle, NewtonTemperature, Reaumur, Romer, Hertz, Radian, Degree, Gradian, Turn, Quadrant, Sextant, Hexacontade, Pascal, Bar, PoundForcePerSquareInch, TechnicalAtmosphere, StandardAtmosphere, Torr, MillimetreOfMercury, MetresPerSecond, KilometresPerSecond, KilometresPerHour, MilesPerHour, AsAFractionOfTheSpeedOfLight];
+
+
+
+const baseUnits = [Metre, Angstrom, Thou, Line, Inch, Foot, Yard, Mile, League, Fathom, NauticalMile, Chain, Link, Rod, AstronomicalUnit, LightYear, Parsec, Second, Minute, Hour, Day, Year, Gram, AtomicMassUnit, Carat, AvoirdupoisOunce, AvoirdupoisPound, ShortTon, LongTon, Tonne, Stone, ShortHundredweight, LongHundredweight, Joule, ElectronVolt, FootPoundForce, BritishThermalUnitISO, WattHour, MechanicalHorsePowerHour, MetricHorsePowerHour, ElectricHorsePowerHour, BoilerHorsePowerHour, Erg, Watt, MechanicalHorsepower, MetricHorsepower, ElectricHorsepower, BoilerHorsepower, HydraulicHorsepower, Volt, Amp, Kelvin, Celsius, Fahrenheit, Rankine, Delisle, NewtonTemperature, Reaumur, Romer, Hertz, Radian, Degree, Gradian, Turn, Quadrant, Sextant, Hexacontade, Pascal, Bar, PoundForcePerSquareInch, TechnicalAtmosphere, StandardAtmosphere, Torr, MillimetreOfMercury, MetresPerSecond, KilometresPerSecond, KilometresPerHour, MilesPerHour, AsAFractionOfTheSpeedOfLight, Newton, Dyne, KilogramForce, PoundForce, Poundal];
 
 
 
