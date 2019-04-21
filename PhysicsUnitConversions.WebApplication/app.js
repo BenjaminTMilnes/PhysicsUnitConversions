@@ -4,8 +4,9 @@ var application = angular.module("PhysicsUnitConversions", ["ngRoute"]);
 
 application.config(function ($routeProvider) {
     $routeProvider
-        .when("/", { templateUrl: "unit-conversions.html", controller: "UnitConversionController" })
-        .when("/settings", { templateUrl: "settings.html", controller: "SettingsController" });
+        .when("/", { templateUrl: "unit-conversions.html", controller: "UnitConversionsController" })
+        .when("/settings", { templateUrl: "settings.html", controller: "SettingsController" })
+        .when("/credits", { templateUrl: "credits.html" });
 
 });
 
@@ -94,7 +95,7 @@ application.factory("settings", function () {
     return new Settings();
 });
 
-application.controller("UnitConversionController", ["$scope", "settings", function UnitConversionController($scope, settings) {
+application.controller("UnitConversionsController", ["$scope", "settings", function UnitConversionController($scope, settings) {
 
     $scope.settings = settings;
 

@@ -1,6 +1,6 @@
 ﻿body {
     font-family: "Open Sans", sans-serif;
-    margin: 0px;
+    margin: 0px 0px 100px 0px;
     font-weight: lighter;
     color: #202020;
 }
@@ -35,6 +35,7 @@ h2, h3 {
 p {
     font-size: 12px;
     margin: 15px 0px;
+      text-align:center;
 }
 
 a {
@@ -456,7 +457,6 @@ a {
 
 .relatedwebsites h2 {
     margin: 20px 0px;
-      text-align:left;
 }
 
 @media (min-width:400px) {
