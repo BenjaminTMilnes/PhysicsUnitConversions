@@ -14,7 +14,7 @@ function getColourOfWord(word) {
         p[i % 3] = p[i % 3] + j;
     }
 
-    p = p.map(q => (q % 255).toString(16));
+    p = p.map(q => (q % 235).toString(16));
     p = p.map(q => (q.length < 2) ? "0" + q : q);
 
     return "#" + p.join("");
