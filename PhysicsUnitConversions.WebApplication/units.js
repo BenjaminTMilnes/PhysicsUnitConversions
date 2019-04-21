@@ -194,9 +194,9 @@ const MillimetreOfMercury = new BaseUnit("Millimetre of Mercury", "Millimetres o
 
 
 
-const    MetresPerSecond = new BaseUnit("Metre per Second", "Metres per Second", "", "m/s", ["ms^{-1}", "ms^-1"],  Speed.dimensions, false, [], [], ["Metric", "SI Derived"],1, 1.0);
-const  KilometresPerSecond = new BaseUnit("Kilometre per Second", "Kilometres per Second", "", "km/s", ["kms^{-1}", "kms^-1", "kps"],  Speed.dimensions, false, [], [], ["Metric"],(1/1000), 0.5);
-const KilometresPerHour = new BaseUnit("Kilometre per Hour", "Kilometres per Hour", "", "kph", ["km/h"],  Speed.dimensions, false, [], [], ["Metric"],(3600/1000), 1.0);
+const MetresPerSecond = new BaseUnit("Metre per Second", "Metres per Second", "", "m/s", ["ms^{-1}", "ms^-1"], Speed.dimensions, false, [], [], ["Metric", "SI Derived"], 1, 1.0);
+const KilometresPerSecond = new BaseUnit("Kilometre per Second", "Kilometres per Second", "", "km/s", ["kms^{-1}", "kms^-1", "kps"], Speed.dimensions, false, [], [], ["Metric"], (1 / 1000), 0.5);
+const KilometresPerHour = new BaseUnit("Kilometre per Hour", "Kilometres per Hour", "", "kph", ["km/h"], Speed.dimensions, false, [], [], ["Metric"], (3600 / 1000), 1.0);
 const MilesPerHour = new BaseUnit("Mile per Hour", "Miles per Hour", "", "mph", [], Speed.dimensions, false, [], [], ["Imperial", "US Customary"], (3600 / 1609.344), 0.9);
 const AsAFractionOfTheSpeedOfLight = new BaseUnit("Times the Speed of Light", "Times the Speed of Light", "", "c", [], Speed.dimensions, false, [], [], ["Metric"], (1 / 299792458), 0.9);
 
