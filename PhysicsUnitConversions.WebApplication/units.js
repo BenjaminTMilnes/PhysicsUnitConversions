@@ -35,30 +35,79 @@ const Volume = new Quantity("L^{3}", "Volume");
 const Time = new Quantity("T", "Time");
 const Speed = new Quantity("L T^{-1}", "Speed");
 const Acceleration = new Quantity("L T^{-2}", "Acceleration");
+const Jolt = new Quantity("L T^{-3}", "Jolt");
+const Snap = new Quantity("L T^{-4}", "Snap");
+const VolumetricFlowRate = new Quantity("L^{3} T^{-1}", "Volumetric Flow Rate");
+
+const AmountOfSubstance = new Quantity("N", "Amount of Substance");
 const Mass = new Quantity("M", "Mass");
-const Density = new Quantity("M L^{-3}", "Density");
+const MassLinearDensity = new Quantity("M L^{-1}", "Mass Linear Density");
+const MassAreaDensity = new Quantity("M L^{-2}", "Mass Area Density");
+const MassVolumeDensity = new Quantity("M L^{-3}", "Density");
 const Momentum = new Quantity("M L T^{-1}", "Momentum");
 const Force = new Quantity("M L T^{-2}", "Force");
 const Energy = new Quantity("M L^{2} T^{-2}", "Energy");
+const EnergyVolumeDensity = new Quantity("M L^{-1} T^{-2}", "Energy Density");
 const Power = new Quantity("M L^{2} T^{-3}", "Power");
-const ElectricPotentialDifference = new Quantity("M L^{2} T^{-3} Q^{-1}", "Electric Potential Difference");
+const Intensity = new Quantity("M T^{-3}", "Intensity");
+
+const ElectricCharge = new Quantity("Q", "Electric Charge");
+const ElectricChargeLinearDensity = new Quantity("Q L^{-1}", "Electric Charge Linear Density");
+const ElectricChargeAreaDensity = new Quantity("Q L^{-2}", "Electric Charge Area Density");
+const ElectricChargeVolumeDensity = new Quantity("Q L^{-3}", "Electric Charge Volume Density");
 const ElectricCurrent = new Quantity("Q T^{-1}", "Electric Current");
+const ElectricalConductance = new Quantity("M^{-1} L^{-2} T^{-2} Q^{2}", "Electrical Conductance");
+const ElectricalConductivity = new Quantity("M^{-1} L^{-3} T^{-2} Q^{-2}", "Electrical Conductivity");
+const ElectricalResistance = new Quantity("M L^{2} T^{2} Q^{-2}", "Electrical Resistance");
+const ElectricalResistivity = new Quantity("M L^{3} T^{2} Q^{-2}", "Electrical Resistivity");
+const ElectricPotentialDifference = new Quantity("M L^{2} T^{-3} Q^{-1}", "Electric Potential Difference");
+const ElectricalCapacitance = new Quantity("M^{-1} L^{-2} T^{2} Q^{2}", "Temperature");
+
+const MagneticFlux = new Quantity("M L^{2} T^{-1} Q^{-1}", "Magnetic Flux");
+const MagneticFluxDensity = new Quantity("M T^{-1} Q^{-1}", "Magnetic Flux Density");
+const ElectricalInductance = new Quantity("M L^{2} Q^{-2}", "Electrical Inductance");
+
 const Temperature = new Quantity("K", "Temperature");
+const HeatCapacity = new Quantity("M L^{2} T^{-2} K^{-1}", "Heat Capacity");
+const SpecificHeatCapacity = new Quantity("L^{2} T^{-2} K^{-1}", "Specific Heat Capacity");
+const ThermalConductance = new Quantity("M L^{2} T^{-3} K^{-1}", "Thermal Conductance");
+const ThermalConductivity = new Quantity("M L T^{-3} K^{-1}", "Thermal Conductivity");
+const ThermalResistance = new Quantity("M^{-1} L^{-2} T^{3} K", "Thermal Resistance");
+const ThermalResistivity = new Quantity("M^{-1} L^{-1} T^{3} K", "Thermal Resistivity");
+
 const Frequency = new Quantity("T^{-1}", "Frequency");
 const Angle = new Quantity("", "Angle");
 const SolidAngle = new Quantity("", "Solid Angle");
 const Pressure = new Quantity("M L^{-1} T^{-2}", "Pressure");
-const ElectricCharge = new Quantity("Q", "Electric Charge");
-const ElectricalCapacitance = new Quantity("M^{-1} L^{-2} T^{2} Q^{2}", "Temperature");
-const ElectricalResistance = new Quantity("M L^{2} T^{2} Q^{-2}", "Electrical Resistance");
-const ElectricalConductance = new Quantity("M^{-1} L^{-2} T^{-2} Q^{2}", "Electrical Conductance");
-const MagneticFlux = new Quantity("M L^{2} T^{-1} Q^{-1}", "Magnetic Flux");
-const MagneticFluxDensity = new Quantity("M T^{-1} Q^{-1}", "Magnetic Flux Density");
-const ElectricalInductance = new Quantity("M L^{2} Q^{-2}", "Electrical Inductance");
-const Jolt = new Quantity("L T^{-3}", "Jolt");
-const Snap = new Quantity("L T^{-4}", "Snap");
 
-const quantities = [Length, Area, Volume, Time, Speed, Acceleration, Mass, Density, Momentum, Force, Energy, Power, ElectricPotentialDifference, ElectricCurrent, Temperature, Frequency, Angle, SolidAngle, Pressure, ElectricCharge, ElectricalCapacitance, ElectricalResistance, ElectricalConductance, MagneticFlux, MagneticFluxDensity, ElectricalInductance, Jolt, Snap];
+const quantities = [Length, 
+                    Area, 
+                    Volume, 
+                    Time, 
+                    Speed, 
+                    Acceleration, 
+                    Mass, 
+                    Density, 
+                    Momentum, 
+                    Force, 
+                    Energy, 
+                    Power, 
+                    ElectricPotentialDifference, 
+                    ElectricCurrent, 
+                    Temperature, 
+                    Frequency, 
+                    Angle, 
+                    SolidAngle, 
+                    Pressure, 
+                    ElectricCharge, 
+                    ElectricalCapacitance,
+                    ElectricalResistance, 
+                    ElectricalConductance, 
+                    MagneticFlux, 
+                    MagneticFluxDensity, 
+                    ElectricalInductance, 
+                    Jolt, 
+                    Snap];
 
 
 
